@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: "Quicksand", sans-serif;
+}
+
+.gradient-btn {
+    @apply transition-all 
+    bg-gradient-to-l 
+    from-[#ffe27a] 
+    to-theme-1 
+    bg-[length:200%] 
+    hover:bg-right;
+}
+
+/* For webkit browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
