@@ -22,7 +22,8 @@ const SelectFilter = ({
                 setFilters((prev: any) => {
                     return {
                         ...prev,
-                        city: filterName === "country" ? "--Select--" : "",
+                        city:
+                            filterName === "country" ? "--Select--" : prev.city,
                         [filterName]: e.target.value,
                     };
                 })
