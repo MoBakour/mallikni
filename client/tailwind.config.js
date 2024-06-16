@@ -7,6 +7,7 @@ export default {
                 theme: {
                     1: "#fcd02c",
                     2: "#F3F3F3",
+                    hover: "rgb(242,193,32)",
                 },
                 error: {
                     1: "crimson",

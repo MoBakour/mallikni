@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import LandingHeader from "../components/landing/LandingHeader";
 import LandingSection from "../components/landing/LandingSection";
 import LandingFooter from "../components/landing/LandingFooter";
-import Footer from "../components/Footer";
+import Footer from "../components/common/Footer";
 
 const sectionData = [
     {

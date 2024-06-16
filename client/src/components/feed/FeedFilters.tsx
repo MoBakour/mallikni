@@ -1,51 +1,99 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import clsx from "clsx";
 import LocationsData from "../../assets/countries.json";
 import ToggleFilter from "./ToggleFilter";
 import RangeFilter from "./RangeFilter";
 import SelectFilter from "./SelectFilter";
-import clsx from "clsx";
 import CountFilter from "./CountFilter";
 import { isChildOf } from "../../utils";
 import OptionsFilter from "./OptionsFilter";
 import IconTick from "../../icons/IconTick";
+import { ICountry, IFilters } from "../../types/types";
 
-interface IState {
-    code: string;
-    name: string;
-    subdivision: string | null;
-}
-
-interface ICountry {
-    code2: string;
-    code3: string;
-    name: string;
-    capital: string;
-    region: string;
-    subregion: string;
-    states: IState[];
-}
+const defaultFilters: IFilters = {
+    mode: "Rent",
+    category: "Residential",
+    country: "United Arab Emirates",
+    city: "",
+    minPrice: "",
+    maxPrice: "",
+    minArea: "",
+    maxArea: "",
+    minPropertyAge: "",
+    maxPropertyAge: "",
+    source: "",
+    furnished: false,
+    beds: [],
+    baths: [],
+    balcony: false,
+    lift: false,
+    parking: false,
+    security: false,
+};
 
 const FeedFilters = () => {
-    const [filters, setFilters] = useState({
-        mode: "Rent",
-        category: "Residential",
-        country: "United Arab Emirates",
-        city: "Ajman",
-        minPrice: "",
-        maxPrice: "",
-        minArea: "",
-        maxArea: "",
-        minPropertyAge: "",
-        maxPropertyAge: "",
-        source: "",
-        furnished: false,
-        beds: [],
-        baths: [],
-        balcony: false,
-        lift: false,
-        parking: false,
-        security: false,
-    });
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const [filters, setFilters] = useState<IFilters>(defaultFilters);
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+
+        const newFilters: IFilters = {
+            mode: params.get("mode") || defaultFilters.mode,
+            category: params.get("category") || defaultFilters.category,
+            country: params.get("country") || defaultFilters.country,
+            city: params.get("city") || defaultFilters.city,
+            minPrice: params.get("minPrice") || defaultFilters.minPrice,
+            maxPrice: params.get("maxPrice") || defaultFilters.maxPrice,
+            minArea: params.get("minArea") || defaultFilters.minArea,
+            maxArea: params.get("maxArea") || defaultFilters.maxArea,
+            minPropertyAge:
+                params.get("minPropertyAge") || defaultFilters.minPropertyAge,
+            maxPropertyAge:
+                params.get("maxPropertyAge") || defaultFilters.maxPropertyAge,
+            source: params.get("source") || defaultFilters.source,
+            furnished:
+                params.get("furnished") === "true" || defaultFilters.furnished,
+            beds: params.get("beds")
+                ? params.get("beds")!.split(",")
+                : defaultFilters.beds,
+            baths: params.get("baths")
+                ? params.get("baths")!.split(",")
+                : defaultFilters.baths,
+            balcony: params.get("balcony") === "true" || defaultFilters.balcony,
+            lift: params.get("lift") === "true" || defaultFilters.lift,
+            parking: params.get("parking") === "true" || defaultFilters.parking,
+            security:
+                params.get("security") === "true" || defaultFilters.security,
+        };
+
+        setFilters(newFilters);
+    }, []);
+
+    useEffect(() => {
+        const params = new URLSearchParams();
+
+        for (const key in filters) {
+            const value = filters[key as keyof IFilters];
+
+            if (Array.isArray(value) && value.length > 0) {
+                params.set(key, value.join(","));
+            } else if (typeof value === "boolean" && value) {
+                params.set(key, value.toString());
+            } else if (
+                typeof value === "string" &&
+                value &&
+                !value.includes("--Select")
+            ) {
+                params.set(key, value);
+            }
+        }
+
+        navigate({ search: params.toString() }, { replace: true });
+    }, [filters]);
 
     interface DropdownsState {
         beds: boolean;
@@ -205,7 +253,7 @@ const FeedFilters = () => {
 
             <div className="w-full h-[2px] bg-slate-200 rounded-full" />
 
-            <button className="rounded-lg text-xl w-fit outline-none bg-theme-1 py-3 px-8 font-bold text-white transition hover:bg-[rgb(242,193,32)]">
+            <button className="rounded-lg text-xl w-fit outline-none bg-theme-1 py-3 px-8 font-bold text-white transition hover:bg-theme-hover">
                 Search
             </button>
         </div>

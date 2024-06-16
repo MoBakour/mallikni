@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import FadeInDiv from "../FadeInDiv";
+import FadeInDiv from "../common/FadeInDiv";
 
 interface ILandingSection {
     reverse: boolean;

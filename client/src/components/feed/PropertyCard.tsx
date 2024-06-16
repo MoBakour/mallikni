@@ -9,7 +9,7 @@ interface IPropertyCard {
 
 const PropertyCard = ({ property }: IPropertyCard) => {
     return (
-        <a href={`/property/${property.id}`} className="w-2/3">
+        <a href={`/property/${property.id}`} className="w-full">
             <div className="bg-white w-full shadow-lg p-4 rounded-lg flex gap-4 transition hover:scale-[1.01]">
                 <img
                     src={property.image}

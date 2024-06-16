@@ -21,7 +21,7 @@ function App() {
     const { authorized } = useAuthStore();
 
     return (
-        <div className="bg-slate-100 min-h-screen overflow-hidden">
+        <div className="bg-slate-100 min-h-screen">
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Landing />} />
