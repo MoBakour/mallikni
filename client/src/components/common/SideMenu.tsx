@@ -5,11 +5,11 @@ import clsx from "clsx";
 const buttons = [
     {
         title: "Post Property",
-        link: "/post-property",
+        link: "/my-properties",
     },
     {
-        title: "My Properties",
-        link: "/my-properties",
+        title: "My Favorites",
+        link: "/favorites",
     },
     {
         title: "Settings",

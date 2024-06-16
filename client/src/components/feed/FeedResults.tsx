@@ -129,7 +129,7 @@ const FeedResults = () => {
                             tenant
                         </p>
                         <a
-                            href="/post-property"
+                            href="/my-properties"
                             className="w-full flex bg-theme-1 text-white text-lg font-bold rounded-lg py-3 text-center justify-evenly items-center transition hover:bg-theme-hover"
                         >
                             Post Your Property
