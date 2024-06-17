@@ -8,7 +8,7 @@ interface IAuthProps {
 
 const Auth = ({ page }: IAuthProps) => {
     return (
-        <div className=" bg-slate-100 flex justify-evenly items-center sm:flex-col w-full min-h-screen relative overflow-hidden">
+        <main className=" bg-slate-100 flex justify-evenly items-center sm:flex-col w-full min-h-screen relative overflow-hidden">
             <img
                 src="./images/blob-2.svg"
                 alt="Blob image"
@@ -30,7 +30,7 @@ const Auth = ({ page }: IAuthProps) => {
                 {/* <AuthForm page={page} /> */}
                 <AuthActivation />
             </div>
-        </div>
+        </main>
     );
 };
 

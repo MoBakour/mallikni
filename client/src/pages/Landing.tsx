@@ -48,7 +48,7 @@ const Landing = () => {
     }, []);
 
     return (
-        <div className="overflow-x-hidden">
+        <main className="overflow-x-hidden">
             {/* landing bg */}
             <div className="bg-[url('./images/city-bg.png')] w-screen h-screen bg-cover bg-center opacity-35"></div>
 
@@ -103,7 +103,7 @@ const Landing = () => {
             {/* footers */}
             <LandingFooter />
             <Footer />
-        </div>
+        </main>
     );
 };
 

@@ -1,5 +1,5 @@
 const ChangeEmail = () => {
-    return <div>ChangeEmail</div>;
+    return <main>ChangeEmail</main>;
 };
 
 export default ChangeEmail;

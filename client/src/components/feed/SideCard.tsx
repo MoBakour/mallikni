@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { IProperty } from "../../types/types";
-import { currencyFormatter } from "../../utils/utils";
+import PriceCard from "../common/PriceCard";
 
 interface ISideCard {
     property: IProperty;
@@ -21,9 +21,7 @@ const SideCard = ({ property }: ISideCard) => {
                     <p className="text-sm">
                         {property.country}, {property.city}
                     </p>
-                    <p className="bg-theme-1/30 w-fit py-2 px-4 rounded-lg">
-                        {currencyFormatter.format(property.price)} AED/year
-                    </p>
+                    <PriceCard price={property.price} />
                 </div>
             </div>
         </Link>

@@ -17,7 +17,7 @@ const Layout = () => {
             {/* side menu */}
             <SideMenu />
 
-            {<Outlet />}
+            <div className="relative">{<Outlet />}</div>
         </div>
     );
 };

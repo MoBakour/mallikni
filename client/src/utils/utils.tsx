@@ -27,7 +27,7 @@ export const isChildOf = (child: HTMLElement, className: string) => {
     return child.closest(className) !== null;
 };
 
-export const currencyFormatter = new Intl.NumberFormat("en-US");
+export const currencyFormatter = new Intl.NumberFormat("en-US").format;
 
 export const capitalize = (word: string) =>
     word[0].toUpperCase() + word.substring(1);

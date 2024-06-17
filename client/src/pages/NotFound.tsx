@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const NotFound = () => {
     return (
-        <div className="flex justify-center items-center gap-x-20 gap-y-10 lg:flex-col min-h-screen">
+        <main className="flex justify-center items-center gap-x-20 gap-y-10 lg:flex-col min-h-screen">
             <p
                 className="absolute text-[700px] pointer-events-none opacity-[0.05] max-h-full max-w-full overflow-hidden leading-tight"
                 style={{ fontFamily: "monospace" }}
@@ -32,7 +32,7 @@ const NotFound = () => {
                 alt="Not Found"
                 className="rounded-full w-[500px] z-10"
             />
-        </div>
+        </main>
     );
 };
 

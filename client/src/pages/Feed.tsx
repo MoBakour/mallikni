@@ -3,7 +3,7 @@ import FeedResults from "../components/feed/FeedResults";
 
 const Feed = () => {
     return (
-        <div className="relative">
+        <main className="relative">
             {/* content */}
             <div className="w-[80%] m-auto relative">
                 <h2 className="font-bold text-3xl tracking-wide pt-28 pb-10">
@@ -16,7 +16,7 @@ const Feed = () => {
                 {/* results */}
                 <FeedResults />
             </div>
-        </div>
+        </main>
     );
 };
 

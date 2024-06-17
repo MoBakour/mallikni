@@ -1,5 +1,5 @@
 const MyProperties = () => {
-    return <div>MyProperties</div>;
+    return <main>MyProperties</main>;
 };
 
 export default MyProperties;
