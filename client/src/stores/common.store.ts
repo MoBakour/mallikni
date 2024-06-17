@@ -6,7 +6,7 @@ interface ICommonStore {
 }
 
 const useCommonStore = create<ICommonStore>((set) => ({
-    showSideMenu: true,
+    showSideMenu: false,
     setShowSideMenu: (newShowSideMenu: boolean) => {
         set({ showSideMenu: newShowSideMenu });
     },

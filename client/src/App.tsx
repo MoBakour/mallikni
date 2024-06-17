@@ -19,7 +19,7 @@ import NotFound from "./pages/NotFound";
 import Layout from "./pages/Layout";
 
 function App() {
-    const { authorized } = useAuthStore();
+    const authorized = useAuthStore((state) => state.authorized);
 
     return (
         <div className="bg-slate-100 min-h-screen">

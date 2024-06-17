@@ -20,8 +20,8 @@ const defaultFilters: IFilters = {
     maxPrice: "",
     minArea: "",
     maxArea: "",
-    minPropertyAge: "",
-    maxPropertyAge: "",
+    minAge: "",
+    maxAge: "",
     source: "",
     furnished: false,
     beds: [],
@@ -50,10 +50,8 @@ const FeedFilters = () => {
             maxPrice: params.get("maxPrice") || defaultFilters.maxPrice,
             minArea: params.get("minArea") || defaultFilters.minArea,
             maxArea: params.get("maxArea") || defaultFilters.maxArea,
-            minPropertyAge:
-                params.get("minPropertyAge") || defaultFilters.minPropertyAge,
-            maxPropertyAge:
-                params.get("maxPropertyAge") || defaultFilters.maxPropertyAge,
+            minAge: params.get("minAge") || defaultFilters.minAge,
+            maxAge: params.get("maxAge") || defaultFilters.maxAge,
             source: params.get("source") || defaultFilters.source,
             furnished:
                 params.get("furnished") === "true" || defaultFilters.furnished,
@@ -204,7 +202,7 @@ const FeedFilters = () => {
                 <RangeFilter
                     name="Property Age"
                     desc="(years)"
-                    filterName="propertyAge"
+                    filterName="age"
                     filters={filters}
                     setFilters={setFilters}
                 />

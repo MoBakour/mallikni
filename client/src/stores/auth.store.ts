@@ -12,11 +12,11 @@ const useAuthStore = create<IAuthState>((set) => {
 
     return {
         auth: userAuth,
-        authorized: !!userAuth?.userDocument.activation.activated,
+        authorized: !!userAuth?.user.activation.activated,
         setAuth: (newAuth: IAuth) => {
             set({
                 auth: newAuth,
-                authorized: !!newAuth?.userDocument.activation.activated,
+                authorized: !!newAuth?.user.activation.activated,
             });
         },
     };

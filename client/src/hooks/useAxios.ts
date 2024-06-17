@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 const useAxios = () => {
-    const { auth } = useAuthStore();
+    const auth = useAuthStore((state) => state.auth);
 
     useEffect(() => {
         const intercept = instance.interceptors.request.use(

@@ -1,18 +1,21 @@
 import { Link } from "react-router-dom";
 import useAuthStore from "../../stores/auth.store";
+import IconBurger from "../../icons/IconBurger";
+import useCommonStore from "../../stores/common.store";
 
 const Header = () => {
-    const { auth } = useAuthStore();
+    const auth = useAuthStore((state) => state.auth);
+    const setShowSideMenu = useCommonStore((state) => state.setShowSideMenu);
 
     return (
         <header className="p-3 flex justify-between">
-            <Link className="grow" to="/">
+            <Link to="/">
                 <h1 className="tracking-widest font-bold text-3xl">
                     <span className="text-theme-1">M</span>allikni
                 </h1>
             </Link>
 
-            <nav className="grow-[3] flex justify-center items-center">
+            <nav className="flex justify-center items-center">
                 <ul className="flex gap-4 text-lg sm:text-sm sm:gap-3">
                     {[
                         ["About", "/about"],
@@ -29,7 +32,7 @@ const Header = () => {
                 </ul>
             </nav>
 
-            <div className="grow flex justify-center items-center gap-2">
+            <div className="flex justify-center items-center gap-2">
                 {auth ? (
                     <>
                         <img
@@ -37,7 +40,11 @@ const Header = () => {
                             alt="User Avatar"
                             className="rounded-full w-10"
                         />
-                        <p className="font-bold text-lg">MoBakour</p>
+                        <p className="font-bold text-lg mr-6">MoBakour</p>
+                        <IconBurger
+                            className="text-4xl transition hover:text-black/70 cursor-pointer"
+                            onClick={() => setShowSideMenu(true)}
+                        />
                     </>
                 ) : (
                     <ul className="flex gap-4 text-lg sm:text-sm sm:gap-3">
