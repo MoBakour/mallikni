@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { capitalize } from "../../utils";
 
 interface IToggleFilter {
     text1: string;
@@ -57,7 +58,7 @@ const ToggleFilter = ({
                     }
                     ref={index === 0 ? firstText : null}
                 >
-                    {txt}
+                    {capitalize(txt)}
                 </div>
             ))}
         </div>

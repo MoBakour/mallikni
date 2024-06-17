@@ -28,3 +28,6 @@ export const isChildOf = (child: HTMLElement, className: string) => {
 };
 
 export const currencyFormatter = new Intl.NumberFormat("en-US");
+
+export const capitalize = (word: string) =>
+    word[0].toUpperCase() + word.substring(1);

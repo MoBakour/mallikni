@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import IconBxChevronDown from "../../icons/IconBxChevronDown";
 import IconTick from "../../icons/IconTick";
-import { toggleItem } from "../../utils";
+import { capitalize, toggleItem } from "../../utils";
 
 interface ICountFilter {
     name: string;
@@ -32,7 +32,7 @@ const CountFilter = ({
             onClick={(e) => handleShow(e)}
         >
             {name[0].toUpperCase() + name.substring(1)}:{" "}
-            {filters[name].join(", ")}
+            {filters[name].map(capitalize).join(", ")}
             <IconBxChevronDown className="text-lg" />
             {show && (
                 <div
@@ -63,7 +63,7 @@ const CountFilter = ({
                             {filters[name].includes(option) && (
                                 <IconTick className="text-sm" />
                             )}
-                            {option}
+                            {capitalize(option)}
                         </button>
                     ))}
                 </div>

@@ -12,9 +12,9 @@ import IconTick from "../../icons/IconTick";
 import { ICountry, IFilters } from "../../types/types";
 
 const defaultFilters: IFilters = {
-    mode: "Rent",
-    category: "Residential",
-    country: "United Arab Emirates",
+    mode: "rent",
+    category: "residential",
+    country: "ae",
     city: "",
     minPrice: "",
     maxPrice: "",
@@ -135,16 +135,16 @@ const FeedFilters = () => {
         <div className="w-full shadow-lg rounded-lg bg-white p-4 flex flex-col gap-6 mb-14">
             <div className="flex flex-wrap gap-y-4 gap-x-6">
                 <ToggleFilter
-                    text1="Rent"
-                    text2="Buy"
+                    text1="rent"
+                    text2="buy"
                     filterName="mode"
                     filters={filters}
                     setFilters={setFilters}
                 />
 
                 <ToggleFilter
-                    text1="Residential"
-                    text2="Commercial"
+                    text1="residential"
+                    text2="commercial"
                     filterName="category"
                     filters={filters}
                     setFilters={setFilters}
@@ -156,7 +156,12 @@ const FeedFilters = () => {
                     setFilters={setFilters}
                 >
                     {LocationsData.map((country: ICountry) => (
-                        <option key={country.code2}>{country.name}</option>
+                        <option
+                            key={country.code2.toLowerCase().trim()}
+                            value={country.code2.toLowerCase().trim()}
+                        >
+                            {country.name}
+                        </option>
                     ))}
                 </SelectFilter>
 
@@ -167,9 +172,16 @@ const FeedFilters = () => {
                 >
                     <option>--Select City--</option>
                     {LocationsData.find(
-                        (item) => item.name.trim() === filters.country.trim()
+                        (item) =>
+                            item.code2.toLowerCase().trim() ===
+                            filters.country.toLowerCase().trim()
                     )?.states.map((state) => (
-                        <option key={state.code}>{state.name}</option>
+                        <option
+                            key={state.code.toLowerCase().trim()}
+                            value={state.code.toLowerCase().trim()}
+                        >
+                            {state.name}
+                        </option>
                     ))}
                 </SelectFilter>
 
@@ -227,7 +239,7 @@ const FeedFilters = () => {
 
                 <CountFilter
                     name="beds"
-                    counts={["Studio", "1", "2", "3", "4", "5", "6", "7+"]}
+                    counts={["studio", "1", "2", "3", "4", "5", "6", "7+"]}
                     filters={filters}
                     setFilters={setFilters}
                     show={dropdowns.beds}
