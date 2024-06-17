@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useCommonStore from "../../stores/common.store";
 import Links from "./Links";
 import clsx from "clsx";
@@ -46,13 +47,13 @@ const SideMenu = () => {
             >
                 <div className="flex flex-col py-2">
                     {buttons.map((btn) => (
-                        <a
+                        <Link
                             key={btn.title}
-                            href={btn.link}
+                            to={btn.link}
                             className="text-2xl text-center font-bold py-4 border-b-4 transition hover:opacity-70"
                         >
                             {btn.title}
-                        </a>
+                        </Link>
                     ))}
                 </div>
 

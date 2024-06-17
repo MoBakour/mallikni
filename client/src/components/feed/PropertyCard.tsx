@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 import IconBath from "../../icons/IconBath";
 import IconBedOutline from "../../icons/IconBedOutline";
 import { IProperty } from "../../types/types";
-import { currencyFormatter } from "../../utils";
+import { currencyFormatter } from "../../utils/utils";
 
 interface IPropertyCard {
     property: IProperty;
@@ -9,7 +10,7 @@ interface IPropertyCard {
 
 const PropertyCard = ({ property }: IPropertyCard) => {
     return (
-        <a href={`/property/${property.id}`} className="w-full">
+        <Link to={`/property/${property.id}`} className="w-full">
             <div className="bg-white w-full shadow-lg p-4 rounded-lg flex gap-4 transition hover:scale-[1.01]">
                 <img
                     src={property.image}
@@ -44,7 +45,7 @@ const PropertyCard = ({ property }: IPropertyCard) => {
                     </p>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 };
 

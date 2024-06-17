@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import IconArrowRight from "../../icons/IconArrowRight";
 import Links from "../common/Links";
 import PropertyCard from "./PropertyCard";
@@ -128,13 +129,13 @@ const FeedResults = () => {
                             Post your property easily and for free and find your
                             tenant
                         </p>
-                        <a
-                            href="/my-properties"
+                        <Link
+                            to="/my-properties"
                             className="w-full flex bg-theme-1 text-white text-lg font-bold rounded-lg py-3 text-center justify-evenly items-center transition hover:bg-theme-hover"
                         >
                             Post Your Property
                             <IconArrowRight className="text-2xl" />
-                        </a>
+                        </Link>
                     </div>
 
                     <div>

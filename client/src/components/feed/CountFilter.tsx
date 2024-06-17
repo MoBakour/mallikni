@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import IconBxChevronDown from "../../icons/IconBxChevronDown";
 import IconTick from "../../icons/IconTick";
-import { capitalize, toggleItem } from "../../utils";
+import { capitalize, toggleItem } from "../../utils/utils";
 
 interface ICountFilter {
     name: string;

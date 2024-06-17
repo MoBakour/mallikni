@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 import { IProperty } from "../../types/types";
-import { currencyFormatter } from "../../utils";
+import { currencyFormatter } from "../../utils/utils";
 
 interface ISideCard {
     property: IProperty;
@@ -7,7 +8,7 @@ interface ISideCard {
 
 const SideCard = ({ property }: ISideCard) => {
     return (
-        <a href={`/property/${property.id}`} className="w-full">
+        <Link to={`/property/${property.id}`} className="w-full">
             <div className="bg-white w-full shadow-lg p-4 rounded-lg flex flex-col gap-2 transition hover:scale-[1.01]">
                 <img
                     src={property.image}
@@ -25,7 +26,7 @@ const SideCard = ({ property }: ISideCard) => {
                     </p>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 };
 

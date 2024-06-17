@@ -6,7 +6,7 @@ import ToggleFilter from "./ToggleFilter";
 import RangeFilter from "./RangeFilter";
 import SelectFilter from "./SelectFilter";
 import CountFilter from "./CountFilter";
-import { isChildOf } from "../../utils";
+import { isChildOf } from "../../utils/utils";
 import OptionsFilter from "./OptionsFilter";
 import IconTick from "../../icons/IconTick";
 import { ICountry, IFilters } from "../../types/types";

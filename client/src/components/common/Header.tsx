@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useAuthStore from "../../stores/auth.store";
 
-const FeedHeader = () => {
+const Header = () => {
     const { auth } = useAuthStore();
 
     return (
@@ -54,4 +54,4 @@ const FeedHeader = () => {
     );
 };
 
-export default FeedHeader;
+export default Header;

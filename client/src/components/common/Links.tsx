@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 
 const bottomLinks = [
@@ -28,9 +29,12 @@ const Links = ({ className = "", dir = "col" }: ILinks) => {
         >
             {bottomLinks.map((link, index) => (
                 <Fragment key={link.title}>
-                    <a href={link.link} className="transition hover:opacity-70">
+                    <Link
+                        to={link.link}
+                        className="transition hover:opacity-70"
+                    >
                         {link.title}
-                    </a>
+                    </Link>
                     {index + 1 !== bottomLinks.length && dir !== "col" && (
                         <span className="block w-[4px] h-[4px] bg-black rounded-full mx-1" />
                     )}

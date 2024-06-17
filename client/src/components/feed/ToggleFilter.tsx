@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
-import { capitalize } from "../../utils";
+import { capitalize } from "../../utils/utils";
 
 interface IToggleFilter {
     text1: string;

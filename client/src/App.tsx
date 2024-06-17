@@ -16,6 +16,7 @@ import Settings from "./pages/Settings";
 import ChangeEmail from "./pages/ChangeEmail";
 import ChangePassword from "./pages/ChangePassword";
 import NotFound from "./pages/NotFound";
+import Layout from "./pages/Layout";
 
 function App() {
     const { authorized } = useAuthStore();
@@ -25,9 +26,6 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Landing />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route
                         path="/login"
                         element={
@@ -48,60 +46,74 @@ function App() {
                             )
                         }
                     />
-                    <Route path="/find" element={<Feed />} />
-                    <Route path="/property/:id" element={<Property />} />
-                    <Route
-                        path="/favorites"
-                        element={
-                            authorized ? (
-                                <Favorites />
-                            ) : (
-                                <Navigate to="/login" />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/my-properties"
-                        element={
-                            authorized ? (
-                                <MyProperties />
-                            ) : (
-                                <Navigate to="/login" />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/new"
-                        element={
-                            authorized ? <New /> : <Navigate to="/login" />
-                        }
-                    />
-                    <Route
-                        path="/settings"
-                        element={
-                            authorized ? <Settings /> : <Navigate to="/login" />
-                        }
-                    />
-                    <Route
-                        path="/change-email"
-                        element={
-                            authorized ? (
-                                <ChangeEmail />
-                            ) : (
-                                <Navigate to="/login" />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/change-password"
-                        element={
-                            authorized ? (
-                                <ChangePassword />
-                            ) : (
-                                <Navigate to="/login" />
-                            )
-                        }
-                    />
+
+                    <Route path="/" element={<Layout />}>
+                        <Route path="/about" element={<About />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route
+                            path="/privacy-policy"
+                            element={<PrivacyPolicy />}
+                        />
+                        <Route path="/find" element={<Feed />} />
+                        <Route path="/property/:id" element={<Property />} />
+                        <Route
+                            path="/favorites"
+                            element={
+                                authorized ? (
+                                    <Favorites />
+                                ) : (
+                                    <Navigate to="/login" />
+                                )
+                            }
+                        />
+                        <Route
+                            path="/my-properties"
+                            element={
+                                authorized ? (
+                                    <MyProperties />
+                                ) : (
+                                    <Navigate to="/login" />
+                                )
+                            }
+                        />
+                        <Route
+                            path="/new"
+                            element={
+                                authorized ? <New /> : <Navigate to="/login" />
+                            }
+                        />
+                        <Route
+                            path="/settings"
+                            element={
+                                authorized ? (
+                                    <Settings />
+                                ) : (
+                                    <Navigate to="/login" />
+                                )
+                            }
+                        />
+                        <Route
+                            path="/change-email"
+                            element={
+                                authorized ? (
+                                    <ChangeEmail />
+                                ) : (
+                                    <Navigate to="/login" />
+                                )
+                            }
+                        />
+                        <Route
+                            path="/change-password"
+                            element={
+                                authorized ? (
+                                    <ChangePassword />
+                                ) : (
+                                    <Navigate to="/login" />
+                                )
+                            }
+                        />
+                    </Route>
+
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
