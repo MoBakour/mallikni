@@ -90,7 +90,7 @@ const FeedFilters = () => {
             }
         }
 
-        navigate({ search: params.toString() }, { replace: true });
+        navigate({ search: params.toString() });
     }, [filters]);
 
     interface DropdownsState {
