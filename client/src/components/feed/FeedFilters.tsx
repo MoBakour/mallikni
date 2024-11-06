@@ -27,7 +27,7 @@ const defaultFilters: IFilters = {
     beds: [],
     baths: [],
     balcony: false,
-    lift: false,
+    elevator: false,
     parking: false,
     security: false,
 };
@@ -62,7 +62,8 @@ const FeedFilters = () => {
                 ? params.get("baths")!.split(",")
                 : defaultFilters.baths,
             balcony: params.get("balcony") === "true" || defaultFilters.balcony,
-            lift: params.get("lift") === "true" || defaultFilters.lift,
+            elevator:
+                params.get("elevator") === "true" || defaultFilters.elevator,
             parking: params.get("parking") === "true" || defaultFilters.parking,
             security:
                 params.get("security") === "true" || defaultFilters.security,
@@ -90,7 +91,7 @@ const FeedFilters = () => {
             }
         }
 
-        navigate({ search: params.toString() });
+        navigate({ search: params.toString() }, { replace: true });
     }, [filters]);
 
     interface DropdownsState {

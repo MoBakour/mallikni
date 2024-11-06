@@ -1,0 +1,91 @@
+"filename", "language", "JSON with Comments", "HTML", "JavaScript", "TypeScript", "Markdown", "TypeScript JSX", "XML", "JSON", "CSS", "comment", "blank", "total"
+"c:\Users\user\Desktop\mallikni\client\.eslintrc.cjs", "JavaScript", 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 1, 19
+"c:\Users\user\Desktop\mallikni\client\PROGRESS.md", "Markdown", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 19, 40
+"c:\Users\user\Desktop\mallikni\client\README.md", "Markdown", 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\index.html", "HTML", 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 14
+"c:\Users\user\Desktop\mallikni\client\models.ts", "TypeScript", 0, 0, 0, 55, 0, 0, 0, 0, 0, 5, 7, 67
+"c:\Users\user\Desktop\mallikni\client\package-lock.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 4490, 0, 0, 1, 4491
+"c:\Users\user\Desktop\mallikni\client\package.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 1, 42
+"c:\Users\user\Desktop\mallikni\client\postcss.config.js", "JavaScript", 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 7
+"c:\Users\user\Desktop\mallikni\client\public\images\blob-1.svg", "XML", 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
+"c:\Users\user\Desktop\mallikni\client\public\images\blob-2.svg", "XML", 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
+"c:\Users\user\Desktop\mallikni\client\src\App.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 117, 0, 0, 0, 0, 8, 125
+"c:\Users\user\Desktop\mallikni\client\src\assets\countries.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 7838, 0, 0, 1, 7839
+"c:\Users\user\Desktop\mallikni\client\src\components\auth\AuthActivation.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 8, 48
+"c:\Users\user\Desktop\mallikni\client\src\components\auth\AuthForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 101, 0, 0, 0, 0, 15, 116
+"c:\Users\user\Desktop\mallikni\client\src\components\auth\AuthInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 73, 0, 0, 0, 0, 8, 81
+"c:\Users\user\Desktop\mallikni\client\src\components\common\FadeInDiv.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 39, 0, 0, 0, 0, 9, 48
+"c:\Users\user\Desktop\mallikni\client\src\components\common\Footer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 3, 22
+"c:\Users\user\Desktop\mallikni\client\src\components\common\Header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 6, 65
+"c:\Users\user\Desktop\mallikni\client\src\components\common\Links.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 43, 0, 0, 0, 0, 5, 48
+"c:\Users\user\Desktop\mallikni\client\src\components\common\PriceCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 4, 16
+"c:\Users\user\Desktop\mallikni\client\src\components\common\SideMenu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 60, 0, 0, 0, 0, 7, 67
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\Checkbox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 5, 39
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\CountFilter.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 71, 0, 0, 0, 0, 5, 76
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\FeedFilters.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 243, 0, 0, 0, 0, 32, 275
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\FeedResults.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 142, 0, 0, 0, 3, 10, 155
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\OptionsFilter.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 8, 64
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\PropertyCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 46, 0, 0, 0, 0, 6, 52
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\RangeFilter.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 48, 0, 0, 0, 4, 3, 55
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\SelectFilter.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 3, 38
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\SideCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 5, 32
+"c:\Users\user\Desktop\mallikni\client\src\components\feed\ToggleFilter.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 62, 0, 0, 0, 0, 7, 69
+"c:\Users\user\Desktop\mallikni\client\src\components\landing\LandingFooter.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 5, 45
+"c:\Users\user\Desktop\mallikni\client\src\components\landing\LandingHeader.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 73, 0, 0, 0, 0, 5, 78
+"c:\Users\user\Desktop\mallikni\client\src\components\landing\LandingSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 52, 0, 0, 0, 0, 5, 57
+"c:\Users\user\Desktop\mallikni\client\src\components\new\CheckboxInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 3, 24
+"c:\Users\user\Desktop\mallikni\client\src\components\new\ContactsInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 268, 0, 0, 0, 0, 20, 288
+"c:\Users\user\Desktop\mallikni\client\src\components\new\ImageInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 116, 0, 0, 0, 0, 19, 135
+"c:\Users\user\Desktop\mallikni\client\src\components\new\Map.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 7, 44
+"c:\Users\user\Desktop\mallikni\client\src\components\new\NumberInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 5, 39
+"c:\Users\user\Desktop\mallikni\client\src\components\new\RadioInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 28, 0, 0, 0, 0, 4, 32
+"c:\Users\user\Desktop\mallikni\client\src\components\new\SelectInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 4, 27
+"c:\Users\user\Desktop\mallikni\client\src\components\property\ContactTab.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 55, 0, 0, 0, 13, 6, 74
+"c:\Users\user\Desktop\mallikni\client\src\components\property\DescriptionTab.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 4, 16
+"c:\Users\user\Desktop\mallikni\client\src\components\property\DetailsTab.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 4, 63
+"c:\Users\user\Desktop\mallikni\client\src\components\property\ImagesPopup.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 58, 0, 0, 0, 4, 7, 69
+"c:\Users\user\Desktop\mallikni\client\src\components\property\LocationTab.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 5, 27
+"c:\Users\user\Desktop\mallikni\client\src\components\property\PropertyHeader.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 69, 0, 0, 0, 1, 9, 79
+"c:\Users\user\Desktop\mallikni\client\src\hooks\useAxios.ts", "TypeScript", 0, 0, 0, 27, 0, 0, 0, 0, 0, 0, 8, 35
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconArrowRight.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 1, 3, 22
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconBath.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 1, 3, 22
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconBedOutline.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 30, 0, 0, 0, 1, 3, 34
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconBurger.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 23, 0, 0, 0, 1, 3, 27
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconBxChevronDown.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 1, 3, 19
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconChevronLeft.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 1, 3, 22
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconChevronRight.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 1, 3, 22
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconClose.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 1, 3, 22
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconDelete.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 1, 3, 19
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconEmptyHeart.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 1, 3, 19
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconEye.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 1, 3, 19
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconEyeInvisible.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 1, 3, 20
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconFilledHeart.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 1, 3, 19
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconLoader2.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 19, 0, 0, 0, 1, 3, 23
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconLocation.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 1, 3, 19
+"c:\Users\user\Desktop\mallikni\client\src\icons\IconTick.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 19, 0, 0, 0, 1, 3, 23
+"c:\Users\user\Desktop\mallikni\client\src\index.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 0, 23, 2, 6, 31
+"c:\Users\user\Desktop\mallikni\client\src\main.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 2, 11
+"c:\Users\user\Desktop\mallikni\client\src\pages\About.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\src\pages\Auth.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 31, 0, 0, 0, 1, 6, 38
+"c:\Users\user\Desktop\mallikni\client\src\pages\ChangeEmail.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\src\pages\ChangePassword.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\src\pages\Contact.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\src\pages\Favorites.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\src\pages\Feed.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 3, 5, 24
+"c:\Users\user\Desktop\mallikni\client\src\pages\Landing.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 95, 0, 0, 0, 4, 12, 111
+"c:\Users\user\Desktop\mallikni\client\src\pages\Layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 2, 6, 26
+"c:\Users\user\Desktop\mallikni\client\src\pages\MyProperties.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\src\pages\New.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 249, 0, 0, 0, 6, 24, 279
+"c:\Users\user\Desktop\mallikni\client\src\pages\NotFound.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 5, 40
+"c:\Users\user\Desktop\mallikni\client\src\pages\PrivacyPolicy.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\src\pages\Property.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 170, 0, 0, 0, 1, 16, 187
+"c:\Users\user\Desktop\mallikni\client\src\pages\Settings.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Users\user\Desktop\mallikni\client\src\stores\auth.store.ts", "TypeScript", 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 5, 26
+"c:\Users\user\Desktop\mallikni\client\src\stores\common.store.ts", "TypeScript", 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 4, 16
+"c:\Users\user\Desktop\mallikni\client\src\types\types.d.ts", "TypeScript", 0, 0, 0, 87, 0, 0, 0, 0, 0, 0, 9, 96
+"c:\Users\user\Desktop\mallikni\client\src\utils\utils.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 12, 52
+"c:\Users\user\Desktop\mallikni\client\tailwind.config.js", "JavaScript", 0, 0, 26, 0, 0, 0, 0, 0, 0, 6, 5, 37
+"c:\Users\user\Desktop\mallikni\client\tsconfig.json", "JSON with Comments", 21, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 26
+"c:\Users\user\Desktop\mallikni\client\tsconfig.node.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 1, 12
+"c:\Users\user\Desktop\mallikni\client\vite.config.ts", "TypeScript", 0, 0, 0, 5, 0, 0, 0, 0, 0, 1, 2, 8
+"Total", "-", 21, 13, 50, 207, 25, 3276, 8, 12380, 23, 74, 500, 16577

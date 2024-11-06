@@ -38,7 +38,7 @@ const OptionsFilter = ({
                     />
 
                     <Checkbox
-                        name="lift"
+                        name="elevator"
                         filters={filters}
                         setFilters={setFilters}
                     />

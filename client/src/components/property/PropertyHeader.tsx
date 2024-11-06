@@ -5,9 +5,10 @@ import PriceCard from "../common/PriceCard";
 
 interface IPropertyHeader {
     property: IProperty;
+    setCurrentImage: (image: number) => void;
 }
 
-const PropertyHeader = ({ property }: IPropertyHeader) => {
+const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
     return (
         <header className="flex justify-between mt-20">
             <div className="flex gap-[20px] flex-[4]">
@@ -15,15 +16,17 @@ const PropertyHeader = ({ property }: IPropertyHeader) => {
                     src={property.images[0]}
                     alt="Property Image"
                     className="w-[300px] h-[200px] rounded-lg transition hover:scale-[1.03]"
+                    onClick={() => setCurrentImage(0)}
                 />
 
                 <div className="flex flex-col justify-between">
-                    {property.images.slice(1, 3).map((img, index) => (
+                    {property.images.slice(1).map((img, index) => (
                         <img
                             key={index}
                             src={img}
                             alt="Property Image"
                             className="w-[120px] h-[90px] rounded transition hover:scale-[1.05]"
+                            onClick={() => setCurrentImage(index + 1)}
                         />
                     ))}
                 </div>

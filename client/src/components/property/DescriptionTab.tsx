@@ -5,7 +5,11 @@ interface IDescriptionTab {
 }
 
 const DescriptionTab = ({ property }: IDescriptionTab) => {
-    return <div>DescriptionTab</div>;
+    return (
+        <section style={{ whiteSpace: `pre-wrap` }}>
+            {property.description}
+        </section>
+    );
 };
 
 export default DescriptionTab;

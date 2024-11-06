@@ -26,7 +26,7 @@ interface PropertyDetails {
 
 interface ApartmentPropertyDetails {
     balcony: boolean;
-    lift: boolean;
+    elevator: boolean;
     parking: boolean;
     floor: number;
     floors: number;

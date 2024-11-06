@@ -9,13 +9,13 @@ const Header = () => {
 
     return (
         <header className="p-3 flex justify-between">
-            <Link to="/">
+            <Link to="/" className="flex-[1]">
                 <h1 className="tracking-widest font-bold text-3xl">
                     <span className="text-theme-1">M</span>allikni
                 </h1>
             </Link>
 
-            <nav className="flex justify-center items-center">
+            <nav className="flex justify-center items-center flex-[2]">
                 <ul className="flex gap-4 text-lg sm:text-sm sm:gap-3">
                     {[
                         ["About", "/about"],
@@ -32,7 +32,7 @@ const Header = () => {
                 </ul>
             </nav>
 
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex justify-end items-center gap-2 flex-[1]">
                 {auth ? (
                     <>
                         <img

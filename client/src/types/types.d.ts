@@ -14,7 +14,7 @@ export interface IProperty {
     owner: string;
     source: string;
     contacts: {
-        [key: string]: string | string[];
+        [key: string]: string[] | { name: string; url: string }[];
     };
     country: string;
     city: string;
@@ -24,15 +24,15 @@ export interface IProperty {
     area: number;
     beds: number;
     baths: number;
-    area: number;
-    price: number;
     age: number;
     images: string[];
     furnished: boolean;
     balcony: boolean;
-    lift: boolean;
+    elevator: boolean;
     parking: boolean;
     security: boolean;
+    latitude: number;
+    longitude: number;
 }
 
 export interface IState {
@@ -67,7 +67,29 @@ export interface IFilters {
     beds: string[];
     baths: string[];
     balcony: boolean;
-    lift: boolean;
+    elevator: boolean;
     parking: boolean;
     security: boolean;
 }
+
+export type TImage = {
+    id: string;
+    url: string;
+};
+
+export type TContact = {
+    id: string;
+    value: string;
+};
+
+export type TLink = {
+    id: string;
+    label: string;
+    url: string;
+};
+
+export type TContacts = {
+    phones: TContact[];
+    emails: TContact[];
+    links: TLink[];
+};

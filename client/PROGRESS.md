@@ -17,3 +17,23 @@
 -   Finished login/signup pages and components
 -   Prepared countries & states json data for filtering
 -   Finished feed page header
+
+### March 11, 2024
+
+-   Completed feed page filters
+
+### March 12, 2024
+
+-   Completed feed page
+
+### November 4, 2024
+
+-   Completed property display page
+
+### November 5, 2024
+
+-   Finished half of new property page (input fields)
+
+### November 6, 2024
+
+-   Completed new property page

@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 const buttons = [
     {
-        title: "Post Property",
+        title: "My Properties",
         link: "/my-properties",
     },
     {
