@@ -17,6 +17,7 @@ import ChangeEmail from "./pages/ChangeEmail";
 import ChangePassword from "./pages/ChangePassword";
 import NotFound from "./pages/NotFound";
 import Layout from "./pages/Layout";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 function App() {
     const authorized = useAuthStore((state) => state.authorized);
@@ -24,6 +25,7 @@ function App() {
     return (
         <div className="bg-slate-100 min-h-screen">
             <BrowserRouter>
+                <ScrollToTop />
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route

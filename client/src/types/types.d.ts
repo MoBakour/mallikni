@@ -33,6 +33,7 @@ export interface IProperty {
     security: boolean;
     latitude: number;
     longitude: number;
+    createdAt: Date;
 }
 
 export interface IState {

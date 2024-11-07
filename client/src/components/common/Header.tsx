@@ -1,11 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuthStore from "../../stores/auth.store";
 import IconBurger from "../../icons/IconBurger";
 import useCommonStore from "../../stores/common.store";
 
 const Header = () => {
     const auth = useAuthStore((state) => state.auth);
+    const location = useLocation();
     const setShowSideMenu = useCommonStore((state) => state.setShowSideMenu);
+
+    const links = [
+        ["About", "/about"],
+        ["Post Property", "/new"],
+        ["Properties", "/find"],
+        ["Contact", "/contact"],
+    ];
 
     return (
         <header className="p-3 flex justify-between">
@@ -17,18 +25,16 @@ const Header = () => {
 
             <nav className="flex justify-center items-center flex-[2]">
                 <ul className="flex gap-4 text-lg sm:text-sm sm:gap-3">
-                    {[
-                        ["About", "/about"],
-                        ["Post Property", "/new"],
-                        ["Contact", "/contact"],
-                    ].map(([title, url], index) => (
-                        <li
-                            key={index}
-                            className="transition hover:opacity-70 whitespace-nowrap"
-                        >
-                            <Link to={url}>{title}</Link>
-                        </li>
-                    ))}
+                    {links
+                        .filter((link) => link[1] !== location.pathname)
+                        .map(([title, url], index) => (
+                            <li
+                                key={index}
+                                className="transition hover:opacity-70 whitespace-nowrap"
+                            >
+                                <NavLink to={url}>{title}</NavLink>
+                            </li>
+                        ))}
                 </ul>
             </nav>
 

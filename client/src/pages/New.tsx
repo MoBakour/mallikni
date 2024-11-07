@@ -59,7 +59,7 @@ const New = () => {
                         <p className="pb-1 font-medium text-xl">Description</p>
                         <textarea
                             rows={4}
-                            placeholder="Property title"
+                            placeholder="Property description"
                             id="title"
                             className="py-1 px-3 rounded-md w-full"
                         />
@@ -222,9 +222,10 @@ const New = () => {
                                 <IconLocation className="text-5xl text-gray-600" />
                             ) : (
                                 <Map
+                                    key={position.lat + position.lng}
                                     position={position}
                                     setPosition={setPosition}
-                                    zoomControl={false}
+                                    picker={false}
                                 />
                             )}
                         </button>

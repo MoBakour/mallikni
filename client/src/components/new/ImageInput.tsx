@@ -2,6 +2,7 @@ import { ReactSortable } from "react-sortablejs";
 import { TImage } from "../../types/types";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { set } from "zod";
 
 interface IImageInput {
     images: TImage[];
@@ -60,12 +61,24 @@ const ImageInput = ({ images, setImages }: IImageInput) => {
         const closeContextMenu = () => {
             setDeleteButton((prev) => ({ ...prev, id: null }));
         };
+
+        const handleContextMenuEnter = (e: KeyboardEvent) => {
+            if (!deleteButton.id) return;
+
+            if (e.key === "Enter") {
+                removeImage(deleteButton.id!);
+                setDeleteButton((prev) => ({ ...prev, id: null }));
+            }
+        };
+
         window.addEventListener("click", closeContextMenu);
+        window.addEventListener("keydown", handleContextMenuEnter);
 
         return () => {
             window.removeEventListener("click", closeContextMenu);
+            window.removeEventListener("keydown", handleContextMenuEnter);
         };
-    }, [setDeleteButton]);
+    }, [setDeleteButton, removeImage, deleteButton]);
 
     return (
         <>
@@ -87,7 +100,7 @@ const ImageInput = ({ images, setImages }: IImageInput) => {
 
             {deleteButton.id && (
                 <button
-                    className="fixed bg-error-1 text-white px-2 py-1 rounded-lg text-sm"
+                    className="fixed bg-error-1 text-white px-2 py-1 rounded-lg text-sm transition hover:opacity-80"
                     style={{
                         top: deleteButton.top,
                         left: deleteButton.left,

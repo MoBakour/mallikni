@@ -48,7 +48,10 @@ const DetailsTab = ({ property }: IDetailsTab) => {
                     value: property.balcony ? "Yes" : "No",
                 },
                 { label: "Elevator", value: property.elevator ? "Yes" : "No" },
-                { label: "", value: "" }, // keep it for layout
+                {
+                    label: "Posted at",
+                    value: new Date(property.createdAt).toLocaleDateString(),
+                },
             ].map((item, index) => (
                 <div key={index} className="w-[300px] flex justify-between">
                     <p className="font-bold">{item.label}</p>{" "}

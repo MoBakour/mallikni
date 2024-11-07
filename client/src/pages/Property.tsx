@@ -96,6 +96,7 @@ Don't miss this opportunity! Contact us today to schedule a viewing of this fant
         security: false,
         latitude: 12.3456789,
         longitude: 98.7654321,
+        createdAt: new Date(),
     });
     const [currentTab, setCurrentTab] = useState<string | null>(
         new URLSearchParams(location.search).get("tab")
