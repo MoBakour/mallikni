@@ -243,7 +243,7 @@ const New = () => {
 
                     {/* map popup */}
                     {map && (
-                        <div className="fixed inset-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-70">
+                        <div className="fixed z-10 inset-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-70">
                             {/* close popup */}
                             <button
                                 type="button"

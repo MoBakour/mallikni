@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { IAuth } from "../types/types";
 
 interface IAuthState {
-    auth: IAuth;
+    auth: IAuth | null;
     authorized: boolean;
-    setAuth: (newAuth: IAuth) => void;
+    setAuth: (newAuth: IAuth | null) => void;
 }
 
 const useAuthStore = create<IAuthState>((set) => {
@@ -13,7 +13,8 @@ const useAuthStore = create<IAuthState>((set) => {
     return {
         auth: userAuth,
         authorized: !!userAuth?.user.activation.activated,
-        setAuth: (newAuth: IAuth) => {
+        setAuth: (newAuth: IAuth | null) => {
+            localStorage.setItem("auth", JSON.stringify(newAuth));
             set({
                 auth: newAuth,
                 authorized: !!newAuth?.user.activation.activated,

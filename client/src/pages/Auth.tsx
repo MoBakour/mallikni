@@ -27,8 +27,8 @@ const Auth = ({ page }: IAuthProps) => {
             </Link>
 
             <div className="z-10">
-                {/* <AuthForm page={page} /> */}
-                <AuthActivation />
+                <AuthForm page={page} />
+                {/* <AuthActivation /> */}
             </div>
         </main>
     );

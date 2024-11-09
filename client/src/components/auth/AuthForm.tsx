@@ -1,13 +1,19 @@
 import { useState } from "react";
 import AuthInput from "./AuthInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IconLoader2 from "../../icons/IconLoader2";
+import useAxios from "../../hooks/useAxios";
+import useAuthStore from "../../stores/auth.store";
 
 interface IAuthForm {
     page: "login" | "signup";
 }
 
 const AuthForm = ({ page }: IAuthForm) => {
+    const axios = useAxios();
+    const { setAuth } = useAuthStore((state) => ({ setAuth: state.setAuth }));
+    const navigate = useNavigate();
+
     const [pwdMode, setPwdMode] = useState("password");
 
     const [credential, setCredential] = useState("");
@@ -18,6 +24,37 @@ const AuthForm = ({ page }: IAuthForm) => {
 
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    const handleSubmit = async () => {
+        try {
+            setIsLoading(true);
+            setError("");
+
+            const body = {
+                credential: page === "login" ? credential : undefined,
+                email: page === "signup" ? email : undefined,
+                username: page === "signup" ? username : undefined,
+                password,
+                repassword: page === "signup" ? repassword : undefined,
+            };
+
+            // make request
+            const response = await axios.post(`/auth/${page}`, body);
+
+            // handle response
+            if (response.status === 200) {
+                setAuth({
+                    user: response.data.user,
+                    token: response.data.token,
+                });
+                window.location.href = "/find";
+            }
+        } catch (err: any) {
+            setError(err.response?.data?.error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <form className="p-4 bg-white rounded shadow-lg flex flex-col justify-center items-center gap-6">
@@ -72,13 +109,15 @@ const AuthForm = ({ page }: IAuthForm) => {
                 />
             )}
 
-            <p className="text-error-1 bg-error-2 py-2 w-full text-center rounded text-sm empty:p-0">
+            <p className="text-error-1 bg-error-2 py-2 px-2 w-[calc(100%-16px)] text-center rounded text-sm empty:p-0">
                 {error}
             </p>
 
             <button
                 disabled={isLoading}
                 className="flex justify-center items-center uppercase font-bold rounded w-full h-[40px] disabled:opacity-50 disabled:pointer-events-none gradient-btn"
+                type="button"
+                onClick={handleSubmit}
             >
                 {isLoading ? (
                     <IconLoader2 className="text-xl animate-spin" />

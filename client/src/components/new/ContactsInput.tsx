@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import IconDelete from "../../icons/IconDelete";
+import IconDeleteFilled from "../../icons/IconDeleteFilled";
 import { TContacts } from "../../types/types";
 import { z } from "zod";
 
@@ -187,7 +187,7 @@ const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
                             className="flex gap-2 justify-center items-center w-fit"
                         >
                             <p>{phone.value}</p>
-                            <IconDelete
+                            <IconDeleteFilled
                                 className="transition text-error-1 hover:scale-110 cursor-pointer"
                                 onClick={() => removeContact("phone", phone.id)}
                             />
@@ -223,7 +223,7 @@ const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
                             className="flex gap-2 justify-center items-center w-fit"
                         >
                             <p>{email.value}</p>
-                            <IconDelete
+                            <IconDeleteFilled
                                 className="transition text-error-1 hover:scale-110 cursor-pointer"
                                 onClick={() => removeContact("email", email.id)}
                             />
@@ -272,7 +272,7 @@ const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
                             >
                                 {link.label}
                             </a>
-                            <IconDelete
+                            <IconDeleteFilled
                                 className="transition text-error-1 hover:scale-110 cursor-pointer"
                                 onClick={() => removeContact("link", link.id)}
                             />

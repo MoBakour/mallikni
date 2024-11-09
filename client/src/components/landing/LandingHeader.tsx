@@ -1,11 +1,27 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import useAuthStore from "../../stores/auth.store";
+import { useEffect } from "react";
 
 interface ILandingHeaderProps {
     scrolled: boolean;
 }
 
 const LandingHeader = ({ scrolled }: ILandingHeaderProps) => {
+    const authorized = useAuthStore((state) => state.authorized);
+
+    const links = [
+        ["About", "/about"],
+        ["Contact", "/contact"],
+        ["Properties", "/find"],
+    ];
+
+    useEffect(() => {
+        if (!authorized) {
+            links.push(["Login", "/login"], ["Sign up", "/signup"]);
+        }
+    }, []);
+
     return (
         <>
             <header
@@ -53,13 +69,7 @@ const LandingHeader = ({ scrolled }: ILandingHeaderProps) => {
                     })}
                 >
                     <ul className="flex gap-4 text-lg sm:text-sm sm:gap-3">
-                        {[
-                            ["About", "/about"],
-                            ["Contact", "/contact"],
-                            ["Properties", "/find"],
-                            ["Login", "/login"],
-                            ["Sign up", "/signup"],
-                        ].map(([title, url], index) => (
+                        {links.map(([title, url], index) => (
                             <li
                                 key={index}
                                 className="transition hover:opacity-70 whitespace-nowrap"

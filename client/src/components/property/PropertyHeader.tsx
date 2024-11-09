@@ -2,6 +2,8 @@ import { IProperty } from "../../types/types";
 import LocationsData from "../../assets/countries.json";
 import IconEmptyHeart from "../../icons/IconEmptyHeart";
 import PriceCard from "../common/PriceCard";
+import IconDelete from "../../icons/IconDelete";
+import IconEdit from "../../icons/IconEdit";
 
 interface IPropertyHeader {
     property: IProperty;
@@ -62,13 +64,28 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                 <PriceCard price={property.price} />
             </div>
 
-            <div className="flex-1 flex flex-col justify-evenly items-center">
+            <div className="flex-1 flex flex-col gap-2 justify-center items-center">
                 {/* add to favorites */}
                 <button
-                    className="text-4xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
+                    className="text-3xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
                     title="Add to favorites"
                 >
                     {<IconEmptyHeart />}
+                </button>
+
+                {/* edit */}
+                <button
+                    className="text-2xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
+                    title="Edit Property"
+                >
+                    {<IconEdit />}
+                </button>
+
+                <button
+                    className="text-3xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
+                    title="Delete Property"
+                >
+                    {<IconDelete />}
                 </button>
             </div>
         </header>

@@ -17,7 +17,9 @@ const FeedResults = () => {
             baths: 1,
             area: 600,
             price: 50000,
-            image: "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            images: [
+                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            ],
         },
         {
             id: "2",
@@ -30,7 +32,9 @@ const FeedResults = () => {
             baths: 1,
             area: 600,
             price: 50000,
-            image: "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            images: [
+                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            ],
         },
         {
             id: "3",
@@ -43,7 +47,9 @@ const FeedResults = () => {
             baths: 1,
             area: 600,
             price: 50000,
-            image: "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            images: [
+                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            ],
         },
         {
             id: "4",
@@ -56,7 +62,9 @@ const FeedResults = () => {
             baths: 1,
             area: 600,
             price: 50000,
-            image: "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            images: [
+                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            ],
         },
         {
             id: "5",
@@ -69,7 +77,9 @@ const FeedResults = () => {
             baths: 1,
             area: 600,
             price: 50000,
-            image: "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            images: [
+                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            ],
         },
         {
             id: "6",
@@ -82,7 +92,9 @@ const FeedResults = () => {
             baths: 1,
             area: 600,
             price: 50000,
-            image: "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            images: [
+                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            ],
         },
         {
             id: "7",
@@ -95,7 +107,9 @@ const FeedResults = () => {
             baths: 1,
             area: 600,
             price: 50000,
-            image: "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            images: [
+                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
+            ],
         },
     ];
 
@@ -116,7 +130,11 @@ const FeedResults = () => {
 
                 <div className="flex flex-col gap-8">
                     {data.slice(0, 2).map((property) => (
-                        <SideCard key={property.id} property={property} />
+                        <PropertyCard
+                            key={property.id}
+                            property={property}
+                            details={false}
+                        />
                     ))}
                 </div>
 

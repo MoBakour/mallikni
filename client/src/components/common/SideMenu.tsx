@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import useCommonStore from "../../stores/common.store";
 import Links from "./Links";
 import clsx from "clsx";
+import IconLogout from "../../icons/IconLogout";
+import useAuthStore from "../../stores/auth.store";
 
 const buttons = [
     {
@@ -19,13 +21,15 @@ const buttons = [
 ];
 
 const SideMenu = () => {
+    const setAuth = useAuthStore((state) => state.setAuth);
+
     const { showSideMenu, setShowSideMenu } = useCommonStore((state) => ({
         showSideMenu: state.showSideMenu,
         setShowSideMenu: state.setShowSideMenu,
     }));
 
     const handleHide = (e: React.MouseEvent) => {
-        if ((e.target as HTMLElement).id !== "sideMenu") {
+        if (e.target === e.currentTarget) {
             setShowSideMenu(false);
         }
     };
@@ -56,6 +60,14 @@ const SideMenu = () => {
                         </Link>
                     ))}
                 </div>
+                <button
+                    title="Logout"
+                    className="flex justify-center items-center gap-2 font-bold text-xl bg-error-1/80 text-white py-2 px-4 rounded-lg mx-auto mt-5 transition hover:bg-error-1/100"
+                    onClick={() => setAuth(null)}
+                >
+                    <p>Logout</p>
+                    <IconLogout />
+                </button>
 
                 <Links className="absolute bottom-0 pb-4" />
             </div>
