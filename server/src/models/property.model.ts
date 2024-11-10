@@ -72,6 +72,13 @@ const PropertySchema = new Schema(
             type: Number,
             required: true,
         },
+        frequency: {
+            type: String,
+        },
+        currency: {
+            type: String,
+            required: true,
+        },
         beds: {
             type: Number,
             required: true,

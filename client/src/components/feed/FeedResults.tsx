@@ -2,35 +2,41 @@ import { Link } from "react-router-dom";
 import IconArrowRight from "../../icons/IconArrowRight";
 import Links from "../common/Links";
 import PropertyCard from "./PropertyCard";
-import { useEffect, useState } from "react";
-import useAxios from "../../hooks/useAxios";
 import { IProperty } from "../../types/types";
+import IconLoader2 from "../../icons/IconLoader2";
 
-const FeedResults = () => {
-    const axios = useAxios();
-    const [data, setData] = useState<IProperty[]>([]);
+interface IFeedResults {
+    data: IProperty[];
+    loading: boolean;
+}
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("/properties/sample");
-                setData(response.data.properties);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData();
-    }, []);
-
+const FeedResults = ({ data, loading }: IFeedResults) => {
     return (
         <div className="pb-24 flex justify-between">
             <div className="w-2/3">
-                <p className="text-xl font-bold mb-3">{data.length} Results</p>
+                {data.length > 0 && (
+                    <p className="text-xl font-bold mb-3">
+                        {data.length} Results
+                    </p>
+                )}
 
                 <div className="flex flex-col gap-8">
-                    {data.map((property: IProperty) => (
-                        <PropertyCard key={property._id} property={property} />
-                    ))}
+                    {loading ? (
+                        <div className="bg-slate-500/20 rounded-xl h-[300px] flex justify-center items-center">
+                            <IconLoader2 className="animate-spin text-5xl m-auto opacity-40" />
+                        </div>
+                    ) : data.length > 0 ? (
+                        data.map((property: IProperty) => (
+                            <PropertyCard
+                                key={property._id}
+                                property={property}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-lg text-gray-600">
+                            No results found
+                        </p>
+                    )}
                 </div>
             </div>
 

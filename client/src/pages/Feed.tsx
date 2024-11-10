@@ -1,7 +1,12 @@
+import { useState } from "react";
 import FeedFilters from "../components/feed/FeedFilters";
 import FeedResults from "../components/feed/FeedResults";
+import { IProperty } from "../types/types";
 
 const Feed = () => {
+    const [data, setData] = useState<IProperty[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
     return (
         <main className="relative">
             {/* content */}
@@ -11,10 +16,10 @@ const Feed = () => {
                 </h2>
 
                 {/* filters */}
-                <FeedFilters />
+                <FeedFilters setData={setData} setLoading={setLoading} />
 
                 {/* results */}
-                <FeedResults />
+                <FeedResults data={data} loading={loading} />
             </div>
         </main>
     );

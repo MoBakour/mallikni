@@ -53,6 +53,13 @@ export const propertySchema = zod.object({
         .min(1, "City is required"),
     price: zod.number({ message: "Price must be a number" }),
     area: zod.number({ message: "Area must be a number" }),
+    frequency: zod.enum(["week", "month", "year", ""], {
+        message: "Invalid frequency",
+    }),
+    currency: zod
+        .string({ message: "Currency must be a string" })
+        .min(1, "Currency is required")
+        .max(20, "Currency cannot exceed 20 characters"),
     age: zod.number({ message: "Age must be a number" }),
     beds: zod.number({ message: "Beds must be a number" }),
     baths: zod.number({ message: "Baths must be a number" }),

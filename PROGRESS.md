@@ -61,3 +61,4 @@
 -   Made my properties page dynamic
 -   Implemented favorites feature and made favorites page dynamic
 -   Fixed bugs
+-   Made filters dynamic

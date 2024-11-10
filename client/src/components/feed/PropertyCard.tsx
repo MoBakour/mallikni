@@ -22,9 +22,13 @@ const PropertyCard = ({ property, details = true }: IPropertyCard) => {
                 )}
             >
                 <img
-                    src={`${import.meta.env.VITE_API_URL}/properties/image/${
-                        property.images[0]
-                    }`}
+                    src={
+                        property.images.length > 0
+                            ? `${
+                                  import.meta.env.VITE_API_URL
+                              }/properties/image/${property.images[0]}`
+                            : "/images/placeholder.jpeg"
+                    }
                     alt="Property Image"
                     className={clsx(
                         details
@@ -80,7 +84,7 @@ const PropertyCard = ({ property, details = true }: IPropertyCard) => {
                         )}
                     </div>
 
-                    <PriceCard price={property.price} />
+                    <PriceCard property={property} />
                 </div>
             </div>
         </Link>

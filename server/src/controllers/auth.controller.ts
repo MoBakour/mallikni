@@ -82,22 +82,12 @@ router.post("/login", async (req: CustomRequest, res) => {
         }
 
         // find user
-        const user = await User.findOne(
-            {
-                $or: [
-                    { email: req.body.credential },
-                    { username: req.body.credential },
-                ],
-            },
-            {
-                username: 1,
-                email: 1,
-                password: 1,
-                favorites: 1,
-                createdAt: 1,
-                updatedAt: 1,
-            }
-        );
+        const user = await User.findOne({
+            $or: [
+                { email: req.body.credential },
+                { username: req.body.credential },
+            ],
+        });
 
         if (!user) {
             res.status(404).json({

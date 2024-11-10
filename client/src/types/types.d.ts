@@ -25,6 +25,8 @@ export interface IProperty {
     category: string;
     price: string;
     area: string;
+    frequency: string;
+    currency: string;
     beds: number;
     baths: number;
     age: number;
@@ -66,13 +68,14 @@ export interface IFilters {
     maxArea: string;
     minAge: string;
     maxAge: string;
-    furnished: boolean;
     beds: string[];
     baths: string[];
+    furnished: boolean;
     balcony: boolean;
     elevator: boolean;
     parking: boolean;
     security: boolean;
+    frequency: string;
 }
 
 export type TImage = {

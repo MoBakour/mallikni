@@ -9,12 +9,24 @@ import CountFilter from "./CountFilter";
 import { isChildOf } from "../../utils/utils";
 import OptionsFilter from "./OptionsFilter";
 import IconTick from "../../icons/IconTick";
-import { ICountry, IFilters } from "../../types/types";
+import { ICountry, IFilters, IProperty } from "../../types/types";
+import useAxios from "../../hooks/useAxios";
+
+interface IFeedFilters {
+    setData: React.Dispatch<React.SetStateAction<IProperty[]>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface DropdownsState {
+    beds: boolean;
+    baths: boolean;
+    options: boolean;
+}
 
 const defaultFilters: IFilters = {
     mode: "rent",
     category: "residential",
-    country: "ae",
+    country: "",
     city: "",
     minPrice: "",
     maxPrice: "",
@@ -22,55 +34,41 @@ const defaultFilters: IFilters = {
     maxArea: "",
     minAge: "",
     maxAge: "",
-    furnished: false,
     beds: [],
     baths: [],
+    furnished: false,
     balcony: false,
     elevator: false,
     parking: false,
     security: false,
+    frequency: "",
 };
 
-const FeedFilters = () => {
+const FeedFilters = ({ setData, setLoading }: IFeedFilters) => {
     const location = useLocation();
     const navigate = useNavigate();
+    const axios = useAxios();
 
     const [filters, setFilters] = useState<IFilters>(defaultFilters);
 
-    useEffect(() => {
-        const params = new URLSearchParams(location.search);
+    const initialDropdownsState: DropdownsState = {
+        beds: false,
+        baths: false,
+        options: false,
+    };
 
-        const newFilters: IFilters = {
-            mode: params.get("mode") || defaultFilters.mode,
-            category: params.get("category") || defaultFilters.category,
-            country: params.get("country") || defaultFilters.country,
-            city: params.get("city") || defaultFilters.city,
-            minPrice: params.get("minPrice") || defaultFilters.minPrice,
-            maxPrice: params.get("maxPrice") || defaultFilters.maxPrice,
-            minArea: params.get("minArea") || defaultFilters.minArea,
-            maxArea: params.get("maxArea") || defaultFilters.maxArea,
-            minAge: params.get("minAge") || defaultFilters.minAge,
-            maxAge: params.get("maxAge") || defaultFilters.maxAge,
-            furnished:
-                params.get("furnished") === "true" || defaultFilters.furnished,
-            beds: params.get("beds")
-                ? params.get("beds")!.split(",")
-                : defaultFilters.beds,
-            baths: params.get("baths")
-                ? params.get("baths")!.split(",")
-                : defaultFilters.baths,
-            balcony: params.get("balcony") === "true" || defaultFilters.balcony,
-            elevator:
-                params.get("elevator") === "true" || defaultFilters.elevator,
-            parking: params.get("parking") === "true" || defaultFilters.parking,
-            security:
-                params.get("security") === "true" || defaultFilters.security,
-        };
+    const [dropdowns, setDropdowns] = useState<DropdownsState>(
+        initialDropdownsState
+    );
 
-        setFilters(newFilters);
-    }, []);
+    const setShow = (name: string) => {
+        setDropdowns((prev) => ({
+            ...initialDropdownsState,
+            [name]: !prev[name as keyof DropdownsState],
+        }));
+    };
 
-    useEffect(() => {
+    const handleSearch = () => {
         const params = new URLSearchParams();
 
         for (const key in filters) {
@@ -90,30 +88,58 @@ const FeedFilters = () => {
         }
 
         navigate({ search: params.toString() }, { replace: true });
-    }, [filters]);
-
-    interface DropdownsState {
-        beds: boolean;
-        baths: boolean;
-        options: boolean;
-    }
-
-    const initialDropdownsState: DropdownsState = {
-        beds: false,
-        baths: false,
-        options: false,
     };
 
-    const [dropdowns, setDropdowns] = useState<DropdownsState>(
-        initialDropdownsState
-    );
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
 
-    const setShow = (name: string) => {
-        setDropdowns((prev) => ({
-            ...initialDropdownsState,
-            [name]: !prev[name as keyof DropdownsState],
-        }));
-    };
+        const newFilters: IFilters = {
+            mode: params.get("mode") || defaultFilters.mode,
+            category: params.get("category") || defaultFilters.category,
+            country: params.get("country") || defaultFilters.country,
+            city: params.get("city") || defaultFilters.city,
+            minPrice: params.get("minPrice") || defaultFilters.minPrice,
+            maxPrice: params.get("maxPrice") || defaultFilters.maxPrice,
+            minArea: params.get("minArea") || defaultFilters.minArea,
+            maxArea: params.get("maxArea") || defaultFilters.maxArea,
+            minAge: params.get("minAge") || defaultFilters.minAge,
+            maxAge: params.get("maxAge") || defaultFilters.maxAge,
+
+            beds: params.get("beds")
+                ? params.get("beds")!.split(",")
+                : defaultFilters.beds,
+            baths: params.get("baths")
+                ? params.get("baths")!.split(",")
+                : defaultFilters.baths,
+            furnished:
+                params.get("furnished") === "true" || defaultFilters.furnished,
+            balcony: params.get("balcony") === "true" || defaultFilters.balcony,
+            elevator:
+                params.get("elevator") === "true" || defaultFilters.elevator,
+            parking: params.get("parking") === "true" || defaultFilters.parking,
+            security:
+                params.get("security") === "true" || defaultFilters.security,
+            frequency: params.get("frequency") || defaultFilters.frequency,
+        };
+
+        setFilters(newFilters);
+
+        (async () => {
+            try {
+                const response = await axios.get(
+                    `/properties/search/${location.search}`
+                );
+
+                if (response.status === 200) {
+                    setData(response.data.properties);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [location.search]);
 
     useEffect(() => {
         window.addEventListener("click", (e: MouseEvent) => {
@@ -132,16 +158,16 @@ const FeedFilters = () => {
         <div className="w-full shadow-lg rounded-lg bg-white p-4 flex flex-col gap-6 mb-14">
             <div className="flex flex-wrap gap-y-4 gap-x-6">
                 <ToggleFilter
-                    text1="rent"
-                    text2="buy"
+                    value1={{ text: "rent", value: "rent" }}
+                    value2={{ text: "buy", value: "sale" }}
                     filterName="mode"
                     filters={filters}
                     setFilters={setFilters}
                 />
 
                 <ToggleFilter
-                    text1="residential"
-                    text2="commercial"
+                    value1={{ text: "residential", value: "residential" }}
+                    value2={{ text: "commercial", value: "commercial" }}
                     filterName="category"
                     filters={filters}
                     setFilters={setFilters}
@@ -152,6 +178,7 @@ const FeedFilters = () => {
                     filters={filters}
                     setFilters={setFilters}
                 >
+                    <option value="">--Select Country--</option>
                     {LocationsData.map((country: ICountry) => (
                         <option
                             key={country.code2.toLowerCase().trim()}
@@ -167,7 +194,7 @@ const FeedFilters = () => {
                     filters={filters}
                     setFilters={setFilters}
                 >
-                    <option>--Select City--</option>
+                    <option value="">--Select City--</option>
                     {LocationsData.find(
                         (item) =>
                             item.code2.toLowerCase().trim() ===
@@ -184,7 +211,7 @@ const FeedFilters = () => {
 
                 <RangeFilter
                     name="Price"
-                    desc="(AED)"
+                    desc=""
                     filterName="price"
                     filters={filters}
                     setFilters={setFilters}
@@ -246,11 +273,27 @@ const FeedFilters = () => {
                     show={dropdowns.options}
                     setShow={setShow}
                 />
+
+                {filters.mode === "rent" && (
+                    <SelectFilter
+                        filterName="frequency"
+                        filters={filters}
+                        setFilters={setFilters}
+                    >
+                        <option value="">--Select Pay Cycle--</option>
+                        <option value="year">Yearly</option>
+                        <option value="month">Monthly</option>
+                        <option value="week">Weekly</option>
+                    </SelectFilter>
+                )}
             </div>
 
             <div className="w-full h-[2px] bg-slate-200 rounded-full" />
 
-            <button className="rounded-lg text-xl w-fit outline-none bg-theme-1 py-3 px-8 font-bold text-white transition hover:bg-theme-hover">
+            <button
+                className="rounded-lg text-xl w-fit outline-none bg-theme-1 py-3 px-8 font-bold text-white transition hover:bg-theme-hover"
+                onClick={handleSearch}
+            >
                 Search
             </button>
         </div>

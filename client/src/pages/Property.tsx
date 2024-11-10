@@ -38,6 +38,7 @@ const Property = () => {
     const axios = useAxios();
 
     const [property, setProperty] = useState<IProperty | null>(null);
+    const [loading, setLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState<string | null>(
         new URLSearchParams(location.search).get("tab")
     );
@@ -82,22 +83,36 @@ const Property = () => {
     }, [currentTab, currentImage]);
 
     useEffect(() => {
-        const fetchProperty = async () => {
+        (async () => {
             try {
                 const response = await axios.get(`/properties/property/${id}`);
                 setProperty(response.data.property);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false);
             }
-        };
-
-        fetchProperty();
+        })();
     }, [id]);
 
     if (!property)
         return (
             <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <IconLoader2 className="animate-spin text-5xl" />
+                {loading ? (
+                    <IconLoader2 className="animate-spin text-5xl" />
+                ) : (
+                    <div className="flex flex-col justify-center items-center">
+                        <p className="text-2xl text-gray-400">
+                            Property not found
+                        </p>
+                        <button
+                            onClick={() => navigate(-1)}
+                            className="text-blue-500"
+                        >
+                            Go back
+                        </button>
+                    </div>
+                )}
             </div>
         );
 

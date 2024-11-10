@@ -7,6 +7,7 @@ import { propertySchema } from "../utils/validation";
 import { s3_get, s3_post } from "../utils/s3";
 import { ZodError } from "zod";
 import User from "../models/user.model";
+import { translateQueryToMQL } from "../utils/utils";
 
 const router = express.Router();
 
@@ -91,7 +92,8 @@ router.get("/property/:id", async (req, res) => {
     try {
         // get property by id
         const property = await Property.findById(req.params.id).populate(
-            "owner"
+            "owner",
+            "-password"
         );
 
         if (!property) {
@@ -104,6 +106,28 @@ router.get("/property/:id", async (req, res) => {
         // return response
         res.status(200).json({
             property,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Internal server error",
+        });
+    }
+});
+
+router.get("/search", async (req, res) => {
+    try {
+        const query = req.query;
+
+        // build query
+        const filter = translateQueryToMQL(query);
+
+        // perform search
+        const properties = await Property.find(filter);
+
+        // return response
+        res.status(200).json({
+            properties,
         });
     } catch (err) {
         console.error(err);
@@ -168,7 +192,7 @@ router.get("/favorites", async (req: CustomRequest, res) => {
     }
 });
 
-router.delete("/delete/:id", async (req: CustomRequest, res) => {
+router.delete("/property/:id", async (req: CustomRequest, res) => {
     try {
         // delete property
         const deletedProperty = await Property.findOneAndDelete({

@@ -64,9 +64,10 @@ export const requireAuth = (
     next: NextFunction
 ) => {
     if (!req.user) {
-        return res.status(401).json({
+        res.status(401).json({
             error: "Unauthorized",
         });
+        return;
     }
 
     next();

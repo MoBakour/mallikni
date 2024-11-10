@@ -18,6 +18,7 @@ import ContactsInput from "../components/new/ContactsInput";
 import useAxios from "../hooks/useAxios";
 import IconLoader2 from "../icons/IconLoader2";
 import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 const New = () => {
     const initialState = {
@@ -29,6 +30,8 @@ const New = () => {
         city: "",
         price: "",
         area: "",
+        frequency: "",
+        currency: "",
         beds: 0,
         baths: 0,
         age: 0,
@@ -61,6 +64,8 @@ const New = () => {
     const [cityError, setCityError] = useState<string | null>(null);
     const [priceError, setPriceError] = useState<string | null>(null);
     const [areaError, setAreaError] = useState<string | null>(null);
+    const [freqError, setFreqError] = useState<string | null>(null);
+    const [currencyError, setCurrencyError] = useState<string | null>(null);
     const [imageError, setImageError] = useState<string | null>(null);
     const [locationError, setLocationError] = useState<string | null>(null);
 
@@ -84,6 +89,8 @@ const New = () => {
             setLocationError(null);
             setPriceError(null);
             setAreaError(null);
+            setFreqError(null);
+            setCurrencyError(null);
 
             // verify fields
             if (form.title === "") {
@@ -126,6 +133,18 @@ const New = () => {
             }
             if (+form.area < 0) {
                 setAreaError("Area cannot be negative");
+                error = true;
+            }
+            if (form.frequency === "" && form.mode === "rent") {
+                setFreqError("Pay Cycle is required");
+                error = true;
+            }
+            if (form.currency === "") {
+                setCurrencyError("Currency is required");
+                error = true;
+            }
+            if (form.currency.length > 20) {
+                setCurrencyError("Currency cannot exceed 20 characters");
                 error = true;
             }
 
@@ -225,7 +244,12 @@ const New = () => {
                             { label: "For sale", title: "sale" },
                         ]}
                         selection={form.mode}
-                        setSelection={(value) => setField("mode", value)}
+                        setSelection={(value) => {
+                            setField("mode", value);
+                            if (value === "sale") {
+                                setField("frequency", "");
+                            }
+                        }}
                     />
 
                     <RadioInput
@@ -315,6 +339,51 @@ const New = () => {
                             />
                             <p className="text-sm text-error-1 mt-1 empty:mt-0">
                                 {areaError}
+                            </p>
+                        </label>
+                    </div>
+
+                    <div className="flex justify-between">
+                        <label
+                            htmlFor="price"
+                            className={clsx("flex-[0.45]", {
+                                "opacity-50 pointer-events-none":
+                                    form.mode !== "rent",
+                            })}
+                        >
+                            <SelectInput
+                                title="Pay Cycle"
+                                value={form.frequency}
+                                setValue={(value) =>
+                                    setField("frequency", value)
+                                }
+                            >
+                                <option value="">--Select Pay Cycle--</option>
+                                <option value="year">Yearly</option>
+                                <option value="month">Monthly</option>
+                                <option value="week">Weekly</option>
+                            </SelectInput>
+                            <p className="text-sm text-error-1 mt-1 empty:mt-0">
+                                {freqError}
+                            </p>
+                        </label>
+
+                        <label htmlFor="area" className="flex-[0.45]">
+                            <p className="pb-1 font-medium text-xl flex items-center gap-2">
+                                Currency
+                            </p>
+                            <input
+                                type="text"
+                                placeholder="Price currency"
+                                id="area"
+                                className="py-1 px-3 rounded-md w-full"
+                                value={form.currency}
+                                onChange={(e) =>
+                                    setField("currency", e.target.value)
+                                }
+                            />
+                            <p className="text-sm text-error-1 mt-1 empty:mt-0">
+                                {currencyError}
                             </p>
                         </label>
                     </div>

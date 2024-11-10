@@ -3,16 +3,22 @@ import { useEffect, useRef, useState } from "react";
 import { capitalize } from "../../utils/utils";
 
 interface IToggleFilter {
-    text1: string;
-    text2: string;
+    value1: {
+        text: string;
+        value: string;
+    };
+    value2: {
+        text: string;
+        value: string;
+    };
     filterName: string;
     filters: any;
     setFilters: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const ToggleFilter = ({
-    text1,
-    text2,
+    value1,
+    value2,
     filterName,
     filters,
     setFilters,
@@ -32,19 +38,22 @@ const ToggleFilter = ({
                 className="text-transparent absolute z-0 bg-theme-1 py-1 px-5 rounded-full transition left-1"
                 style={{
                     transform: `translateX(${
-                        filters[filterName] === text2 ? firstTextWidth + 4 : 0
+                        filters[filterName] === value2.value
+                            ? firstTextWidth + 4
+                            : 0
                     }px)`,
                 }}
             >
                 {filters[filterName]}
             </div>
 
-            {[text1, text2].map((txt, index) => (
+            {[value1, value2].map((item, index) => (
                 <div
-                    key={txt}
+                    key={item.text}
                     className={clsx(
                         {
-                            "cursor-pointer": filters[filterName] !== txt,
+                            "cursor-pointer":
+                                filters[filterName] !== item.value,
                         },
                         "py-1 px-5 rounded-full relative"
                     )}
@@ -52,13 +61,13 @@ const ToggleFilter = ({
                         setFilters((prev: any) => {
                             return {
                                 ...prev,
-                                [filterName]: txt,
+                                [filterName]: item.value,
                             };
                         })
                     }
                     ref={index === 0 ? firstText : null}
                 >
-                    {capitalize(txt)}
+                    {capitalize(item.text)}
                 </div>
             ))}
         </div>

@@ -45,6 +45,8 @@ export const s3_get = async (fielKey: string) => {
 };
 
 export const s3_delete = async (fileKey: string | string[]) => {
+    if (!fileKey || fileKey.length === 0) return;
+
     const params = {
         Bucket: bucketName,
         Delete: {
