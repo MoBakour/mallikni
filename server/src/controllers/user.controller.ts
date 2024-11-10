@@ -53,8 +53,6 @@ router.patch(
                 req.user.password
             );
 
-            console.log(req.user);
-
             if (!validPassword) {
                 res.status(400).json({ error: "Incorrect password" });
                 return;
