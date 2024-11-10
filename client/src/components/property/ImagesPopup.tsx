@@ -18,7 +18,7 @@ const ImagesPopup = ({
     return (
         <>
             {currentImage !== null && (
-                <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
+                <div className="fixed z-10 inset-0 bg-black bg-opacity-70 flex justify-center items-center">
                     {/* close button */}
                     <button
                         className="absolute top-5 right-5"
@@ -43,7 +43,9 @@ const ImagesPopup = ({
                     {/* image */}
                     <div className="w-[60%] flex justify-center items-center">
                         <img
-                            src={images[currentImage]}
+                            src={`${
+                                import.meta.env.VITE_API_URL
+                            }/properties/image/${images[currentImage]}`}
                             alt="Property Image"
                             className="rounded-lg"
                         />

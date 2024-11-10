@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropertyHeader from "../components/property/PropertyHeader";
 import { IProperty } from "../types/types";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import clsx from "clsx";
 import { capitalize } from "../utils/utils";
 import DetailsTab from "../components/property/DetailsTab";
@@ -9,6 +9,8 @@ import DescriptionTab from "../components/property/DescriptionTab";
 import LocationTab from "../components/property/LocationTab";
 import ContactTab from "../components/property/ContactTab";
 import ImagesPopup from "../components/property/ImagesPopup";
+import useAxios from "../hooks/useAxios";
+import IconLoader2 from "../icons/IconLoader2";
 
 const tabs = [
     {
@@ -32,72 +34,10 @@ const tabs = [
 const Property = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { id } = useParams();
+    const axios = useAxios();
 
-    const [property, setProperty] = useState<IProperty>({
-        id: "1",
-        title: "2+1 Apartment for rent in Sharjah, Al-Majaz",
-        images: [
-            "https://t3.ftcdn.net/jpg/03/48/06/74/360_F_348067415_PmFzkSJzPMXwni4RhmnB2Zji3TmA0pUF.jpg",
-            "https://img.freepik.com/free-photo/cozy-living-room-modern-apartment_181624-58445.jpg?semt=ais_hybrid",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfI8Es6rwcaDVPaE06YpPiamjGMC7qF675sQ&s",
-        ],
-        description: `Discover this modern 2+1 apartment located in the vibrant neighborhood of Majaz, Sharjah, offering a perfect blend of comfort and convenience. With a spacious layout of 1,300 square feet, this apartment is ideal for families and professionals.
-
-Key Features:
-Open Living Area: Enjoy a bright and airy living space with large windows, seamlessly connected to the dining area, perfect for entertaining.
-
-Contemporary Kitchen: Fully equipped with sleek cabinetry, granite countertops, and stainless-steel appliances, including a refrigerator and stove.
-
-Two Bedrooms: The master bedroom features an en-suite bathroom and built-in wardrobes, while the second bedroom is perfect for guests or children.
-
-Study Room: A versatile additional room ideal for a home office or playroom.
-
-Private Balcony: Enjoy scenic views from your own balcony, ideal for relaxation.
-
-Building Amenities:
-24/7 Security
-Swimming Pool
-Fully Equipped Gym
-Children's Play Area
-Dedicated Parking
-Prime Location:
-Located in Majaz, this apartment offers easy access to shopping malls, schools, and Al Majaz Waterfront, making it perfect for those seeking a lively community atmosphere.
-
-Don't miss this opportunity! Contact us today to schedule a viewing of this fantastic apartment priced at 50,000 AED per year!`,
-        owner: "MoBakour",
-        contacts: {
-            phones: ["+971-12-345-6789", "+90-123-456-7890"],
-            emails: ["email@gmail.com", "real@estate.com"],
-            links: [
-                {
-                    name: "Instagram",
-                    url: "https://instagram.com",
-                },
-                {
-                    name: "Facebook",
-                    url: "https://facebook.com",
-                },
-            ],
-        },
-        mode: "rent",
-        category: "residential",
-        country: "ae",
-        city: "sh",
-        price: 50000,
-        area: 160,
-        age: 4,
-        source: "owner",
-        furnished: false,
-        beds: 2,
-        baths: 1,
-        balcony: true,
-        elevator: true,
-        parking: true,
-        security: false,
-        latitude: 12.3456789,
-        longitude: 98.7654321,
-        createdAt: new Date(),
-    });
+    const [property, setProperty] = useState<IProperty | null>(null);
     const [currentTab, setCurrentTab] = useState<string | null>(
         new URLSearchParams(location.search).get("tab")
     );
@@ -111,7 +51,7 @@ Don't miss this opportunity! Contact us today to schedule a viewing of this fant
     };
 
     const handleImageNav = (direction: "prev" | "next") => {
-        if (currentImage === null) return;
+        if (currentImage === null || !property) return;
 
         if (
             (currentImage === 0 && direction === "prev") ||
@@ -140,6 +80,26 @@ Don't miss this opportunity! Contact us today to schedule a viewing of this fant
             window.removeEventListener("keydown", handleKeyImageNav);
         };
     }, [currentTab, currentImage]);
+
+    useEffect(() => {
+        const fetchProperty = async () => {
+            try {
+                const response = await axios.get(`/properties/property/${id}`);
+                setProperty(response.data.property);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchProperty();
+    }, [id]);
+
+    if (!property)
+        return (
+            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <IconLoader2 className="animate-spin text-5xl" />
+            </div>
+        );
 
     return (
         <main className="w-[80%] m-auto">

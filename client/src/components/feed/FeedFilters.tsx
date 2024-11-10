@@ -22,7 +22,6 @@ const defaultFilters: IFilters = {
     maxArea: "",
     minAge: "",
     maxAge: "",
-    source: "",
     furnished: false,
     beds: [],
     baths: [],
@@ -52,7 +51,6 @@ const FeedFilters = () => {
             maxArea: params.get("maxArea") || defaultFilters.maxArea,
             minAge: params.get("minAge") || defaultFilters.minAge,
             maxAge: params.get("maxAge") || defaultFilters.maxAge,
-            source: params.get("source") || defaultFilters.source,
             furnished:
                 params.get("furnished") === "true" || defaultFilters.furnished,
             beds: params.get("beds")
@@ -207,18 +205,6 @@ const FeedFilters = () => {
                     filters={filters}
                     setFilters={setFilters}
                 />
-
-                <SelectFilter
-                    filterName="source"
-                    filters={filters}
-                    setFilters={setFilters}
-                >
-                    <option>--Select Source--</option>
-                    <option value="owner">From Owner</option>
-                    <option value="office">From Office</option>
-                    <option value="bank">From Bank</option>
-                    <option value="constructor">From Constructor</option>
-                </SelectFilter>
 
                 <button
                     onClick={() =>

@@ -1,7 +1,11 @@
+// envrionment variables
+import dotenv from "dotenv";
+dotenv.config();
+
+// dependencies
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
 
 // middlewares and controllers
 import { authenticate } from "./middlewares/auth.middleware";
@@ -18,7 +22,7 @@ app.use(
         origin: "*",
     })
 );
-dotenv.config();
+
 const PORT = +(process.env.PORT || process.env.port || "3000");
 
 // connect to database and start server
@@ -38,10 +42,12 @@ app.use(authenticate);
 
 // controllers
 app.use("/auth", authController);
-app.use(userController);
-app.use(propertyController);
+app.use("/users", userController);
+app.use("/properties", propertyController);
 
 // 404
 app.use((req, res) => {
-    res.status(404).send("404: Not found");
+    res.status(404).json({
+        error: "Not Found",
+    });
 });

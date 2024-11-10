@@ -2,11 +2,12 @@ import { ReactSortable } from "react-sortablejs";
 import { TImage } from "../../types/types";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { set } from "zod";
 
 interface IImageInput {
     images: TImage[];
     setImages: React.Dispatch<React.SetStateAction<TImage[]>>;
+    error: string | null;
+    setError: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 interface IDeleteButton {
@@ -15,7 +16,7 @@ interface IDeleteButton {
     id: string | null;
 }
 
-const ImageInput = ({ images, setImages }: IImageInput) => {
+const ImageInput = ({ images, setImages, error, setError }: IImageInput) => {
     const [deleteButton, setDeleteButton] = useState<IDeleteButton>({
         top: 0,
         left: 0,
@@ -26,9 +27,16 @@ const ImageInput = ({ images, setImages }: IImageInput) => {
         if (!e.target.files) return;
 
         const newImages = Array.from(e.target.files);
+
+        if (newImages.length + images.length > 30) {
+            setError("You can only upload up to 30 images");
+            setTimeout(() => setError(null), 3000);
+            return;
+        }
+
         const imagesObject = newImages.map((image) => ({
             id: crypto.randomUUID(),
-            url: URL.createObjectURL(image),
+            file: image,
         }));
 
         setImages([...images, ...imagesObject]);
@@ -84,7 +92,7 @@ const ImageInput = ({ images, setImages }: IImageInput) => {
         <>
             <label
                 htmlFor="image"
-                className="w-full h-[160px] mb-6 bg-slate-300 rounded-2xl flex justify-center items-center transition opacity-80 hover:opacity-100 cursor-pointer"
+                className="w-full h-[160px] bg-slate-300 rounded-2xl flex justify-center items-center transition opacity-80 hover:opacity-100 cursor-pointer"
                 title="Add Image"
             >
                 <p className="text-7xl text-gray-600">+</p>
@@ -97,6 +105,9 @@ const ImageInput = ({ images, setImages }: IImageInput) => {
                     onChange={(e) => handleAddImage(e)}
                 />
             </label>
+            <p className="mb-6 mt-2 empty:mt-0 bg-error-2 text-error-1 text-sm px-2 py-2 empty:p-0 text-center rounded-md">
+                {error}
+            </p>
 
             {deleteButton.id && (
                 <button
@@ -124,7 +135,7 @@ const ImageInput = ({ images, setImages }: IImageInput) => {
                             <img
                                 key={image.id}
                                 id={image.id}
-                                src={image.url}
+                                src={URL.createObjectURL(image.file)}
                                 alt="Property Image"
                                 className={clsx(
                                     "sort-handle shadow-md w-[100px] h-[100px] object-cover rounded-md",

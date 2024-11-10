@@ -46,7 +46,9 @@ const Header = () => {
                             alt="User Avatar"
                             className="rounded-full w-10"
                         />
-                        <p className="font-bold text-lg mr-6">MoBakour</p>
+                        <p className="font-bold text-lg mr-6">
+                            {auth.user.username}
+                        </p>
                         <IconBurger
                             className="text-4xl transition hover:text-black/70 cursor-pointer"
                             onClick={() => setShowSideMenu(true)}

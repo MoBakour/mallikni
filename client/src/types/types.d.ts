@@ -1,6 +1,11 @@
 export interface IAuth {
     token: string;
     user: {
+        _id: string;
+        username: string;
+        email: string;
+        createdAt: Date;
+        updatedAt: Date;
         activation: {
             activated: boolean;
         };
@@ -8,14 +13,11 @@ export interface IAuth {
 }
 
 export interface IProperty {
-    id: string;
+    _id: string;
     title: string;
     description: string;
-    owner: string;
-    source: string;
-    contacts: {
-        [key: string]: string[] | { name: string; url: string }[];
-    };
+    owner: any;
+    contacts: TContacts;
     country: string;
     city: string;
     mode: string;
@@ -31,9 +33,9 @@ export interface IProperty {
     elevator: boolean;
     parking: boolean;
     security: boolean;
-    latitude: number;
-    longitude: number;
+    location: [number, number];
     createdAt: Date;
+    updatedAt: Date;
 }
 
 export interface IState {
@@ -63,7 +65,6 @@ export interface IFilters {
     maxArea: string;
     minAge: string;
     maxAge: string;
-    source: string;
     furnished: boolean;
     beds: string[];
     baths: string[];
@@ -75,7 +76,7 @@ export interface IFilters {
 
 export type TImage = {
     id: string;
-    url: string;
+    file: File;
 };
 
 export type TContact = {

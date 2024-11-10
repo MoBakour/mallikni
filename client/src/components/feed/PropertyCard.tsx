@@ -4,6 +4,7 @@ import IconBedOutline from "../../icons/IconBedOutline";
 import { IProperty } from "../../types/types";
 import PriceCard from "../common/PriceCard";
 import clsx from "clsx";
+import { getCityName, getCountryName } from "../../utils/utils";
 
 interface IPropertyCard {
     property: IProperty;
@@ -12,7 +13,7 @@ interface IPropertyCard {
 
 const PropertyCard = ({ property, details = true }: IPropertyCard) => {
     return (
-        <Link to={`/property/${property.id}`} className="w-full">
+        <Link to={`/property/${property._id}`} className="w-full">
             <div
                 className={clsx(
                     "bg-white w-full shadow-lg flex p-4 rounded-lg transition hover:scale-[1.01]",
@@ -21,7 +22,9 @@ const PropertyCard = ({ property, details = true }: IPropertyCard) => {
                 )}
             >
                 <img
-                    src={property.images[0]}
+                    src={`${import.meta.env.VITE_API_URL}/properties/image/${
+                        property.images[0]
+                    }`}
                     alt="Property Image"
                     className={clsx(
                         details
@@ -45,7 +48,8 @@ const PropertyCard = ({ property, details = true }: IPropertyCard) => {
                         {property.title}
                     </p>
                     <p className={clsx({ "text-sm": !details })}>
-                        {property.country}, {property.city}
+                        {getCountryName(property.country)},{" "}
+                        {getCityName(property.country, property.city)}
                     </p>
 
                     <div className="flex gap-4">

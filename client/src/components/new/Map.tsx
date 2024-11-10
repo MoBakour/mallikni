@@ -3,31 +3,31 @@ import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 interface IMap {
-    position: LatLng | null;
-    setPosition: (position: LatLng | null) => void;
+    location: LatLng | null;
+    setLocation: (location: LatLng | null) => void;
     picker?: boolean;
 }
 
 type TLocationPicker = {
-    position: LatLng | null;
-    setPosition: (position: LatLng | null) => void;
+    location: LatLng | null;
+    setLocation: (location: LatLng | null) => void;
 };
 
-const Map = ({ position, setPosition, picker = true }: IMap) => {
-    const LocationPicker = ({ position, setPosition }: TLocationPicker) => {
+const Map = ({ location, setLocation, picker = true }: IMap) => {
+    const LocationPicker = ({ location, setLocation }: TLocationPicker) => {
         useMapEvents({
             click(e) {
                 if (!picker) return;
-                setPosition(e.latlng);
+                setLocation(e.latlng);
             },
         });
 
-        return position === null ? null : <Marker position={position}></Marker>;
+        return location === null ? null : <Marker position={location}></Marker>;
     };
 
     return (
         <MapContainer
-            center={position || new LatLng(25.2048, 55.2708)}
+            center={location || new LatLng(25.2048, 55.2708)}
             zoom={13}
             style={{ height: "100%", width: "100%" }}
             zoomControl={picker}
@@ -42,7 +42,7 @@ const Map = ({ position, setPosition, picker = true }: IMap) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            <LocationPicker position={position} setPosition={setPosition} />
+            <LocationPicker location={location} setLocation={setLocation} />
         </MapContainer>
     );
 };

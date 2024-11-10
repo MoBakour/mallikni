@@ -7,17 +7,20 @@ interface ILocationTab {
 }
 
 const LocationTab = ({ property }: ILocationTab) => {
-    const position: [number, number] = [property.latitude, property.longitude];
+    const location: [number, number] = [
+        property.location[0],
+        property.location[1],
+    ];
 
     return (
         <section>
             <MapContainer
-                center={position}
+                center={location}
                 zoom={13}
-                style={{ height: "400px", width: "100%" }}
+                style={{ height: "400px", width: "100%", zIndex: 0 }}
             >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker position={position}></Marker>
+                <Marker position={location}></Marker>
             </MapContainer>
         </section>
     );

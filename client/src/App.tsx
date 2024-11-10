@@ -64,7 +64,7 @@ function App() {
                                 authorized ? (
                                     <Favorites />
                                 ) : (
-                                    <Navigate to="/login" />
+                                    <Navigate to="/login" replace />
                                 )
                             }
                         />
@@ -74,14 +74,18 @@ function App() {
                                 authorized ? (
                                     <MyProperties />
                                 ) : (
-                                    <Navigate to="/login" />
+                                    <Navigate to="/login" replace />
                                 )
                             }
                         />
                         <Route
                             path="/new"
                             element={
-                                authorized ? <New /> : <Navigate to="/login" />
+                                authorized ? (
+                                    <New />
+                                ) : (
+                                    <Navigate to="/login" replace />
+                                )
                             }
                         />
                         <Route
@@ -90,7 +94,7 @@ function App() {
                                 authorized ? (
                                     <Settings />
                                 ) : (
-                                    <Navigate to="/login" />
+                                    <Navigate to="/login" replace />
                                 )
                             }
                         />
@@ -100,7 +104,7 @@ function App() {
                                 authorized ? (
                                     <ChangeEmail />
                                 ) : (
-                                    <Navigate to="/login" />
+                                    <Navigate to="/login" replace />
                                 )
                             }
                         />
@@ -110,7 +114,7 @@ function App() {
                                 authorized ? (
                                     <ChangePassword />
                                 ) : (
-                                    <Navigate to="/login" />
+                                    <Navigate to="/login" replace />
                                 )
                             }
                         />

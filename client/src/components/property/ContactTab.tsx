@@ -1,24 +1,8 @@
-import { IProperty } from "../../types/types";
+import { IProperty, TLink } from "../../types/types";
 
 interface IContactTab {
     property: IProperty;
 }
-
-type TLink = {
-    name: string;
-    url: string;
-};
-
-// {
-//     phones: ["+971-12-345-6789", "+90-123-456-7890"],
-//     emails: ["email@gmail.com", "real@estate.com"],
-//     links: [
-//         {
-//             name: "Instagram",
-//             url: "https://instagram.com",
-//         },
-//     ],
-// },
 
 const ContactTab = ({ property }: IContactTab) => {
     return (
@@ -29,12 +13,12 @@ const ContactTab = ({ property }: IContactTab) => {
                 {property.contacts.phones.map((phone, index) => (
                     <a
                         key={index}
-                        href={`tel:${(phone as string)
+                        href={`tel:${(phone as unknown as string)
                             .replace(/ /g, "")
                             .replace(/-/g, "")}`}
                         className="text-right text-blue-500"
                     >
-                        {phone as string}
+                        {phone as unknown as string}
                     </a>
                 ))}
             </div>
@@ -47,22 +31,22 @@ const ContactTab = ({ property }: IContactTab) => {
                         href={`mailto:${email}`}
                         className="text-right text-blue-500"
                     >
-                        {email as string}
+                        {email as unknown as string}
                     </a>
                 ))}
             </div>
             {/* links */}
             <p className="font-bold">Links</p>{" "}
             <div className="flex flex-col">
-                {property.contacts.links.map((link, index) => (
+                {property.contacts.links.map((link: TLink, index) => (
                     <a
                         key={index}
-                        href={(link as TLink).url}
+                        href={link.url}
                         target="_blank"
                         rel="noreferrer"
                         className="text-right text-blue-500"
                     >
-                        {(link as TLink).name}
+                        {link.label}
                     </a>
                 ))}
             </div>

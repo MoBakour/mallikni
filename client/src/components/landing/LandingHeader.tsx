@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import useAuthStore from "../../stores/auth.store";
-import { useEffect } from "react";
 
 interface ILandingHeaderProps {
     scrolled: boolean;
@@ -14,13 +13,13 @@ const LandingHeader = ({ scrolled }: ILandingHeaderProps) => {
         ["About", "/about"],
         ["Contact", "/contact"],
         ["Properties", "/find"],
+        ...(!authorized
+            ? [
+                  ["Login", "/login"],
+                  ["Sign up", "/signup"],
+              ]
+            : []),
     ];
-
-    useEffect(() => {
-        if (!authorized) {
-            links.push(["Login", "/login"], ["Sign up", "/signup"]);
-        }
-    }, []);
 
     return (
         <>

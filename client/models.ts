@@ -14,14 +14,13 @@ interface User {
 
 // Property Details Interfaces
 interface PropertyDetails {
-    mode: "buy" | "rent";
+    mode: "sale" | "rent";
     country: string;
     state: string;
     price: number;
     area: number;
     furnished: boolean;
     age: number;
-    source: "owner" | "office" | "bank" | "constructor";
 }
 
 interface ApartmentPropertyDetails {

@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const LinkSchema = new Schema(
     {
-        name: {
+        label: {
             type: String,
             required: true,
         },
@@ -14,7 +14,7 @@ const LinkSchema = new Schema(
     { _id: false, timestamps: false }
 );
 
-const contactsSchema = new Schema(
+const ContactsSchema = new Schema(
     {
         phones: {
             type: [String],
@@ -29,7 +29,7 @@ const contactsSchema = new Schema(
     { _id: false, timestamps: false }
 );
 
-const propertySchema = new Schema(
+const PropertySchema = new Schema(
     {
         title: {
             type: String,
@@ -72,20 +72,16 @@ const propertySchema = new Schema(
             type: Number,
             required: true,
         },
-        source: {
-            type: String,
-            required: true,
-        },
-        furnished: {
-            type: Boolean,
-            required: true,
-        },
         beds: {
             type: Number,
             required: true,
         },
         baths: {
             type: Number,
+            required: true,
+        },
+        furnished: {
+            type: Boolean,
             required: true,
         },
         balcony: {
@@ -111,11 +107,12 @@ const propertySchema = new Schema(
         images: {
             type: [String],
             required: true,
+            default: [],
         },
-        contacts: contactsSchema,
+        contacts: ContactsSchema,
     },
     { timestamps: true }
 );
 
-const propertyModel = model("User", propertySchema);
+const propertyModel = model("Property", PropertySchema);
 export default propertyModel;

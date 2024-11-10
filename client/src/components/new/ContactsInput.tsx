@@ -5,10 +5,10 @@ import { z } from "zod";
 
 interface IContactsInput {
     contacts: TContacts;
-    setContacts: React.Dispatch<React.SetStateAction<TContacts>>;
+    setForm: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
+const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
     const phoneInput = useRef<HTMLInputElement>(null);
     const emailInput = useRef<HTMLInputElement>(null);
     const linkInput = useRef<HTMLInputElement>(null);
@@ -44,15 +44,18 @@ const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
                 return;
             }
 
-            setContacts((prev) => ({
+            setForm((prev: any) => ({
                 ...prev,
-                phones: [
-                    ...prev.phones,
-                    {
-                        id: crypto.randomUUID(),
-                        value: phoneInput.current!.value,
-                    },
-                ],
+                contacts: {
+                    ...prev.contacts,
+                    phones: [
+                        ...prev.contacts.phones,
+                        {
+                            id: crypto.randomUUID(),
+                            value: phoneInput.current!.value,
+                        },
+                    ],
+                },
             }));
 
             phoneInput.current.value = "";
@@ -65,15 +68,18 @@ const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
                 return;
             }
 
-            setContacts((prev) => ({
+            setForm((prev: any) => ({
                 ...prev,
-                emails: [
-                    ...prev.emails,
-                    {
-                        id: crypto.randomUUID(),
-                        value: emailInput.current!.value,
-                    },
-                ],
+                contacts: {
+                    ...prev.contacts,
+                    emails: [
+                        ...prev.contacts.emails,
+                        {
+                            id: crypto.randomUUID(),
+                            value: emailInput.current!.value,
+                        },
+                    ],
+                },
             }));
 
             emailInput.current.value = "";
@@ -91,16 +97,19 @@ const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
                 return;
             }
 
-            setContacts((prev) => ({
+            setForm((prev: any) => ({
                 ...prev,
-                links: [
-                    ...prev.links,
-                    {
-                        id: crypto.randomUUID(),
-                        label: labelInput.current!.value,
-                        url: linkInput.current!.value,
-                    },
-                ],
+                contacts: {
+                    ...prev.contacts,
+                    links: [
+                        ...prev.contacts.links,
+                        {
+                            id: crypto.randomUUID(),
+                            label: labelInput.current!.value,
+                            url: linkInput.current!.value,
+                        },
+                    ],
+                },
             }));
 
             linkInput.current.value = "";
@@ -109,22 +118,15 @@ const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
     };
 
     const removeContact = (type: string, id: string) => {
-        if (type === "phone") {
-            setContacts((prev) => ({
-                ...prev,
-                phones: prev.phones.filter((phone) => phone.id !== id),
-            }));
-        } else if (type === "email") {
-            setContacts((prev) => ({
-                ...prev,
-                emails: prev.emails.filter((email) => email.id !== id),
-            }));
-        } else if (type === "link") {
-            setContacts((prev) => ({
-                ...prev,
-                links: prev.links.filter((link) => link.id !== id),
-            }));
-        }
+        setForm((prev: any) => ({
+            ...prev,
+            contacts: {
+                ...prev.contacts,
+                [type + "s"]: prev.contacts[type + "s"].filter(
+                    (item: any) => item.id !== id
+                ),
+            },
+        }));
     };
 
     const showError = (message: string) => {
@@ -155,6 +157,19 @@ const ContactsInput = ({ contacts, setContacts }: IContactsInput) => {
         emailInput.current?.addEventListener("keydown", handleEmailEnter);
         linkInput.current?.addEventListener("keydown", handleLinkEnter);
         labelInput.current?.addEventListener("keydown", handleLinkEnter);
+
+        return () => {
+            phoneInput.current?.removeEventListener(
+                "keydown",
+                handlePhoneEnter
+            );
+            emailInput.current?.removeEventListener(
+                "keydown",
+                handleEmailEnter
+            );
+            linkInput.current?.removeEventListener("keydown", handleLinkEnter);
+            labelInput.current?.removeEventListener("keydown", handleLinkEnter);
+        };
     }, []);
 
     return (

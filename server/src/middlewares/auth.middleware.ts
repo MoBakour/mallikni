@@ -17,7 +17,7 @@ export const authenticate = (
         }
 
         // get token
-        const [token, bearer] = header.split(" ");
+        const [bearer, token] = header.split(" ");
         if (!token || !bearer || bearer !== "Bearer") {
             next();
             return;
@@ -28,7 +28,6 @@ export const authenticate = (
             if (!err && decoded) {
                 const userId = (decoded as JwtPayload).userId;
                 const user = await User.findById(userId);
-
                 req.user = user;
             }
 

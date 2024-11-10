@@ -2,125 +2,34 @@ import { Link } from "react-router-dom";
 import IconArrowRight from "../../icons/IconArrowRight";
 import Links from "../common/Links";
 import PropertyCard from "./PropertyCard";
-import SideCard from "./SideCard";
+import { useEffect, useState } from "react";
+import useAxios from "../../hooks/useAxios";
+import { IProperty } from "../../types/types";
 
 const FeedResults = () => {
-    const data = [
-        {
-            id: "1",
-            title: "2+1 Apartment for rent in Sharjah, Al-Majaz",
-            country: "United Arab Emirates",
-            city: "Sharjah",
-            mode: "rent",
-            category: "residential",
-            beds: 2,
-            baths: 1,
-            area: 600,
-            price: 50000,
-            images: [
-                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
-            ],
-        },
-        {
-            id: "2",
-            title: "2+1 Apartment for rent in Sharjah, Al-Majaz",
-            country: "United Arab Emirates",
-            city: "Sharjah",
-            mode: "rent",
-            category: "residential",
-            beds: 2,
-            baths: 1,
-            area: 600,
-            price: 50000,
-            images: [
-                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
-            ],
-        },
-        {
-            id: "3",
-            title: "2+1 Apartment for rent in Sharjah, Al-Majaz",
-            country: "United Arab Emirates",
-            city: "Sharjah",
-            mode: "rent",
-            category: "residential",
-            beds: 2,
-            baths: 1,
-            area: 600,
-            price: 50000,
-            images: [
-                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
-            ],
-        },
-        {
-            id: "4",
-            title: "2+1 Apartment for rent in Sharjah, Al-Majaz",
-            country: "United Arab Emirates",
-            city: "Sharjah",
-            mode: "rent",
-            category: "residential",
-            beds: 2,
-            baths: 1,
-            area: 600,
-            price: 50000,
-            images: [
-                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
-            ],
-        },
-        {
-            id: "5",
-            title: "2+1 Apartment for rent in Sharjah, Al-Majaz",
-            country: "United Arab Emirates",
-            city: "Sharjah",
-            mode: "rent",
-            category: "residential",
-            beds: 2,
-            baths: 1,
-            area: 600,
-            price: 50000,
-            images: [
-                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
-            ],
-        },
-        {
-            id: "6",
-            title: "2+1 Apartment for rent in Sharjah, Al-Majaz",
-            country: "United Arab Emirates",
-            city: "Sharjah",
-            mode: "rent",
-            category: "residential",
-            beds: 2,
-            baths: 1,
-            area: 600,
-            price: 50000,
-            images: [
-                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
-            ],
-        },
-        {
-            id: "7",
-            title: "2+1 Apartment for rent in Sharjah, Al-Majaz",
-            country: "United Arab Emirates",
-            city: "Sharjah",
-            mode: "rent",
-            category: "residential",
-            beds: 2,
-            baths: 1,
-            area: 600,
-            price: 50000,
-            images: [
-                "https://st3.depositphotos.com/1004998/17968/i/450/depositphotos_179686718-stock-photo-english-street-of-terraced-houses.jpg",
-            ],
-        },
-    ];
+    const axios = useAxios();
+    const [data, setData] = useState<IProperty[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("/properties/sample");
+                setData(response.data.properties);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <div className="pb-24 flex justify-between">
             <div className="w-2/3">
-                <p className="text-xl font-bold mb-3">720 Results</p>
+                <p className="text-xl font-bold mb-3">{data.length} Results</p>
 
                 <div className="flex flex-col gap-8">
-                    {data.map((property) => (
-                        <PropertyCard key={property.id} property={property} />
+                    {data.map((property: IProperty) => (
+                        <PropertyCard key={property._id} property={property} />
                     ))}
                 </div>
             </div>
@@ -131,7 +40,7 @@ const FeedResults = () => {
                 <div className="flex flex-col gap-8">
                     {data.slice(0, 2).map((property) => (
                         <PropertyCard
-                            key={property.id}
+                            key={property._id}
                             property={property}
                             details={false}
                         />

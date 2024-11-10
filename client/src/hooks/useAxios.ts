@@ -3,7 +3,7 @@ import useAuthStore from "../stores/auth.store";
 import { useEffect } from "react";
 
 const instance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: import.meta.env.VITE_API_URL as string,
 });
 
 const useAxios = () => {

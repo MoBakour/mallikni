@@ -19,7 +19,7 @@ const DetailsTab = ({ property }: IDetailsTab) => {
                 },
                 {
                     label: "Status",
-                    value: property.mode === "buy" ? "for sale" : "for rent",
+                    value: property.mode === "sale" ? "for sale" : "for rent",
                 },
                 {
                     label: "Price",
@@ -34,7 +34,6 @@ const DetailsTab = ({ property }: IDetailsTab) => {
                         property.age.toString() +
                         (property.age > 1 ? " years" : " year"),
                 },
-                { label: "Source", value: property.source },
                 {
                     label: "Furnished",
                     value: property.furnished ? "Yes" : "No",
@@ -48,6 +47,7 @@ const DetailsTab = ({ property }: IDetailsTab) => {
                     value: property.balcony ? "Yes" : "No",
                 },
                 { label: "Elevator", value: property.elevator ? "Yes" : "No" },
+                { label: "Security", value: property.security ? "Yes" : "No" },
                 {
                     label: "Posted at",
                     value: new Date(property.createdAt).toLocaleDateString(),

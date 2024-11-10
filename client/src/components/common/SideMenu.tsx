@@ -34,6 +34,11 @@ const SideMenu = () => {
         }
     };
 
+    const handleLogout = () => {
+        setAuth(null);
+        setShowSideMenu(false);
+    };
+
     return (
         <div
             className={clsx(
@@ -63,7 +68,7 @@ const SideMenu = () => {
                 <button
                     title="Logout"
                     className="flex justify-center items-center gap-2 font-bold text-xl bg-error-1/80 text-white py-2 px-4 rounded-lg mx-auto mt-5 transition hover:bg-error-1/100"
-                    onClick={() => setAuth(null)}
+                    onClick={handleLogout}
                 >
                     <p>Logout</p>
                     <IconLogout />

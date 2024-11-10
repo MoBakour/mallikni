@@ -5,7 +5,7 @@ const CheckboxInput = ({ title, checked, setChecked }: any) => {
     return (
         <label
             className="flex items-center w-[140px] cursor-pointer"
-            onClick={() => setChecked((prev: boolean) => !prev)}
+            onClick={() => setChecked(!checked)}
         >
             <div
                 className={clsx(

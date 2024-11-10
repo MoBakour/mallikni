@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthInput from "./AuthInput";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import IconLoader2 from "../../icons/IconLoader2";
 import useAxios from "../../hooks/useAxios";
 import useAuthStore from "../../stores/auth.store";
@@ -12,7 +12,6 @@ interface IAuthForm {
 const AuthForm = ({ page }: IAuthForm) => {
     const axios = useAxios();
     const { setAuth } = useAuthStore((state) => ({ setAuth: state.setAuth }));
-    const navigate = useNavigate();
 
     const [pwdMode, setPwdMode] = useState("password");
 
@@ -55,6 +54,24 @@ const AuthForm = ({ page }: IAuthForm) => {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        setError("");
+    }, [page, setError]);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Enter") {
+                handleSubmit();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [handleSubmit]);
 
     return (
         <form className="p-4 bg-white rounded shadow-lg flex flex-col justify-center items-center gap-6">

@@ -7,7 +7,7 @@ interface INumberInput {
 const NumberInput = ({ title, value, setValue }: INumberInput) => {
     const handleChange = (type: number) => {
         if (value === 0 && type === -1) return;
-        setValue((prev: number) => prev + type);
+        setValue(value + type);
     };
 
     return (
