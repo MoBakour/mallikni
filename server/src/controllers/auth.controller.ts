@@ -93,6 +93,7 @@ router.post("/login", async (req: CustomRequest, res) => {
                 username: 1,
                 email: 1,
                 password: 1,
+                favorites: 1,
                 createdAt: 1,
                 updatedAt: 1,
             }

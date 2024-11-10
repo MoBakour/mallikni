@@ -4,6 +4,7 @@ export interface IAuth {
         _id: string;
         username: string;
         email: string;
+        favorites: string[];
         createdAt: Date;
         updatedAt: Date;
         activation: {
@@ -22,8 +23,8 @@ export interface IProperty {
     city: string;
     mode: string;
     category: string;
-    price: number;
-    area: number;
+    price: string;
+    area: string;
     beds: number;
     baths: number;
     age: number;

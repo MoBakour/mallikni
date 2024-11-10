@@ -1,7 +1,29 @@
+import { useEffect, useState } from "react";
 import PropertyCard from "../components/feed/PropertyCard";
+import { IProperty } from "../types/types";
+import useAxios from "../hooks/useAxios";
+import IconLoader2 from "../icons/IconLoader2";
 
 const MyProperties = () => {
-    const data = [];
+    const axios = useAxios();
+    const [data, setData] = useState<IProperty[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await axios.get("/properties/own");
+
+                if (response.status === 200) {
+                    setData(response.data.properties);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, []);
 
     return (
         <main>
@@ -18,9 +40,20 @@ const MyProperties = () => {
                     </a>
                 </div>
                 <div className="flex flex-col gap-6">
-                    {data.map((property) => (
-                        <PropertyCard key={property.id} property={property} />
-                    ))}
+                    {loading ? (
+                        <IconLoader2 className="animate-spin text-5xl mx-auto" />
+                    ) : data.length > 0 ? (
+                        data.map((property) => (
+                            <PropertyCard
+                                key={property._id}
+                                property={property}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-lg text-gray-500/80 text-center">
+                            Your properties will appear here
+                        </p>
+                    )}
                 </div>
             </div>
         </main>

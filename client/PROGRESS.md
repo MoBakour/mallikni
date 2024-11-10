@@ -28,12 +28,36 @@
 
 ### November 4, 2024
 
--   Completed property display page
+-   Completed property page
 
 ### November 5, 2024
 
--   Finished half of new property page (input fields)
+-   Worked on new property page
 
 ### November 6, 2024
 
 -   Completed new property page
+-   Fixed bugs in property page
+
+### November 7, 2024
+
+-   Fixed bugs in new property page
+-   Added errors
+
+### November 8, 2024
+
+-   Started working on server side
+-   Implemented authentication logic
+-   Set up database
+
+### November 9, 2024
+
+-   Made feed and new properties page dynamic
+-   Made feed page dynamic
+-   Set up AWS S3 and made images dynamic
+
+### November 10, 2024
+
+-   Made my properties page dynamic
+-   Implemented favorites feature and made favorites page dynamic
+-   Fixed bugs

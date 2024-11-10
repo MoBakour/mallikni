@@ -18,6 +18,11 @@ const UserSchema = new Schema(
             required: true,
             select: false,
         },
+        favorites: {
+            type: [Schema.Types.ObjectId],
+            ref: "Property",
+            default: [],
+        },
     },
     { timestamps: true }
 );

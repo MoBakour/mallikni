@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import IconDeleteFilled from "../../icons/IconDeleteFilled";
 import { TContacts } from "../../types/types";
-import { z } from "zod";
+import { set, z } from "zod";
 
 interface IContactsInput {
     contacts: TContacts;
@@ -13,6 +13,11 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
     const emailInput = useRef<HTMLInputElement>(null);
     const linkInput = useRef<HTMLInputElement>(null);
     const labelInput = useRef<HTMLInputElement>(null);
+
+    const [phone, setPhone] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [link, setLink] = useState<string>("");
+    const [label, setLabel] = useState<string>("");
 
     const [error, setError] = useState<string | null>(null);
 
@@ -35,10 +40,8 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
     });
 
     const addContact = (type: string) => {
-        if (type === "phone" && phoneInput.current?.value) {
-            const phoneValidation = phoneSchema.safeParse(
-                phoneInput.current.value
-            );
+        if (type === "phone" && phone) {
+            const phoneValidation = phoneSchema.safeParse(phone);
             if (!phoneValidation.success) {
                 showError(phoneValidation.error.errors[0].message);
                 return;
@@ -52,17 +55,15 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
                         ...prev.contacts.phones,
                         {
                             id: crypto.randomUUID(),
-                            value: phoneInput.current!.value,
+                            value: phone,
                         },
                     ],
                 },
             }));
 
-            phoneInput.current.value = "";
-        } else if (type === "email" && emailInput.current?.value) {
-            const emailValidation = emailSchema.safeParse(
-                emailInput.current.value
-            );
+            setPhone("");
+        } else if (type === "email" && email) {
+            const emailValidation = emailSchema.safeParse(email);
             if (!emailValidation.success) {
                 showError(emailValidation.error.errors[0].message);
                 return;
@@ -76,21 +77,17 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
                         ...prev.contacts.emails,
                         {
                             id: crypto.randomUUID(),
-                            value: emailInput.current!.value,
+                            value: email,
                         },
                     ],
                 },
             }));
 
-            emailInput.current.value = "";
-        } else if (
-            type === "link" &&
-            linkInput.current?.value &&
-            labelInput.current?.value
-        ) {
+            setEmail("");
+        } else if (type === "link" && link && label) {
             const linkValidation = linkSchema.safeParse({
-                url: linkInput.current.value,
-                label: labelInput.current.value,
+                url: link,
+                label: label,
             });
             if (!linkValidation.success) {
                 showError(linkValidation.error.errors[0].message);
@@ -105,15 +102,15 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
                         ...prev.contacts.links,
                         {
                             id: crypto.randomUUID(),
-                            label: labelInput.current!.value,
-                            url: linkInput.current!.value,
+                            url: link,
+                            label: label,
                         },
                     ],
                 },
             }));
 
-            linkInput.current.value = "";
-            labelInput.current.value = "";
+            setLink("");
+            setLabel("");
         }
     };
 
@@ -170,7 +167,7 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
             linkInput.current?.removeEventListener("keydown", handleLinkEnter);
             labelInput.current?.removeEventListener("keydown", handleLinkEnter);
         };
-    }, []);
+    }, [addContact, phoneInput, emailInput, linkInput, labelInput]);
 
     return (
         <div className="flex flex-col gap-2">
@@ -186,6 +183,8 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
                         id="phone"
                         className="py-1 px-3 rounded-md"
                         ref={phoneInput}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                     />
                     <button
                         type="button"
@@ -222,6 +221,8 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
                         id="email"
                         className="py-1 px-3 rounded-md"
                         ref={emailInput}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <button
                         type="button"
@@ -257,6 +258,8 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
                     id="link"
                     className="py-1 px-3 mb-2 rounded-md block"
                     ref={linkInput}
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
                 />
                 <div className="flex gap-2">
                     <input
@@ -264,6 +267,8 @@ const ContactsInput = ({ contacts, setForm }: IContactsInput) => {
                         placeholder="Label"
                         className="py-1 px-3 rounded-md"
                         ref={labelInput}
+                        value={label}
+                        onChange={(e) => setLabel(e.target.value)}
                     />
                     <button
                         type="button"

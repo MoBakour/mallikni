@@ -60,6 +60,7 @@ const SideMenu = () => {
                             key={btn.title}
                             to={btn.link}
                             className="text-2xl text-center font-bold py-4 border-b-4 transition hover:opacity-70"
+                            onClick={() => setShowSideMenu(false)}
                         >
                             {btn.title}
                         </Link>

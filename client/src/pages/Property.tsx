@@ -102,7 +102,7 @@ const Property = () => {
         );
 
     return (
-        <main className="w-[80%] m-auto">
+        <main className="w-[80%] m-auto pb-14">
             <PropertyHeader
                 property={property}
                 setCurrentImage={setCurrentImage}
@@ -116,7 +116,16 @@ const Property = () => {
                 setCurrentImage={setCurrentImage}
             />
 
-            <div className="my-14">
+            <div className="my-4 flex justify-center items-center gap-2 w-fit">
+                <span>By</span>
+                <img
+                    src="https://wallpapers-clan.com/wp-content/uploads/2022/08/default-pfp-7.jpg"
+                    className="w-[30px] h-[30px] rounded-full"
+                />
+                <span className="font-bold">{property.owner.username}</span>
+            </div>
+
+            <div>
                 <header className="flex">
                     {tabs.map((tab) => (
                         <button

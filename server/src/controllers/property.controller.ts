@@ -6,6 +6,7 @@ import Property from "../models/property.model";
 import { propertySchema } from "../utils/validation";
 import { s3_get, s3_post } from "../utils/s3";
 import { ZodError } from "zod";
+import User from "../models/user.model";
 
 const router = express.Router();
 
@@ -88,6 +89,7 @@ router.post("/new", (req: CustomRequest, res) => {
 
 router.get("/property/:id", async (req, res) => {
     try {
+        // get property by id
         const property = await Property.findById(req.params.id).populate(
             "owner"
         );
@@ -99,6 +101,7 @@ router.get("/property/:id", async (req, res) => {
             return;
         }
 
+        // return response
         res.status(200).json({
             property,
         });
@@ -112,10 +115,12 @@ router.get("/property/:id", async (req, res) => {
 
 router.get("/sample", async (req, res) => {
     try {
+        // get sample properties
         const properties = await Property.aggregate([
             { $sample: { size: 10 } },
         ]);
 
+        // return response
         res.status(200).json({
             properties,
         });
@@ -127,8 +132,82 @@ router.get("/sample", async (req, res) => {
     }
 });
 
+router.get("/own", async (req: CustomRequest, res) => {
+    try {
+        // find properties owned by user
+        const properties = await Property.find({ owner: req.user._id });
+
+        // return response
+        res.status(200).json({
+            properties,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Internal server error",
+        });
+    }
+});
+
+router.get("/favorites", async (req: CustomRequest, res) => {
+    try {
+        // get user favorite properties
+        const properties = await Property.find({
+            _id: { $in: req.user.favorites },
+        });
+
+        // return response
+        res.status(200).json({
+            properties,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Internal server error",
+        });
+    }
+});
+
+router.delete("/delete/:id", async (req: CustomRequest, res) => {
+    try {
+        // delete property
+        const deletedProperty = await Property.findOneAndDelete({
+            _id: req.params.id,
+            owner: req.user._id,
+        });
+
+        if (!deletedProperty) {
+            res.status(404).json({
+                error: "Property not found",
+            });
+            return;
+        }
+
+        // remove property from users favorites
+        await User.updateMany(
+            {
+                favorites: req.params.id,
+            },
+            {
+                $pull: { favorites: req.params.id },
+            }
+        );
+
+        // return response
+        res.status(200).json({
+            message: "Property deleted successfully",
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Internal server error",
+        });
+    }
+});
+
 router.get("/image/:key", async (req, res) => {
     try {
+        // get image from s3 and stream it to user
         const stream = (await s3_get(req.params.key)) as NodeJS.ReadableStream;
         stream.pipe(res);
     } catch (err) {

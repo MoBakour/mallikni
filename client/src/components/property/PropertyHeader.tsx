@@ -5,6 +5,10 @@ import PriceCard from "../common/PriceCard";
 import IconDelete from "../../icons/IconDelete";
 import IconEdit from "../../icons/IconEdit";
 import useAuthStore from "../../stores/auth.store";
+import { useNavigate } from "react-router-dom";
+import useAxios from "../../hooks/useAxios";
+import { useState } from "react";
+import IconFilledHeart from "../../icons/IconFilledHeart";
 
 interface IPropertyHeader {
     property: IProperty;
@@ -12,7 +16,47 @@ interface IPropertyHeader {
 }
 
 const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
-    const auth = useAuthStore((state) => state.auth);
+    const { auth, setAuth } = useAuthStore((state) => ({
+        auth: state.auth,
+        setAuth: state.setAuth,
+    }));
+    const navigate = useNavigate();
+    const axios = useAxios();
+    const [favored, setFavored] = useState<boolean>(
+        !!auth?.user?.favorites.includes(property._id)
+    );
+
+    const handleFavorite = async () => {
+        if (!auth?.user) {
+            navigate("/login");
+            return;
+        }
+
+        setFavored((prev) => !prev);
+
+        try {
+            const response = await axios.patch("/users/favor", {
+                propertyId: property._id,
+            });
+
+            if (response.status === 200) {
+                setAuth({
+                    ...auth,
+                    user: {
+                        ...auth.user,
+                        favorites: response.data.favored
+                            ? [...auth.user.favorites, property._id]
+                            : auth.user.favorites.filter(
+                                  (id) => id !== property._id
+                              ),
+                    },
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            setFavored((prev) => !prev);
+        }
+    };
 
     return (
         <header className="flex justify-between mt-20 gap-4">
@@ -102,8 +146,13 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                 <button
                     className="text-3xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
                     title="Add to favorites"
+                    onClick={handleFavorite}
                 >
-                    {<IconEmptyHeart />}
+                    {favored ? (
+                        <IconFilledHeart className="text-error-1" />
+                    ) : (
+                        <IconEmptyHeart />
+                    )}
                 </button>
 
                 {auth?.user && auth.user._id === property.owner._id && (

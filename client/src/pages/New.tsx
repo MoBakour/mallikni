@@ -27,8 +27,8 @@ const New = () => {
         category: "residential",
         country: "ae",
         city: "",
-        price: 0,
-        area: 0,
+        price: "",
+        area: "",
         beds: 0,
         baths: 0,
         age: 0,
@@ -59,6 +59,8 @@ const New = () => {
         null
     );
     const [cityError, setCityError] = useState<string | null>(null);
+    const [priceError, setPriceError] = useState<string | null>(null);
+    const [areaError, setAreaError] = useState<string | null>(null);
     const [imageError, setImageError] = useState<string | null>(null);
     const [locationError, setLocationError] = useState<string | null>(null);
 
@@ -74,6 +76,14 @@ const New = () => {
         try {
             const formData = new FormData();
             let error = false;
+
+            // reset errors
+            setTitleError(null);
+            setDescriptionError(null);
+            setCityError(null);
+            setLocationError(null);
+            setPriceError(null);
+            setAreaError(null);
 
             // verify fields
             if (form.title === "") {
@@ -102,6 +112,22 @@ const New = () => {
                 setLocationError("Location is required");
                 error = true;
             }
+            if (form.price === "") {
+                setPriceError("Price is required");
+                error = true;
+            }
+            if (+form.price < 0) {
+                setPriceError("Price cannot be negative");
+                error = true;
+            }
+            if (form.area === "") {
+                setAreaError("Area is required");
+                error = true;
+            }
+            if (+form.area < 0) {
+                setAreaError("Area cannot be negative");
+                error = true;
+            }
 
             if (error) {
                 return scrollToTop();
@@ -115,6 +141,8 @@ const New = () => {
                 "data",
                 JSON.stringify({
                     ...form,
+                    price: +form.price,
+                    area: +form.area,
                     location:
                         form.location === null
                             ? null
@@ -260,13 +288,21 @@ const New = () => {
                                 className="py-1 px-3 rounded-md w-full"
                                 value={form.price}
                                 onChange={(e) =>
-                                    setField("price", e.target.valueAsNumber)
+                                    setField("price", e.target.value)
                                 }
                             />
+                            <p className="text-sm text-error-1 mt-1 empty:mt-0">
+                                {priceError}
+                            </p>
                         </label>
 
                         <label htmlFor="area" className="flex-[0.45]">
-                            <p className="pb-1 font-medium text-xl">Area</p>
+                            <p className="pb-1 font-medium text-xl flex items-center gap-2">
+                                <span>Area</span>
+                                <span className="text-sm text-gray-500">
+                                    (sqft)
+                                </span>
+                            </p>
                             <input
                                 type="number"
                                 placeholder="Property area"
@@ -274,9 +310,12 @@ const New = () => {
                                 className="py-1 px-3 rounded-md w-full"
                                 value={form.area}
                                 onChange={(e) =>
-                                    setField("area", e.target.valueAsNumber)
+                                    setField("area", e.target.value)
                                 }
                             />
+                            <p className="text-sm text-error-1 mt-1 empty:mt-0">
+                                {areaError}
+                            </p>
                         </label>
                     </div>
 
