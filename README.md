@@ -8,12 +8,12 @@ OLD TODOS:
 
 TODOS:
 
-Make suggestions real
-Implement activation system
-Build settings page
-Remove favorites and other states when log out
-Replace auth? with authorized?
+-   Make suggestions real
+-   Implement activation system
+-   Build settings page
+-   Remove favorites and other states when log out
+-   Replace auth? with authorized?
 
-Make website responsive
-Write about, contact, and privacy policy pages
-Close side menu on navigate to about/contact/privacy from side menu
+-   Make website responsive
+-   Write about, contact, and privacy policy pages
+-   Close side menu on navigate to about/contact/privacy from side menu
