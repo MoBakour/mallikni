@@ -9,7 +9,6 @@ OLD TODOS:
 TODOS:
 
 Make suggestions real
-Implement edit option
 Implement activation system
 Build settings page
 Remove favorites and other states when log out
