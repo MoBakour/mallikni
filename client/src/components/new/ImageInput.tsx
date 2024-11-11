@@ -34,10 +34,23 @@ const ImageInput = ({ images, setImages, error, setError }: IImageInput) => {
             return;
         }
 
-        const imagesObject = newImages.map((image) => ({
-            id: crypto.randomUUID(),
-            file: image,
-        }));
+        const imagesObject: TImage[] = newImages.map((image) => {
+            const imageId = crypto.randomUUID();
+
+            const newFile = new File(
+                [image],
+                `${imageId}.${image.name.split(".").pop()}`,
+                {
+                    type: image.type,
+                }
+            );
+
+            return {
+                id: imageId,
+                file: newFile,
+                type: "new",
+            };
+        });
 
         setImages([...images, ...imagesObject]);
     };
@@ -135,7 +148,15 @@ const ImageInput = ({ images, setImages, error, setError }: IImageInput) => {
                             <img
                                 key={image.id}
                                 id={image.id}
-                                src={URL.createObjectURL(image.file)}
+                                src={
+                                    image.type === "new"
+                                        ? URL.createObjectURL(
+                                              image.file as File
+                                          )
+                                        : `${
+                                              import.meta.env.VITE_API_URL
+                                          }/properties/image/${image.file}`
+                                }
                                 alt="Property Image"
                                 className={clsx(
                                     "sort-handle shadow-md w-[100px] h-[100px] object-cover rounded-md",

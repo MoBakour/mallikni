@@ -89,6 +89,16 @@ function App() {
                             }
                         />
                         <Route
+                            path="/edit/:id"
+                            element={
+                                authorized ? (
+                                    <New edit={true} />
+                                ) : (
+                                    <Navigate to="/login" replace />
+                                )
+                            }
+                        />
+                        <Route
                             path="/settings"
                             element={
                                 authorized ? (

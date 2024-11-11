@@ -22,7 +22,7 @@ const FeedResults = ({ data, loading }: IFeedResults) => {
 
                 <div className="flex flex-col gap-8">
                     {loading ? (
-                        <div className="bg-slate-500/20 rounded-xl h-[300px] flex justify-center items-center">
+                        <div className="bg-slate-500/20 rounded-xl h-[200px] flex justify-center items-center">
                             <IconLoader2 className="animate-spin text-5xl m-auto opacity-40" />
                         </div>
                     ) : data.length > 0 ? (

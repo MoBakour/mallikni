@@ -80,7 +80,8 @@ export interface IFilters {
 
 export type TImage = {
     id: string;
-    file: File;
+    file: string | File;
+    type: "new" | "edit";
 };
 
 export type TContact = {

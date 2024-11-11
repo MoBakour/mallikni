@@ -186,6 +186,9 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                             <button
                                 className="text-2xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
                                 title="Edit Property"
+                                onClick={() =>
+                                    navigate(`/edit/${property._id}`)
+                                }
                             >
                                 {<IconEdit />}
                             </button>

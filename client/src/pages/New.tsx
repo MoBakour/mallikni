@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LatLng } from "leaflet";
 import LocationsData from "../assets/countries.json";
 import { ICountry, TImage, TContacts } from "../types/types";
@@ -17,10 +17,18 @@ import Map from "../components/new/Map";
 import ContactsInput from "../components/new/ContactsInput";
 import useAxios from "../hooks/useAxios";
 import IconLoader2 from "../icons/IconLoader2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import clsx from "clsx";
 
-const New = () => {
+interface INew {
+    edit?: boolean;
+}
+
+const New = ({ edit = false }: INew) => {
+    const axios = useAxios();
+    const navigate = useNavigate();
+    const { id } = useParams();
+
     const initialState = {
         title: "",
         description: "",
@@ -49,12 +57,12 @@ const New = () => {
         } as TContacts,
     };
 
-    const axios = useAxios();
-    const navigate = useNavigate();
-
     const [form, setForm] = useState(initialState);
     const [map, setMap] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+
+    const [editLoading, setEditLoading] = useState<boolean>(true);
+    const [editFound, setEditFound] = useState<boolean>(false);
 
     // errors
     const [titleError, setTitleError] = useState<string | null>(null);
@@ -174,7 +182,7 @@ const New = () => {
                             url: item.url,
                         })),
                     },
-                    images: undefined,
+                    images: form.images,
                 })
             );
 
@@ -184,10 +192,15 @@ const New = () => {
             });
 
             // send request
-            const response = await axios.post("/properties/new", formData);
+            let response;
+            if (edit) {
+                response = await axios.put(`/properties/edit/${id}`, formData);
+            } else {
+                response = await axios.post("/properties/new", formData);
+            }
 
             if (response.status === 200) {
-                navigate(`/property/${response.data.property._id.toString()}`);
+                navigate(`/property/${response.data.propertyId.toString()}`);
             }
         } catch (err: any) {
             console.error(err);
@@ -200,9 +213,106 @@ const New = () => {
         }
     };
 
+    useEffect(() => {
+        if (edit) {
+            (async () => {
+                try {
+                    const response = await axios.get(
+                        `/properties/property/${id}`
+                    );
+
+                    if (response.status === 200) {
+                        const property = response.data.property;
+
+                        setForm({
+                            title: property.title,
+                            description: property.description,
+                            mode: property.mode,
+                            category: property.category,
+                            country: property.country,
+                            city: property.city,
+                            price: property.price.toString(),
+                            area: property.area.toString(),
+                            frequency: property.frequency,
+                            currency: property.currency,
+                            beds: property.beds,
+                            baths: property.baths,
+                            age: property.age,
+                            furnished: property.furnished,
+                            balcony: property.balcony,
+                            elevator: property.elevator,
+                            parking: property.parking,
+                            security: property.security,
+                            images: property.images.map((image: string) => ({
+                                id: crypto.randomUUID(),
+                                file: image as string,
+                                type: "edit",
+                            })) as TImage[],
+                            location: new LatLng(
+                                property.location[0],
+                                property.location[1]
+                            ),
+                            contacts: {
+                                phones: property.contacts.phones.map(
+                                    (phone: string) => ({
+                                        id: crypto.randomUUID(),
+                                        value: phone,
+                                    })
+                                ),
+                                emails: property.contacts.emails.map(
+                                    (email: string) => ({
+                                        id: crypto.randomUUID(),
+                                        value: email,
+                                    })
+                                ),
+                                links: property.contacts.links.map(
+                                    (link: { label: string; url: string }) => ({
+                                        id: crypto.randomUUID(),
+                                        label: link.label,
+                                        url: link.url,
+                                    })
+                                ),
+                            },
+                        });
+                    }
+
+                    setEditFound(true);
+                } catch (err: any) {
+                    console.error(err);
+                } finally {
+                    setEditLoading(false);
+                }
+            })();
+        }
+    }, []);
+
+    if (edit && !editFound) {
+        return (
+            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                {editLoading ? (
+                    <IconLoader2 className="animate-spin text-5xl" />
+                ) : (
+                    <div className="flex flex-col justify-center items-center">
+                        <p className="text-2xl text-gray-400">
+                            Property not found
+                        </p>
+                        <button
+                            onClick={() => navigate(-1)}
+                            className="text-blue-500"
+                        >
+                            Go back
+                        </button>
+                    </div>
+                )}
+            </div>
+        );
+    }
+
     return (
         <main className="w-[80%] m-auto pb-32">
-            <h1 className="my-10 font-bold text-3xl">Post New Property</h1>
+            <h1 className="my-10 font-bold text-3xl">
+                {edit ? "Edit" : "Post New"} Property
+            </h1>
 
             <form className="flex justify-between">
                 <section className="flex flex-col gap-8 w-[400px]">
@@ -530,13 +640,15 @@ const New = () => {
 
             {/* submit form */}
             <button
-                title="Post Property"
+                title={edit ? "Edit Property" : "Post Property"}
                 className="bg-theme-1 w-[240px] h-[50px] rounded-xl font-bold text-xl text-white mt-12 relative left-1/2 -translate-x-1/2 transition hover:scale-[1.01] flex justify-center items-center disabled:opacity-50 disabled:pointer-events-none"
                 onClick={handleSubmit}
                 disabled={loading}
             >
                 {loading ? (
                     <IconLoader2 className="animate-spin text-3xl" />
+                ) : edit ? (
+                    "Edit Property"
                 ) : (
                     "Post Property"
                 )}

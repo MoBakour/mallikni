@@ -1,10 +1,14 @@
 import express from "express";
 import { MulterError } from "multer";
 import { CustomRequest } from "../types/types";
-import { deleteFiles, upload } from "../middlewares/multer.middleware";
+import {
+    deleteFiles,
+    handleMulterErrors,
+    upload,
+} from "../middlewares/multer.middleware";
 import Property from "../models/property.model";
 import { propertySchema } from "../utils/validation";
-import { s3_get, s3_post } from "../utils/s3";
+import { s3_delete, s3_get, s3_post } from "../utils/s3";
 import { ZodError } from "zod";
 import User from "../models/user.model";
 import { translateQueryToMQL } from "../utils/utils";
@@ -15,31 +19,8 @@ router.post("/new", (req: CustomRequest, res) => {
     // use multer
     upload(req, res, async (err) => {
         // handle errors
-        if (
-            err instanceof MulterError &&
-            err.code === "LIMIT_UNEXPECTED_FILE"
-        ) {
-            res.status(400).json({
-                error: "You can upload a maximum of 30 images",
-                code: "IMAGE",
-            });
-            return;
-        } else if (
-            err instanceof MulterError &&
-            err.code === "LIMIT_FILE_SIZE"
-        ) {
-            res.status(400).json({
-                error: "Size of each image must not exceed 5 MB",
-                code: "IMAGE",
-            });
-            return;
-        } else if (err) {
-            console.error(err);
-            res.status(400).json({
-                error: err.message,
-            });
-            return;
-        }
+        const cont = handleMulterErrors(res, err);
+        if (!cont) return;
 
         try {
             const requestBody = JSON.parse(req.body.data);
@@ -52,9 +33,8 @@ router.post("/new", (req: CustomRequest, res) => {
             propertySchema.parse(data);
 
             // store images in s3
-            let keys: string[] = [];
             if (req.files && Array.isArray(req.files)) {
-                keys = await Promise.all(
+                await Promise.all(
                     req.files.map((file: Express.Multer.File) => s3_post(file))
                 );
             }
@@ -62,12 +42,17 @@ router.post("/new", (req: CustomRequest, res) => {
             // store in db
             const property = await Property.create({
                 ...data,
-                images: keys,
+                images:
+                    req.files && Array.isArray(req.files)
+                        ? req.files.map(
+                              (file: Express.Multer.File) => file.originalname
+                          )
+                        : [],
             });
 
             // send response
             res.status(200).json({
-                property,
+                propertyId: property._id,
             });
         } catch (err) {
             if (err instanceof ZodError) {
@@ -80,6 +65,81 @@ router.post("/new", (req: CustomRequest, res) => {
                     error: "Internal server error",
                 });
             }
+        } finally {
+            if (req.files && Array.isArray(req.files)) {
+                await deleteFiles(req.files.map((file) => file.path));
+            }
+        }
+    });
+});
+
+router.put("/edit/:id", (req: CustomRequest, res) => {
+    upload(req, res, async (err) => {
+        // handle errors
+        const cont = handleMulterErrors(res, err);
+        if (!cont) return;
+
+        try {
+            // validate body
+            const data = JSON.parse(req.body.data);
+            propertySchema.parse(data);
+
+            // get property
+            const property = await Property.findById(req.params.id);
+
+            if (!property) {
+                res.status(404).json({
+                    error: "Property not found",
+                });
+                return;
+            }
+
+            // find removed images and delete from s3 & db
+            const removedImages = property.images.filter(
+                (image) => !data.images.some((img: any) => img.file === image)
+            );
+            await s3_delete(removedImages);
+            property.images = property.images.filter(
+                (img: string) => !removedImages.includes(img)
+            );
+
+            // store new images in s3
+            let newImages: string[] = [];
+            if (req.files && Array.isArray(req.files)) {
+                await Promise.all(
+                    req.files.map((file: Express.Multer.File) => s3_post(file))
+                );
+
+                // find new images
+                newImages = req.files
+                    .filter(
+                        (file: any) =>
+                            !property.images.includes(file.originalname)
+                    )
+                    .map((file: any) => file.originalname);
+
+                data.images = data.images.map((img: any) => {
+                    if (img.type === "new") {
+                        img.file = newImages.shift();
+                    }
+
+                    return img.file;
+                });
+            }
+
+            // store changes in db
+            Object.assign(property, data);
+            await property.save();
+
+            // return response
+            res.status(200).json({
+                propertyId: property._id,
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                error: "Internal server error",
+            });
         } finally {
             if (req.files && Array.isArray(req.files)) {
                 await deleteFiles(req.files.map((file) => file.path));
@@ -206,6 +266,9 @@ router.delete("/property/:id", async (req: CustomRequest, res) => {
             });
             return;
         }
+
+        // delete images from s3
+        await s3_delete(deletedProperty.images);
 
         // remove property from users favorites
         await User.updateMany(

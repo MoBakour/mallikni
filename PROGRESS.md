@@ -62,3 +62,9 @@
 -   Implemented favorites feature and made favorites page dynamic
 -   Fixed bugs
 -   Made filters dynamic
+-   Implemented delete property feature
+
+### November 11, 2024
+
+-   Implemented edit property feature
+-   Fixed bugs

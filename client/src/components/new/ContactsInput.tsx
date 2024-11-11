@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import IconDeleteFilled from "../../icons/IconDeleteFilled";
 import { TContacts } from "../../types/types";
-import { set, z } from "zod";
+import { z } from "zod";
 
 interface IContactsInput {
     contacts: TContacts;
