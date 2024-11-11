@@ -1,7 +1,13 @@
 import clsx from "clsx";
 import IconTick from "../../icons/IconTick";
 
-const CheckboxInput = ({ title, checked, setChecked }: any) => {
+interface ICheckboxInput {
+    title: string;
+    checked: boolean;
+    setChecked: (value: boolean) => void;
+}
+
+const CheckboxInput = ({ title, checked, setChecked }: ICheckboxInput) => {
     return (
         <label
             className="flex items-center w-[140px] cursor-pointer"

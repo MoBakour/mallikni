@@ -1,24 +1,11 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { LatLng } from "leaflet";
-import LocationsData from "../assets/countries.json";
-import { ICountry, TImage, TContacts } from "../types/types";
-
-// icons
-import IconClose from "../icons/IconClose";
-import IconLocation from "../icons/IconLocation";
-
-// components
-import RadioInput from "../components/new/RadioInput";
-import SelectInput from "../components/new/SelectInput";
-import NumberInput from "../components/new/NumberInput";
-import CheckboxInput from "../components/new/CheckboxInput";
-import ImageInput from "../components/new/ImageInput";
-import Map from "../components/new/Map";
-import ContactsInput from "../components/new/ContactsInput";
+import { TImage, TContacts } from "../types/types";
 import useAxios from "../hooks/useAxios";
 import IconLoader2 from "../icons/IconLoader2";
-import { useNavigate, useParams } from "react-router-dom";
-import clsx from "clsx";
+import MediaInputs from "../components/new/MediaInputs";
+import FieldInputs from "../components/new/FieldInputs";
 
 interface INew {
     edit?: boolean;
@@ -58,7 +45,6 @@ const New = ({ edit = false }: INew) => {
     };
 
     const [form, setForm] = useState(initialState);
-    const [map, setMap] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
     const [editLoading, setEditLoading] = useState<boolean>(true);
@@ -294,327 +280,28 @@ const New = ({ edit = false }: INew) => {
             </h1>
 
             <form className="flex justify-between">
-                <section className="flex flex-col gap-8 w-[400px]">
-                    <label htmlFor="title">
-                        <p className="pb-1 font-medium text-xl">Title</p>
-                        <input
-                            type="text"
-                            placeholder="Property title"
-                            id="title"
-                            className="py-1 px-3 rounded-md w-full"
-                            value={form.title}
-                            onChange={(e) => setField("title", e.target.value)}
-                        />
-                        <p className="text-sm text-error-1 mt-1 empty:mt-0">
-                            {titleError}
-                        </p>
-                    </label>
+                <FieldInputs
+                    form={form}
+                    setField={setField}
+                    titleError={titleError}
+                    descError={descError}
+                    cityError={cityError}
+                    setCityError={setCityError}
+                    priceError={priceError}
+                    areaError={areaError}
+                    freqError={freqError}
+                    currencyError={currencyError}
+                />
 
-                    <label htmlFor="description">
-                        <p className="pb-1 font-medium text-xl">Description</p>
-                        <textarea
-                            rows={4}
-                            placeholder="Property description"
-                            id="description"
-                            className="py-1 px-3 rounded-md w-full"
-                            value={form.description}
-                            onChange={(e) =>
-                                setField("description", e.target.value)
-                            }
-                        />
-                        <p className="text-sm text-error-1 mt-1 empty:mt-0">
-                            {descError}
-                        </p>
-                    </label>
-
-                    <RadioInput
-                        options={[
-                            { label: "For rent", title: "rent" },
-                            { label: "For sale", title: "sale" },
-                        ]}
-                        selection={form.mode}
-                        setSelection={(value) => {
-                            setField("mode", value);
-                            if (value === "sale") {
-                                setField("frequency", "");
-                            }
-                        }}
-                    />
-
-                    <RadioInput
-                        options={[
-                            { label: "Residential", title: "residential" },
-                            { label: "Commercial", title: "commercial" },
-                        ]}
-                        selection={form.category}
-                        setSelection={(value) => setField("category", value)}
-                    />
-
-                    <div className="flex justify-between">
-                        <SelectInput
-                            title="country"
-                            value={form.country}
-                            setValue={(value) => setField("country", value)}
-                        >
-                            {LocationsData.map((country: ICountry) => (
-                                <option
-                                    key={country.code2.toLowerCase().trim()}
-                                    value={country.code2.toLowerCase().trim()}
-                                >
-                                    {country.name}
-                                </option>
-                            ))}
-                        </SelectInput>
-
-                        <SelectInput
-                            title="city"
-                            value={form.city}
-                            setValue={(value) => setField("city", value)}
-                            error={cityError}
-                            setError={setCityError}
-                        >
-                            <>
-                                <option value="">--Select City--</option>
-                                {LocationsData.find(
-                                    (item) =>
-                                        item.code2.toLowerCase().trim() ===
-                                        form.country.toLowerCase().trim()
-                                )?.states.map((state) => (
-                                    <option
-                                        key={state.code.toLowerCase().trim()}
-                                        value={state.code.toLowerCase().trim()}
-                                    >
-                                        {state.name}
-                                    </option>
-                                ))}
-                            </>
-                        </SelectInput>
-                    </div>
-
-                    <div className="flex justify-between">
-                        <label htmlFor="price" className="flex-[0.45]">
-                            <p className="pb-1 font-medium text-xl">Price</p>
-                            <input
-                                type="number"
-                                placeholder="Property price"
-                                id="price"
-                                className="py-1 px-3 rounded-md w-full"
-                                value={form.price}
-                                onChange={(e) =>
-                                    setField("price", e.target.value)
-                                }
-                            />
-                            <p className="text-sm text-error-1 mt-1 empty:mt-0">
-                                {priceError}
-                            </p>
-                        </label>
-
-                        <label htmlFor="area" className="flex-[0.45]">
-                            <p className="pb-1 font-medium text-xl flex items-center gap-2">
-                                <span>Area</span>
-                                <span className="text-sm text-gray-500">
-                                    (sqft)
-                                </span>
-                            </p>
-                            <input
-                                type="number"
-                                placeholder="Property area"
-                                id="area"
-                                className="py-1 px-3 rounded-md w-full"
-                                value={form.area}
-                                onChange={(e) =>
-                                    setField("area", e.target.value)
-                                }
-                            />
-                            <p className="text-sm text-error-1 mt-1 empty:mt-0">
-                                {areaError}
-                            </p>
-                        </label>
-                    </div>
-
-                    <div className="flex justify-between">
-                        <label
-                            htmlFor="price"
-                            className={clsx("flex-[0.45]", {
-                                "opacity-50 pointer-events-none":
-                                    form.mode !== "rent",
-                            })}
-                        >
-                            <SelectInput
-                                title="Pay Cycle"
-                                value={form.frequency}
-                                setValue={(value) =>
-                                    setField("frequency", value)
-                                }
-                            >
-                                <option value="">--Select Pay Cycle--</option>
-                                <option value="year">Yearly</option>
-                                <option value="month">Monthly</option>
-                                <option value="week">Weekly</option>
-                            </SelectInput>
-                            <p className="text-sm text-error-1 mt-1 empty:mt-0">
-                                {freqError}
-                            </p>
-                        </label>
-
-                        <label htmlFor="area" className="flex-[0.45]">
-                            <p className="pb-1 font-medium text-xl flex items-center gap-2">
-                                Currency
-                            </p>
-                            <input
-                                type="text"
-                                placeholder="Price currency"
-                                id="area"
-                                className="py-1 px-3 rounded-md w-full"
-                                value={form.currency}
-                                onChange={(e) =>
-                                    setField("currency", e.target.value)
-                                }
-                            />
-                            <p className="text-sm text-error-1 mt-1 empty:mt-0">
-                                {currencyError}
-                            </p>
-                        </label>
-                    </div>
-
-                    <div className="flex justify-between">
-                        <NumberInput
-                            title="Beds"
-                            value={form.beds}
-                            setValue={(value) => setField("beds", value)}
-                        />
-                        <NumberInput
-                            title="Baths"
-                            value={form.baths}
-                            setValue={(value) => setField("baths", value)}
-                        />
-                        <NumberInput
-                            title="Age"
-                            value={form.age}
-                            setValue={(value) => setField("age", value)}
-                        />
-                    </div>
-
-                    <div className="flex flex-wrap gap-y-6 gap-x-24 justify-center">
-                        <CheckboxInput
-                            title="Furnished"
-                            checked={form.furnished}
-                            setChecked={(value: any) =>
-                                setField("furnished", value)
-                            }
-                        />
-                        <CheckboxInput
-                            title="Balcony"
-                            checked={form.balcony}
-                            setChecked={(value: any) =>
-                                setField("balcony", value)
-                            }
-                        />
-                        <CheckboxInput
-                            title="Elevator"
-                            checked={form.elevator}
-                            setChecked={(value: any) =>
-                                setField("elevator", value)
-                            }
-                        />
-                        <CheckboxInput
-                            title="Parking"
-                            checked={form.parking}
-                            setChecked={(value: any) =>
-                                setField("parking", value)
-                            }
-                        />
-                        <CheckboxInput
-                            title="Security"
-                            checked={form.security}
-                            setChecked={(value: any) =>
-                                setField("security", value)
-                            }
-                        />
-                    </div>
-                </section>
-
-                <section className="flex flex-col gap-8 w-[400px]">
-                    {/* image input */}
-                    <div>
-                        <p className="pb-1 font-medium text-xl">Images</p>
-
-                        <div className="w-[240px]">
-                            <ImageInput
-                                images={form.images}
-                                setImages={(value: any) =>
-                                    setField("images", value)
-                                }
-                                error={imageError}
-                                setError={setImageError}
-                            />
-                        </div>
-                    </div>
-
-                    {/* location input */}
-                    <div className="w-[240px]">
-                        <p className="pb-1 font-medium text-xl">Location</p>
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setMap(true);
-                                setLocationError(null);
-                            }}
-                            className="w-full h-[160px] mb-6 bg-slate-300 rounded-2xl overflow-hidden flex justify-center items-center transition opacity-80 hover:opacity-100 cursor-pointer"
-                            title="Select Location"
-                        >
-                            {form.location === null ? (
-                                <IconLocation className="text-5xl text-gray-600" />
-                            ) : (
-                                <Map
-                                    key={form.location.lat + form.location.lng}
-                                    location={form.location}
-                                    setLocation={(value: any) =>
-                                        setField("location", value)
-                                    }
-                                    picker={false}
-                                />
-                            )}
-                        </button>
-                        <p className="mb-6 mt-2 empty:mt-0 bg-error-2 text-error-1 text-sm px-2 py-2 empty:p-0 text-center rounded-md">
-                            {locationError}
-                        </p>
-                    </div>
-
-                    {/* contacts input */}
-                    <div>
-                        <p className="pb-1 font-medium text-xl">Contacts</p>
-
-                        <ContactsInput
-                            contacts={form.contacts}
-                            setForm={setForm}
-                        />
-                    </div>
-
-                    {/* map popup */}
-                    {map && (
-                        <div className="fixed z-10 inset-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-70">
-                            {/* close popup */}
-                            <button
-                                type="button"
-                                className="absolute top-5 right-5"
-                                onClick={() => setMap(false)}
-                                title="Close [ESC]"
-                            >
-                                <IconClose className="text-white text-4xl" />
-                            </button>
-
-                            <div className="w-[80%] h-[80%] rounded-2xl overflow-hidden">
-                                <Map
-                                    location={form.location}
-                                    setLocation={(value: any) =>
-                                        setField("location", value)
-                                    }
-                                />
-                            </div>
-                        </div>
-                    )}
-                </section>
+                <MediaInputs
+                    form={form}
+                    setForm={setForm}
+                    setField={setField}
+                    locationError={locationError}
+                    setLocationError={setLocationError}
+                    imageError={imageError}
+                    setImageError={setImageError}
+                />
             </form>
 
             {/* submit form */}
