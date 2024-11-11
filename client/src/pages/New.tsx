@@ -66,9 +66,7 @@ const New = ({ edit = false }: INew) => {
 
     // errors
     const [titleError, setTitleError] = useState<string | null>(null);
-    const [descriptionError, setDescriptionError] = useState<string | null>(
-        null
-    );
+    const [descError, setDescError] = useState<string | null>(null);
     const [cityError, setCityError] = useState<string | null>(null);
     const [priceError, setPriceError] = useState<string | null>(null);
     const [areaError, setAreaError] = useState<string | null>(null);
@@ -92,7 +90,7 @@ const New = ({ edit = false }: INew) => {
 
             // reset errors
             setTitleError(null);
-            setDescriptionError(null);
+            setDescError(null);
             setCityError(null);
             setLocationError(null);
             setPriceError(null);
@@ -110,13 +108,11 @@ const New = ({ edit = false }: INew) => {
                 error = true;
             }
             if (form.description === "") {
-                setDescriptionError("Description is required");
+                setDescError("Description is required");
                 error = true;
             }
             if (form.description.length > 1000) {
-                setDescriptionError(
-                    "Description cannot exceed 1000 characters"
-                );
+                setDescError("Description cannot exceed 1000 characters");
                 error = true;
             }
             if (form.city === "") {
@@ -225,24 +221,7 @@ const New = ({ edit = false }: INew) => {
                         const property = response.data.property;
 
                         setForm({
-                            title: property.title,
-                            description: property.description,
-                            mode: property.mode,
-                            category: property.category,
-                            country: property.country,
-                            city: property.city,
-                            price: property.price.toString(),
-                            area: property.area.toString(),
-                            frequency: property.frequency,
-                            currency: property.currency,
-                            beds: property.beds,
-                            baths: property.baths,
-                            age: property.age,
-                            furnished: property.furnished,
-                            balcony: property.balcony,
-                            elevator: property.elevator,
-                            parking: property.parking,
-                            security: property.security,
+                            ...property,
                             images: property.images.map((image: string) => ({
                                 id: crypto.randomUUID(),
                                 file: image as string,
@@ -344,7 +323,7 @@ const New = ({ edit = false }: INew) => {
                             }
                         />
                         <p className="text-sm text-error-1 mt-1 empty:mt-0">
-                            {descriptionError}
+                            {descError}
                         </p>
                     </label>
 
