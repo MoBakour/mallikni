@@ -1,10 +1,9 @@
 import express from "express";
-import { MulterError } from "multer";
 import { CustomRequest } from "../types/types";
 import {
     deleteFiles,
     handleMulterErrors,
-    upload,
+    uploadPropertyImages,
 } from "../middlewares/multer.middleware";
 import Property from "../models/property.model";
 import { propertySchema } from "../utils/validation";
@@ -17,7 +16,7 @@ const router = express.Router();
 
 router.post("/new", (req: CustomRequest, res) => {
     // use multer
-    upload(req, res, async (err) => {
+    uploadPropertyImages(req, res, async (err) => {
         // handle errors
         const cont = handleMulterErrors(res, err);
         if (!cont) return;
@@ -74,7 +73,7 @@ router.post("/new", (req: CustomRequest, res) => {
 });
 
 router.put("/edit/:id", (req: CustomRequest, res) => {
-    upload(req, res, async (err) => {
+    uploadPropertyImages(req, res, async (err) => {
         // handle errors
         const cont = handleMulterErrors(res, err);
         if (!cont) return;

@@ -134,7 +134,13 @@ const Property = () => {
             <div className="my-4 flex justify-center items-center gap-2 w-fit">
                 <span>By</span>
                 <img
-                    src="https://wallpapers-clan.com/wp-content/uploads/2022/08/default-pfp-7.jpg"
+                    src={
+                        property.owner.avatar
+                            ? `${import.meta.env.VITE_API_URL}/users/avatar/${
+                                  property.owner.avatar
+                              }`
+                            : "/images/default-avatar.png"
+                    }
                     className="w-[30px] h-[30px] rounded-full"
                 />
                 <span className="font-bold">{property.owner.username}</span>

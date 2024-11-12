@@ -2,7 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import { ZodError } from "zod";
 import { CustomRequest } from "../types/types";
-import { userSchema } from "../utils/validation";
+import { createUserSchema } from "../utils/validation";
 import User from "../models/user.model";
 import { sendActivationEmail } from "../utils/mailer";
 import { generateActivationCode } from "../utils/utils";
@@ -13,13 +13,17 @@ const router = express.Router();
 router.post("/signup", async (req: CustomRequest, res) => {
     try {
         // validate user data
-        const { email, username, password } = userSchema.parse(req.body);
+        const { email, username, password } = createUserSchema.parse(req.body);
 
         const user = {
             email,
             username,
             password,
         };
+
+        // hash password
+        const salt = await bcrypt.genSalt();
+        user.password = await bcrypt.hash(password, salt);
 
         // save user to database
         const userDocument = await User.create(user);

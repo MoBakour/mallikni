@@ -42,9 +42,15 @@ const Header = () => {
                 {auth ? (
                     <>
                         <img
-                            src="https://wallpapers-clan.com/wp-content/uploads/2022/08/default-pfp-7.jpg"
+                            src={
+                                auth.user.avatar
+                                    ? `${
+                                          import.meta.env.VITE_API_URL
+                                      }/users/avatar/${auth.user.avatar}`
+                                    : "/images/default-avatar.png"
+                            }
                             alt="User Avatar"
-                            className="rounded-full w-10"
+                            className="rounded-full w-10 h-10"
                         />
                         <p className="font-bold text-lg mr-6">
                             {auth.user.username}

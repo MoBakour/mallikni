@@ -5,6 +5,7 @@ export interface IAuth {
         username: string;
         email: string;
         favorites: string[];
+        avatar: string;
         createdAt: Date;
         updatedAt: Date;
         activation: {
