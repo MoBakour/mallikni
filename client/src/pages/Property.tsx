@@ -141,7 +141,7 @@ const Property = () => {
                               }`
                             : "/images/default-avatar.png"
                     }
-                    className="w-[30px] h-[30px] rounded-full"
+                    className="w-[30px] h-[30px] object-cover rounded-full"
                 />
                 <span className="font-bold">{property.owner.username}</span>
             </div>

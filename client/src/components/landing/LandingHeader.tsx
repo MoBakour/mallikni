@@ -67,7 +67,7 @@ const LandingHeader = ({ scrolled }: ILandingHeaderProps) => {
                         "right-1/2 translate-x-1/2 text-black": !scrolled,
                     })}
                 >
-                    <ul className="flex gap-4 text-lg sm:text-sm sm:gap-3">
+                    <ul className="flex gap-6 text-base sm:text-sm sm:gap-3">
                         {links.map(([title, url], index) => (
                             <li
                                 key={index}

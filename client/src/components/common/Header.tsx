@@ -24,7 +24,7 @@ const Header = () => {
             </Link>
 
             <nav className="flex justify-center items-center flex-[2]">
-                <ul className="flex gap-4 text-lg sm:text-sm sm:gap-3">
+                <ul className="flex gap-6 text-base sm:text-sm sm:gap-3">
                     {links
                         .filter((link) => link[1] !== location.pathname)
                         .map(([title, url], index) => (
@@ -50,7 +50,7 @@ const Header = () => {
                                     : "/images/default-avatar.png"
                             }
                             alt="User Avatar"
-                            className="rounded-full w-10 h-10"
+                            className="object-cover rounded-full w-10 h-10"
                         />
                         <p className="font-bold text-lg mr-6">
                             {auth.user.username}
