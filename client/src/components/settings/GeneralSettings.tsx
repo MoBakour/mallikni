@@ -3,7 +3,21 @@ import useAuthStore from "../../stores/auth.store";
 import useAxios from "../../hooks/useAxios";
 import { IAuth } from "../../types/types";
 
-const GeneralSettings = () => {
+interface IGeneralSettings {
+    setLoading: (loading: boolean) => void;
+    setShowConfirmation: (show: boolean) => void;
+    setConfirmationError: (error: string) => void;
+    setAction: (action: (confirmationPassword: string) => void) => void;
+    resetConfirmation: () => void;
+}
+
+const GeneralSettings = ({
+    setLoading,
+    setShowConfirmation,
+    setConfirmationError,
+    setAction,
+    resetConfirmation,
+}: IGeneralSettings) => {
     const axios = useAxios();
     const { auth, setAuth } = useAuthStore((state) => ({
         auth: state.auth,
@@ -22,11 +36,13 @@ const GeneralSettings = () => {
     );
 
     const handleAddImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files) return;
+        if (!e.target.files || !e.target.files[0]) return;
         setAvatar(e.target.files[0]);
     };
 
-    const handleSave = async () => {
+    const saveAction = async (confirmationPassword: string) => {
+        setLoading(true);
+
         const formData = new FormData();
 
         if (typeof avatar !== "string") {
@@ -43,17 +59,27 @@ const GeneralSettings = () => {
         formData.append("username", newUsername);
         formData.append("email", newEmail);
         formData.append("password", newPassword);
+        formData.append("confirmationPassword", confirmationPassword);
 
         try {
             const response = await axios.patch("/users/update", formData);
 
             if (response.status === 200) {
                 setAuth({ ...auth, user: response.data.user } as IAuth);
+                resetConfirmation();
                 location.reload();
             }
-        } catch (error) {
-            console.error(error);
+        } catch (err: any) {
+            console.error(err);
+            setConfirmationError(err.response.data.error);
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const handleSave = () => {
+        setShowConfirmation(true);
+        setAction(() => saveAction);
     };
 
     useEffect(() => {
@@ -71,7 +97,7 @@ const GeneralSettings = () => {
 
     return (
         <section>
-            <h2 className="font-bold text-3xl mb-14">Profile Settings</h2>
+            <h2 className="font-bold text-3xl mb-12">Profile Settings</h2>
 
             <div className="flex justify-evenly items-start">
                 {/* avatar selector */}
@@ -145,7 +171,7 @@ const GeneralSettings = () => {
                         <input
                             className="shadow rounded border-none outline-none py-2 px-3 w-[300px]"
                             id="password"
-                            type="text"
+                            type="password"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             placeholder="New Password"

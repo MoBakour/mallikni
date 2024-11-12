@@ -14,6 +14,16 @@ import { updateUserSchema } from "../utils/validation";
 
 const router = express.Router();
 
+router.get("/avatar/:key", async (req, res) => {
+    try {
+        const stream = (await s3_get(req.params.key)) as NodeJS.ReadableStream;
+        stream.pipe(res);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 router.patch("/favor", async (req: CustomRequest, res) => {
     try {
         const property = await Property.findById(req.body.propertyId);
@@ -55,15 +65,15 @@ router.patch("/update", requireAuth, async (req: CustomRequest, res) => {
 
         try {
             // check password
-            // const validPassword = await bcrypt.compare(
-            //     req.body.confirmationPassword,
-            //     req.user.password
-            // );
+            const validPassword = await bcrypt.compare(
+                req.body.confirmationPassword,
+                req.user.password
+            );
 
-            // if (!validPassword) {
-            //     res.status(400).json({ error: "Incorrect password" });
-            //     return;
-            // }
+            if (!validPassword) {
+                res.status(400).json({ error: "Incorrect password" });
+                return;
+            }
 
             // validate fields
             if (req.body.password === "") {
@@ -89,7 +99,9 @@ router.patch("/update", requireAuth, async (req: CustomRequest, res) => {
             const updatedUser = await User.findByIdAndUpdate(
                 req.user._id,
                 {
-                    ...data,
+                    username: data.username || req.user.username,
+                    email: data.email || req.user.email,
+                    password: data.password || req.user.password,
                     avatar: req.file ? req.file.originalname : req.user.avatar,
                 },
                 { new: true, projection: { password: 0 } }
@@ -120,18 +132,20 @@ router.patch("/update", requireAuth, async (req: CustomRequest, res) => {
     });
 });
 
-router.get("/avatar/:key", async (req, res) => {
-    try {
-        const stream = (await s3_get(req.params.key)) as NodeJS.ReadableStream;
-        stream.pipe(res);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
 router.delete("/delete", async (req: CustomRequest, res) => {
     try {
+        // check password
+        const validPassword = await bcrypt.compare(
+            req.body.confirmationPassword,
+            req.user.password
+        );
+
+        if (!validPassword) {
+            res.status(400).json({ error: "Incorrect password" });
+            return;
+        }
+
+        // delete user
         const user = await User.findByIdAndDelete(req.user._id);
 
         if (!user) {

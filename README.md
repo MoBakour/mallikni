@@ -10,9 +10,9 @@ TODOS:
 
 -   Make suggestions real
 -   Implement activation system
--   Build settings page
 -   Remove favorites and other states when log out
 -   Replace auth? with authorized?
+-   Protect routes
 
 -   Make website responsive
 -   Write about, contact, and privacy policy pages

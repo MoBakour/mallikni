@@ -1,4 +1,5 @@
 import express from "express";
+import bcrypt from "bcrypt";
 import { CustomRequest } from "../types/types";
 import {
     deleteFiles,
@@ -64,81 +65,6 @@ router.post("/new", (req: CustomRequest, res) => {
                     error: "Internal server error",
                 });
             }
-        } finally {
-            if (req.files && Array.isArray(req.files)) {
-                await deleteFiles(req.files.map((file) => file.path));
-            }
-        }
-    });
-});
-
-router.put("/edit/:id", (req: CustomRequest, res) => {
-    uploadPropertyImages(req, res, async (err) => {
-        // handle errors
-        const cont = handleMulterErrors(res, err);
-        if (!cont) return;
-
-        try {
-            // validate body
-            const data = JSON.parse(req.body.data);
-            propertySchema.parse(data);
-
-            // get property
-            const property = await Property.findById(req.params.id);
-
-            if (!property) {
-                res.status(404).json({
-                    error: "Property not found",
-                });
-                return;
-            }
-
-            // find removed images and delete from s3 & db
-            const removedImages = property.images.filter(
-                (image) => !data.images.some((img: any) => img.file === image)
-            );
-            await s3_delete(removedImages);
-            property.images = property.images.filter(
-                (img: string) => !removedImages.includes(img)
-            );
-
-            // store new images in s3
-            let newImages: string[] = [];
-            if (req.files && Array.isArray(req.files)) {
-                await Promise.all(
-                    req.files.map((file: Express.Multer.File) => s3_post(file))
-                );
-
-                // find new images
-                newImages = req.files
-                    .filter(
-                        (file: any) =>
-                            !property.images.includes(file.originalname)
-                    )
-                    .map((file: any) => file.originalname);
-
-                data.images = data.images.map((img: any) => {
-                    if (img.type === "new") {
-                        img.file = newImages.shift();
-                    }
-
-                    return img.file;
-                });
-            }
-
-            // store changes in db
-            Object.assign(property, data);
-            await property.save();
-
-            // return response
-            res.status(200).json({
-                propertyId: property._id,
-            });
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({
-                error: "Internal server error",
-            });
         } finally {
             if (req.files && Array.isArray(req.files)) {
                 await deleteFiles(req.files.map((file) => file.path));
@@ -251,6 +177,94 @@ router.get("/favorites", async (req: CustomRequest, res) => {
     }
 });
 
+router.get("/image/:key", async (req, res) => {
+    try {
+        // get image from s3 and stream it to user
+        const stream = (await s3_get(req.params.key)) as NodeJS.ReadableStream;
+        stream.pipe(res);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Internal server error",
+        });
+    }
+});
+
+router.put("/edit/:id", (req: CustomRequest, res) => {
+    uploadPropertyImages(req, res, async (err) => {
+        // handle errors
+        const cont = handleMulterErrors(res, err);
+        if (!cont) return;
+
+        try {
+            // validate body
+            const data = JSON.parse(req.body.data);
+            propertySchema.parse(data);
+
+            // get property
+            const property = await Property.findById(req.params.id);
+
+            if (!property) {
+                res.status(404).json({
+                    error: "Property not found",
+                });
+                return;
+            }
+
+            // find removed images and delete from s3 & db
+            const removedImages = property.images.filter(
+                (image) => !data.images.some((img: any) => img.file === image)
+            );
+            await s3_delete(removedImages);
+            property.images = property.images.filter(
+                (img: string) => !removedImages.includes(img)
+            );
+
+            // store new images in s3
+            let newImages: string[] = [];
+            if (req.files && Array.isArray(req.files)) {
+                await Promise.all(
+                    req.files.map((file: Express.Multer.File) => s3_post(file))
+                );
+
+                // find new images
+                newImages = req.files
+                    .filter(
+                        (file: any) =>
+                            !property.images.includes(file.originalname)
+                    )
+                    .map((file: any) => file.originalname);
+
+                data.images = data.images.map((img: any) => {
+                    if (img.type === "new") {
+                        img.file = newImages.shift();
+                    }
+
+                    return img.file;
+                });
+            }
+
+            // store changes in db
+            Object.assign(property, data);
+            await property.save();
+
+            // return response
+            res.status(200).json({
+                propertyId: property._id,
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                error: "Internal server error",
+            });
+        } finally {
+            if (req.files && Array.isArray(req.files)) {
+                await deleteFiles(req.files.map((file) => file.path));
+            }
+        }
+    });
+});
+
 router.delete("/property/:id", async (req: CustomRequest, res) => {
     try {
         // delete property
@@ -291,11 +305,43 @@ router.delete("/property/:id", async (req: CustomRequest, res) => {
     }
 });
 
-router.get("/image/:key", async (req, res) => {
+router.delete("/all", async (req: CustomRequest, res) => {
     try {
-        // get image from s3 and stream it to user
-        const stream = (await s3_get(req.params.key)) as NodeJS.ReadableStream;
-        stream.pipe(res);
+        // check password
+        const validPassword = await bcrypt.compare(
+            req.body.confirmationPassword,
+            req.user.password
+        );
+
+        if (!validPassword) {
+            res.status(400).json({
+                error: "Incorrect password",
+            });
+            return;
+        }
+
+        // get all properties
+        const properties = await Property.find({ owner: req.user._id });
+
+        // delete all properties
+        const result = await Property.deleteMany({ owner: req.user._id });
+
+        // remove properties from users favorites
+        const propertiesIds = properties.map((property) => property._id);
+        await User.updateMany(
+            { favorites: { $in: propertiesIds } },
+            { $pull: { favorites: { $in: propertiesIds } } }
+        );
+
+        // delete images from s3
+        const images = properties.map((property) => property.images).flat();
+        await s3_delete(images);
+
+        // return response
+        res.status(200).json({
+            message: "All properties deleted successfully",
+            deletedCount: result.deletedCount,
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({

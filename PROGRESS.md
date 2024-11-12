@@ -68,3 +68,9 @@
 
 -   Implemented edit property feature
 -   Fixed bugs
+
+### November 12, 2024
+
+-   Built the settings page and edit user profile functionality
+-   Added user avatar feature
+-   Optimized deleteFiles function
