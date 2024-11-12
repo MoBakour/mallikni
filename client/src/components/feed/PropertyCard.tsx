@@ -31,6 +31,7 @@ const PropertyCard = ({ property, details = true }: IPropertyCard) => {
                     }
                     alt="Property Image"
                     className={clsx(
+                        "object-cover",
                         details
                             ? "rounded-lg w-[260px] h-[180px]"
                             : "rounded-lg w-full"

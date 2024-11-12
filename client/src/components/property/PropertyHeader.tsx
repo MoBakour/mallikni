@@ -90,7 +90,7 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                                 import.meta.env.VITE_API_URL
                             }/properties/image/${property.images[0]}`}
                             alt="Property Image"
-                            className="w-[300px] h-[200px] rounded-lg transition hover:scale-[1.03] cursor-pointer"
+                            className="w-[300px] h-[200px] rounded-lg transition hover:scale-[1.03] cursor-pointer object-cover"
                             onClick={() => setCurrentImage(0)}
                         />
 
@@ -101,7 +101,7 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                                         import.meta.env.VITE_API_URL
                                     }/properties/image/${property.images[1]}`}
                                     alt="Property Image"
-                                    className="w-[120px] h-[90px] rounded transition hover:scale-[1.05] cursor-pointer"
+                                    className="w-[120px] h-[90px] rounded transition hover:scale-[1.05] cursor-pointer object-cover"
                                     onClick={() => setCurrentImage(1)}
                                 />
 
@@ -117,7 +117,7 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                                                 property.images[2]
                                             }`}
                                             alt="Property Image"
-                                            className="w-full h-full"
+                                            className="w-full h-full object-cover"
                                         />
 
                                         {property.images.length > 3 && (
