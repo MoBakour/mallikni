@@ -1,5 +1,7 @@
 # Mallikni
 
+(project still under development)
+
 OLD TODOS:
 
 -   add a search box in the very first part in the landing page, when clicked, redirect to /find
