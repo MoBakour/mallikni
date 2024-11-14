@@ -1,5 +1,7 @@
 # Mallikni
 
+(project still under development)
+
 TODOS:
 
 -   Make suggestions real
