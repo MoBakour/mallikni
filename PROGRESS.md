@@ -78,3 +78,8 @@
 ### November 13, 2024
 
 -   Worked on the activation system
+
+### November 14, 2024
+
+-   Completed activation system
+-   Fixed bugs

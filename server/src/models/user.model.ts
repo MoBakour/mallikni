@@ -41,6 +41,20 @@ const UserSchema = new Schema(
                 default: 5,
                 select: false,
             },
+            issuedAt: {
+                type: Date,
+                default: Date.now,
+                select: false,
+            },
+            blocked: {
+                type: Boolean,
+                default: false,
+                select: false,
+            },
+            updated: {
+                type: Boolean,
+                default: false,
+            },
         },
     },
     { timestamps: true }

@@ -28,7 +28,7 @@ router.post("/signup", async (req: CustomRequest, res) => {
         const userDocument = await User.create(user);
 
         // send activation email
-        sendActivationEmail(userDocument.activation!.code);
+        // sendActivationEmail(userDocument.activation!.code);
 
         // generate jwt token
         const token = await createToken(userDocument._id.toString());

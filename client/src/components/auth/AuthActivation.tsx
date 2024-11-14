@@ -50,12 +50,20 @@ const AuthActivation = () => {
     return (
         <form className="p-4 max-w-[340px] bg-white rounded shadow-lg flex flex-col justify-center items-center gap-6">
             <h2 className="font-bold text-2xl xs:text-xl uppercase">
-                Activate Your Account
+                {auth?.user.activation.updated
+                    ? "Verify Your New Email"
+                    : "Activate Your Account"}
             </h2>
 
             <p>
-                An activation code has been sent to your email address. You have
-                x minutes and x attempts to activate your account.
+                {auth?.user.activation.updated ? "Hello" : "Welcome"},{" "}
+                {auth?.user.username}!
+                <br />
+                <br />
+                An activation code has been sent to your email address.{" "}
+                {auth?.user.activation.updated
+                    ? "Please verify your new email address to access your account."
+                    : "You have 10 minutes and 5 attempts to activate your account."}
             </p>
 
             <AuthInput
@@ -74,9 +82,12 @@ const AuthActivation = () => {
                 disabled={isLoading}
                 className="flex justify-center items-center uppercase font-bold rounded w-full h-[40px] disabled:opacity-50 disabled:pointer-events-none gradient-btn"
                 onClick={handleActivate}
+                title="Submit Code"
             >
                 {isLoading ? (
                     <IconLoader2 className="text-xl animate-spin" />
+                ) : auth?.user.activation.updated ? (
+                    "Verify"
                 ) : (
                     "Activate"
                 )}

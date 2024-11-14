@@ -18,7 +18,10 @@ import Layout from "./pages/Layout";
 import ScrollToTop from "./components/common/ScrollToTop";
 
 function App() {
-    const authorized = useAuthStore((state) => state.authorized);
+    const { authorized, auth } = useAuthStore((state) => ({
+        authorized: state.authorized,
+        auth: state.auth,
+    }));
 
     return (
         <div className="bg-slate-100 min-h-screen">
@@ -29,8 +32,10 @@ function App() {
                     <Route
                         path="/login"
                         element={
-                            authorized ? (
+                            auth && authorized ? (
                                 <Navigate to="/" />
+                            ) : auth ? (
+                                <Navigate to="/verify" />
                             ) : (
                                 <Auth page="login" />
                             )
@@ -39,10 +44,22 @@ function App() {
                     <Route
                         path="/signup"
                         element={
-                            authorized ? (
+                            auth && authorized ? (
                                 <Navigate to="/" />
+                            ) : auth ? (
+                                <Navigate to="/verify" />
                             ) : (
                                 <Auth page="signup" />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/verify"
+                        element={
+                            !auth || authorized ? (
+                                <Navigate to="/login" />
+                            ) : (
+                                <Auth page="login" />
                             )
                         }
                     />

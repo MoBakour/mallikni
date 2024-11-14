@@ -83,3 +83,31 @@ export const translateQueryToMQL = (query: any) => {
 
     return filter;
 };
+
+/**
+ * this function calculates the time remaining until a given time
+ */
+export const timeUntil = (ms: number) => {
+    const now = Date.now();
+    const diff = ms - now;
+
+    if (diff <= 0) {
+        return "Time has passed";
+    }
+
+    // calculate hours and minutes
+    const totalMinutes = Math.floor(diff / (1000 * 60));
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    // build the output string
+    let result = [];
+    if (hours > 0) {
+        result.push(`${hours} ${hours === 1 ? "hour" : "hours"}`);
+    }
+    if (minutes > 0) {
+        result.push(`${minutes} ${minutes === 1 ? "minute" : "minutes"}`);
+    }
+
+    return result.join(", ");
+};

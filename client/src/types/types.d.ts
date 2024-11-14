@@ -10,6 +10,7 @@ export interface IAuth {
         updatedAt: Date;
         activation: {
             activated: boolean;
+            updated: boolean;
         };
     };
 }

@@ -1,5 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
+import cron from "node-cron";
 import { CustomRequest } from "../types/types";
 import Property from "../models/property.model";
 import User from "../models/user.model";
@@ -11,9 +12,39 @@ import {
     uploadUserAvatar,
 } from "../middlewares/multer.middleware";
 import { updateUserSchema } from "../utils/validation";
-import { generateActivationCode } from "../utils/utils";
+import { generateActivationCode, timeUntil } from "../utils/utils";
 
 const router = express.Router();
+
+/**
+ * cron job every minute:
+ *      - delete blocked users that have issued codes older than 24 hours
+ *      - delete unactivated recently created users that have issued codes older than 10 minutes
+ */
+cron.schedule("* * * * *", async () => {
+    try {
+        await User.deleteMany({
+            "activation.blocked": true,
+            "activation.issuedAt": {
+                $lte: new Date(Date.now() - 1000 * 60 * 60 * 24),
+            },
+        });
+
+        await User.updateMany(
+            {
+                "activation.activated": false,
+                "activation.blocked": false,
+                "activation.updated": false,
+                "activation.issuedAt": {
+                    $lte: new Date(Date.now() - 1000 * 60 * 10),
+                },
+            },
+            { $set: { "activation.blocked": true } }
+        );
+    } catch (err) {
+        console.error(err);
+    }
+});
 
 router.get("/avatar/:key", async (req, res) => {
     try {
@@ -63,11 +94,10 @@ router.patch("/activate", requireAuth, async (req: CustomRequest, res) => {
     try {
         // get user with activation data
         const user = await User.findById(req.user._id, {
-            "activation.code": 1,
-            "activation.attempts": 1,
-            "activation.activated": 1,
+            activation: 1,
         });
 
+        // check if no user or if user is already activated
         if (!user) {
             res.status(404).json({ error: "User not found" });
             return;
@@ -80,15 +110,24 @@ router.patch("/activate", requireAuth, async (req: CustomRequest, res) => {
             return;
         }
 
-        // check if user is out of attempts
-        const retryTime = new Date(
-            req.user.createdAt.getTime() + 1000 * 60 * 60 * 24
-        ).toLocaleString();
-        const errorMessage = `Due to multiple activation attempts, your email got blocked from registration until ${retryTime}`;
+        // error messages
+        const INCORRECT_CODE_ERR = "Incorrect activation code";
+        const ACTIVATION_BLOCKED_ERR = `Your email got blocked from registration for ${timeUntil(
+            new Date(user.activation!.issuedAt).getTime() + 1000 * 60 * 60 * 24
+        )}`;
 
-        if (user.activation!.attempts === 0) {
+        // check if user is blocked
+        if (user.activation!.blocked) {
             res.status(400).json({
-                error: errorMessage,
+                error: ACTIVATION_BLOCKED_ERR,
+            });
+            return;
+        }
+
+        // check if user is out of attempts
+        if (user.activation!.attempts === 0 && !user.activation!.updated) {
+            res.status(400).json({
+                error: ACTIVATION_BLOCKED_ERR,
             });
             return;
         }
@@ -109,15 +148,23 @@ router.patch("/activate", requireAuth, async (req: CustomRequest, res) => {
 
         // check if activation code is incorrect
         if (!activationSuccess) {
+            if (user.activation?.updated) {
+                res.status(400).json({
+                    error: INCORRECT_CODE_ERR,
+                });
+                return;
+            }
+
             const left = user.activation!.attempts - 1;
+            const error =
+                left === 0
+                    ? ACTIVATION_BLOCKED_ERR
+                    : `${INCORRECT_CODE_ERR}. You have ${left} ${
+                          left === 1 ? "attempt" : "attempts"
+                      } left`;
 
             res.status(400).json({
-                error:
-                    left === 0
-                        ? errorMessage
-                        : `Incorrect activation code. You have ${left} ${
-                              left === 1 ? "attempt" : "attempts"
-                          } left`,
+                error,
             });
             return;
         }
@@ -177,11 +224,18 @@ router.put("/update", requireAuth, async (req: CustomRequest, res) => {
                     email: data.email || req.user.email,
                     password: data.password || req.user.password,
                     avatar: req.file ? req.file.originalname : req.user.avatar,
-                    activation: {
-                        activated: false,
-                        code: generateActivationCode(),
-                        attempts: 5,
-                    },
+                    ...(req.user.email === data.email
+                        ? {}
+                        : {
+                              activation: {
+                                  blocked: false,
+                                  activated: false,
+                                  code: generateActivationCode(),
+                                  attempts: 5,
+                                  issuedAt: new Date(),
+                                  updated: true,
+                              },
+                          }),
                 },
                 { new: true, projection: { password: 0 } }
             );
@@ -244,7 +298,8 @@ router.delete("/delete", requireAuth, async (req: CustomRequest, res) => {
 
         // delete associated images from s3
         const images = properties.map((property) => property.images).flat();
-        await s3_delete([...images, req.user.avatar]);
+        if (req.user.avatar) images.push(req.user.avatar);
+        await s3_delete(images);
 
         // return response
         res.status(200).json({ message: "User deleted" });
