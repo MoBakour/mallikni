@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { generateActivationCode } from "../utils/utils";
 
 const UserSchema = new Schema(
     {
@@ -24,6 +25,22 @@ const UserSchema = new Schema(
         avatar: {
             type: String,
             default: "",
+        },
+        activation: {
+            activated: {
+                type: Boolean,
+                default: false,
+            },
+            code: {
+                type: String,
+                default: generateActivationCode,
+                select: false,
+            },
+            attempts: {
+                type: Number,
+                default: 5,
+                select: false,
+            },
         },
     },
     { timestamps: true }

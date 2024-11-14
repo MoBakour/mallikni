@@ -74,3 +74,7 @@
 -   Built the settings page and edit user profile functionality
 -   Added user avatar feature
 -   Optimized deleteFiles function
+
+### November 13, 2024
+
+-   Worked on the activation system

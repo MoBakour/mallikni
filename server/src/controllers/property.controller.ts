@@ -12,10 +12,11 @@ import { s3_delete, s3_get, s3_post } from "../utils/s3";
 import { ZodError } from "zod";
 import User from "../models/user.model";
 import { translateQueryToMQL } from "../utils/utils";
+import { requireAuth } from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
-router.post("/new", (req: CustomRequest, res) => {
+router.post("/new", requireAuth, (req: CustomRequest, res) => {
     // use multer
     uploadPropertyImages(req, res, async (err) => {
         // handle errors
@@ -141,7 +142,7 @@ router.get("/sample", async (req, res) => {
     }
 });
 
-router.get("/own", async (req: CustomRequest, res) => {
+router.get("/own", requireAuth, async (req: CustomRequest, res) => {
     try {
         // find properties owned by user
         const properties = await Property.find({ owner: req.user._id });
@@ -158,7 +159,7 @@ router.get("/own", async (req: CustomRequest, res) => {
     }
 });
 
-router.get("/favorites", async (req: CustomRequest, res) => {
+router.get("/favorites", requireAuth, async (req: CustomRequest, res) => {
     try {
         // get user favorite properties
         const properties = await Property.find({
@@ -190,7 +191,7 @@ router.get("/image/:key", async (req, res) => {
     }
 });
 
-router.put("/edit/:id", (req: CustomRequest, res) => {
+router.put("/edit/:id", requireAuth, (req: CustomRequest, res) => {
     uploadPropertyImages(req, res, async (err) => {
         // handle errors
         const cont = handleMulterErrors(res, err);
@@ -265,7 +266,7 @@ router.put("/edit/:id", (req: CustomRequest, res) => {
     });
 });
 
-router.delete("/property/:id", async (req: CustomRequest, res) => {
+router.delete("/property/:id", requireAuth, async (req: CustomRequest, res) => {
     try {
         // delete property
         const deletedProperty = await Property.findOneAndDelete({
@@ -305,7 +306,7 @@ router.delete("/property/:id", async (req: CustomRequest, res) => {
     }
 });
 
-router.delete("/all", async (req: CustomRequest, res) => {
+router.delete("/all", requireAuth, async (req: CustomRequest, res) => {
     try {
         // check password
         const validPassword = await bcrypt.compare(

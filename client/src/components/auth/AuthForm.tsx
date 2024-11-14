@@ -46,7 +46,6 @@ const AuthForm = ({ page }: IAuthForm) => {
                     user: response.data.user,
                     token: response.data.token,
                 });
-                window.location.href = "/find";
             }
         } catch (err: any) {
             setError(err.response?.data?.error);

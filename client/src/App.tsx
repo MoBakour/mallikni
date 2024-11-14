@@ -13,8 +13,6 @@ import Favorites from "./pages/Favorites";
 import MyProperties from "./pages/MyProperties";
 import New from "./pages/New";
 import Settings from "./pages/Settings";
-import ChangeEmail from "./pages/ChangeEmail";
-import ChangePassword from "./pages/ChangePassword";
 import NotFound from "./pages/NotFound";
 import Layout from "./pages/Layout";
 import ScrollToTop from "./components/common/ScrollToTop";
@@ -103,26 +101,6 @@ function App() {
                             element={
                                 authorized ? (
                                     <Settings />
-                                ) : (
-                                    <Navigate to="/login" replace />
-                                )
-                            }
-                        />
-                        <Route
-                            path="/change-email"
-                            element={
-                                authorized ? (
-                                    <ChangeEmail />
-                                ) : (
-                                    <Navigate to="/login" replace />
-                                )
-                            }
-                        />
-                        <Route
-                            path="/change-password"
-                            element={
-                                authorized ? (
-                                    <ChangePassword />
                                 ) : (
                                     <Navigate to="/login" replace />
                                 )

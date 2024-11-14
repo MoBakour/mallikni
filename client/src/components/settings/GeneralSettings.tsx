@@ -62,7 +62,7 @@ const GeneralSettings = ({
         formData.append("confirmationPassword", confirmationPassword);
 
         try {
-            const response = await axios.patch("/users/update", formData);
+            const response = await axios.put("/users/update", formData);
 
             if (response.status === 200) {
                 setAuth({ ...auth, user: response.data.user } as IAuth);

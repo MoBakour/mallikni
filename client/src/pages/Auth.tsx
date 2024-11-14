@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import AuthForm from "../components/auth/AuthForm";
 import AuthActivation from "../components/auth/AuthActivation";
+import useAuthStore from "../stores/auth.store";
 
 interface IAuthProps {
     page: "login" | "signup";
 }
 
 const Auth = ({ page }: IAuthProps) => {
+    const auth = useAuthStore((state) => state.auth);
+
     return (
         <main className=" bg-slate-100 flex justify-evenly items-center sm:flex-col w-full min-h-screen relative overflow-hidden">
             <img
@@ -27,8 +30,7 @@ const Auth = ({ page }: IAuthProps) => {
             </Link>
 
             <div className="z-10">
-                <AuthForm page={page} />
-                {/* <AuthActivation /> */}
+                {auth ? <AuthActivation /> : <AuthForm page={page} />}
             </div>
         </main>
     );

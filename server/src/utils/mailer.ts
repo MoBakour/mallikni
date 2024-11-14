@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 
-const sendActivationEmail = async (email: string, code: string) => {
+const activationEmail = "";
+
+const sendActivationEmail = async (code: string) => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -11,7 +13,7 @@ const sendActivationEmail = async (email: string, code: string) => {
 
     await transporter.sendMail({
         from: process.env.EMAIL_USER,
-        to: email,
+        to: activationEmail,
         subject: "Activate Your Mallikni Account",
         html: `<p>Your activation code is: <strong>${code}</strong></p>`,
     });

@@ -5,7 +5,6 @@ import { CustomRequest } from "../types/types";
 import { createUserSchema } from "../utils/validation";
 import User from "../models/user.model";
 import { sendActivationEmail } from "../utils/mailer";
-import { generateActivationCode } from "../utils/utils";
 import { createToken } from "../middlewares/auth.middleware";
 
 const router = express.Router();
@@ -29,8 +28,7 @@ router.post("/signup", async (req: CustomRequest, res) => {
         const userDocument = await User.create(user);
 
         // send activation email
-        const activationCode = generateActivationCode();
-        // sendActivationEmail(email, activationCode);
+        sendActivationEmail(userDocument.activation!.code);
 
         // generate jwt token
         const token = await createToken(userDocument._id.toString());
@@ -40,7 +38,7 @@ router.post("/signup", async (req: CustomRequest, res) => {
                 ...userDocument.toObject(),
                 password: undefined,
                 activation: {
-                    activated: true,
+                    activated: userDocument.activation!.activated,
                 },
             },
             token,
@@ -117,9 +115,6 @@ router.post("/login", async (req: CustomRequest, res) => {
             user: {
                 ...user.toObject(),
                 password: undefined,
-                activation: {
-                    activated: true,
-                },
             },
             token,
         });
