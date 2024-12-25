@@ -13,6 +13,7 @@ import {
 } from "../middlewares/multer.middleware";
 import { updateUserSchema } from "../utils/validation";
 import { generateActivationCode, timeUntil } from "../utils/utils";
+import { sendActivationEmail } from "../utils/mailer";
 
 const router = express.Router();
 
@@ -216,21 +217,28 @@ router.put("/update", requireAuth, async (req: CustomRequest, res) => {
                 ]);
             }
 
+            // generate activation code (if needed)
+            const emailUpdated = req.user.email !== data.email?.toLowerCase();
+            let activationCode;
+            if (emailUpdated) {
+                activationCode = generateActivationCode();
+            }
+
             // update fields
             const updatedUser = await User.findByIdAndUpdate(
                 req.user._id,
                 {
                     username: data.username || req.user.username,
-                    email: data.email || req.user.email,
+                    email: data.email?.toLowerCase() || req.user.email,
                     password: data.password || req.user.password,
                     avatar: req.file ? req.file.originalname : req.user.avatar,
-                    ...(req.user.email === data.email
+                    ...(!emailUpdated
                         ? {}
                         : {
                               activation: {
                                   blocked: false,
                                   activated: false,
-                                  code: generateActivationCode(),
+                                  code: activationCode,
                                   attempts: 5,
                                   issuedAt: new Date(),
                                   updated: true,
@@ -243,6 +251,15 @@ router.put("/update", requireAuth, async (req: CustomRequest, res) => {
             if (!updatedUser) {
                 res.status(404).json({ error: "User not found" });
                 return;
+            }
+
+            // send email with activation code
+            if (emailUpdated) {
+                await sendActivationEmail(
+                    updatedUser.email,
+                    activationCode!,
+                    "update"
+                );
             }
 
             // return response

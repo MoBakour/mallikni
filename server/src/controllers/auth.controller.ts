@@ -15,7 +15,7 @@ router.post("/signup", async (req: CustomRequest, res) => {
         const { email, username, password } = createUserSchema.parse(req.body);
 
         const user = {
-            email,
+            email: email.toLowerCase(),
             username,
             password,
         };
@@ -28,7 +28,11 @@ router.post("/signup", async (req: CustomRequest, res) => {
         const userDocument = await User.create(user);
 
         // send activation email
-        // sendActivationEmail(userDocument.activation!.code);
+        sendActivationEmail(
+            userDocument.email,
+            userDocument.activation!.code,
+            "new"
+        );
 
         // generate jwt token
         const token = await createToken(userDocument._id.toString());
@@ -86,7 +90,7 @@ router.post("/login", async (req: CustomRequest, res) => {
         // find user
         const user = await User.findOne({
             $or: [
-                { email: req.body.credential },
+                { email: req.body.credential.toLowerCase() },
                 { username: req.body.credential },
             ],
         });
