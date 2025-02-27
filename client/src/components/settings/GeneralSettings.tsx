@@ -125,6 +125,7 @@ const GeneralSettings = ({
                     </label>
                     <input
                         type="file"
+                        accept="image/*"
                         className="hidden"
                         id="avatar"
                         onChange={handleAddImage}

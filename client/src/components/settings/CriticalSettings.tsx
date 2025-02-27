@@ -32,6 +32,7 @@ const CriticalSettings = ({
             }
         } catch (err: any) {
             console.error(err);
+            console.log(err.response.data.error);
             setConfirmationError(err.response.data.error);
         } finally {
             setLoading(false);
@@ -53,7 +54,7 @@ const CriticalSettings = ({
             }
         } catch (err: any) {
             console.error(err);
-            setConfirmationError(err.response.data.message);
+            setConfirmationError(err.response.data.error);
         } finally {
             setLoading(false);
         }
