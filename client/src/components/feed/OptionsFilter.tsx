@@ -22,7 +22,7 @@ const OptionsFilter = ({
 
     return (
         <div
-            className="click-target px-4 bg-theme-2 hover:bg-slate-200 rounded-full h-[40px] relative flex justify-center items-center gap-3 cursor-default transition"
+            className="click-target px-4 sm:px-2 bg-theme-2 hover:bg-slate-200 rounded-full h-[40px] sm:h-[30px] sm:text-sm relative flex justify-center items-center gap-3 cursor-default transition"
             onClick={(e) => handleShow(e)}
         >
             Property Options <IconBxChevronDown className="text-lg" />

@@ -10,7 +10,7 @@ const Feed = () => {
     return (
         <main className="relative">
             {/* content */}
-            <div className="w-[80%] m-auto relative">
+            <div className="w-[80%] m-auto relative sm:w-[95%]">
                 <h2 className="font-bold text-3xl tracking-wide pt-28 pb-10">
                     What are you looking for?
                 </h2>

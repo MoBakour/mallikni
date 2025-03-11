@@ -16,7 +16,7 @@ const SelectFilter = ({
         <select
             name=""
             id=""
-            className="bg-theme-2 hover:bg-slate-200 transition rounded-full px-2 outline-none h-[40px]"
+            className="bg-theme-2 hover:bg-slate-200 transition rounded-full px-2 outline-none h-[40px] sm:h-[30px] sm:text-sm"
             value={filters[filterName]}
             onChange={(e) =>
                 setFilters((prev: any) => {

@@ -33,9 +33,9 @@ const ToggleFilter = ({
     }, [firstText]);
 
     return (
-        <div className="bg-theme-2 w-fit p-1 flex justify-center items-center gap-1 rounded-full relative h-[40px]">
+        <div className="sm:text-sm bg-theme-2 w-fit p-1 flex justify-center items-center gap-1 rounded-full relative h-[40px] sm:h-[30px]">
             <div
-                className="text-transparent absolute z-0 bg-theme-1 py-1 px-5 rounded-full transition left-1"
+                className="text-transparent absolute z-0 bg-theme-1 py-1 px-5 sm:px-3 rounded-full transition left-1"
                 style={{
                     transform: `translateX(${
                         filters[filterName] === value2.value
@@ -55,7 +55,7 @@ const ToggleFilter = ({
                             "cursor-pointer":
                                 filters[filterName] !== item.value,
                         },
-                        "py-1 px-5 rounded-full relative"
+                        "py-1 px-5 sm:px-3 rounded-full relative"
                     )}
                     onClick={() =>
                         setFilters((prev: any) => {

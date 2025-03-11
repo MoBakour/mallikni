@@ -242,7 +242,7 @@ const FeedFilters = ({ setData, setLoading }: IFeedFilters) => {
                     }
                     className={clsx(
                         filters.furnished ? "bg-theme-1" : "bg-theme-2",
-                        "h-[40px] px-4 rounded-full cursor-pointer transition flex justify-center items-center gap-2"
+                        "sm:text-sm sm:px-2 sm:h-[30px] h-[40px] px-4 rounded-full cursor-pointer transition flex justify-center items-center gap-2"
                     )}
                 >
                     {filters.furnished && <IconTick />}
@@ -291,7 +291,7 @@ const FeedFilters = ({ setData, setLoading }: IFeedFilters) => {
             <div className="w-full h-[2px] bg-slate-200 rounded-full" />
 
             <button
-                className="rounded-lg text-xl w-fit outline-none bg-theme-1 py-3 px-8 font-bold text-white transition hover:bg-theme-hover"
+                className="rounded-lg text-xl sm:text-base w-fit outline-none bg-theme-1 py-3 px-8 sm:py-2 sm:px-4 font-bold text-white transition hover:bg-theme-hover"
                 onClick={handleSearch}
             >
                 Search

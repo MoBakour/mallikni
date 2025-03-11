@@ -23,14 +23,14 @@ const Header = () => {
                 </h1>
             </Link>
 
-            <nav className="flex justify-center items-center flex-[2]">
-                <ul className="flex gap-6 text-base sm:text-sm sm:gap-3">
+            <nav className="flex justify-center items-center flex-[2] sm:hidden">
+                <ul className="flex gap-5 text-base">
                     {links
                         .filter((link) => link[1] !== location.pathname)
                         .map(([title, url], index) => (
                             <li
                                 key={index}
-                                className="transition hover:opacity-70 whitespace-nowrap"
+                                className="transition hover:opacity-70 whitespace-nowrap text-sm"
                             >
                                 <NavLink to={url}>{title}</NavLink>
                             </li>
@@ -38,7 +38,7 @@ const Header = () => {
                 </ul>
             </nav>
 
-            <div className="flex justify-end items-center gap-2 flex-[1]">
+            <div className="flex justify-end items-center gap-2 flex-[1] sm:hidden">
                 {auth ? (
                     <>
                         <img
@@ -50,13 +50,11 @@ const Header = () => {
                                     : "/images/default-avatar.png"
                             }
                             alt="User Avatar"
-                            className="object-cover rounded-full w-10 h-10"
+                            className="object-cover rounded-full w-8 h-8"
                         />
-                        <p className="font-bold text-lg mr-6">
-                            {auth.user.username}
-                        </p>
+                        <p className="font-bold">{auth.user.username}</p>
                         <IconBurger
-                            className="text-4xl transition hover:text-black/70 cursor-pointer"
+                            className="text-3xl transition hover:text-black/70 cursor-pointer shrink-0"
                             onClick={() => setShowSideMenu(true)}
                         />
                     </>
@@ -70,6 +68,13 @@ const Header = () => {
                         </li>
                     </ul>
                 )}
+            </div>
+
+            <div className="hidden sm:block">
+                <IconBurger
+                    className="text-4xl transition hover:text-black/70 cursor-pointer"
+                    onClick={() => setShowSideMenu(true)}
+                />
             </div>
         </header>
     );

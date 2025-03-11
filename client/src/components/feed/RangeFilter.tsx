@@ -18,14 +18,14 @@ const RangeFilter = ({
     setFilters,
 }: IRangeFilter) => {
     return (
-        <div className="bg-theme-2 w-fit p-1 pl-4 flex justify-center items-center gap-2 rounded-full relative h-[40px]">
+        <div className="bg-theme-2 w-fit p-1 pl-4 flex justify-center items-center gap-2 rounded-full relative h-[40px] sm:h-[30px] sm:text-xs">
             <p>
                 {name} <span className="text-xs text-black/60">{desc}</span>
             </p>
             {["min", "max"].map((inp) => (
                 <input
                     type="number"
-                    className="outline-none w-[60px] text-sm rounded-full px-2 text-center"
+                    className="outline-none w-[60px] text-sm sm:text-xs rounded-full px-2 text-center"
                     key={inp}
                     placeholder={inp[0].toUpperCase() + inp.substring(1)}
                     value={

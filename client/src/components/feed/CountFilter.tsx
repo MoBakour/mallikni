@@ -28,7 +28,7 @@ const CountFilter = ({
 
     return (
         <div
-            className="click-target px-4 bg-theme-2 hover:bg-slate-200 rounded-full h-[40px] relative flex justify-center items-center gap-3 cursor-default transition"
+            className="click-target px-4 sm:px-3 sm:text-sm bg-theme-2 hover:bg-slate-200 rounded-full h-[40px] sm:h-[30px] relative flex justify-center items-center gap-3 cursor-default transition"
             onClick={(e) => handleShow(e)}
         >
             {name[0].toUpperCase() + name.substring(1)}:{" "}
@@ -36,7 +36,7 @@ const CountFilter = ({
             <IconBxChevronDown className="text-lg" />
             {show && (
                 <div
-                    className="filter-dropdown absolute -bottom-1 left-0 translate-y-full bg-theme-2 p-3 rounded-lg shadow flex flex-wrap gap-2 w-[300px]"
+                    className="filter-dropdown absolute -bottom-1 left-0 translate-y-full bg-theme-2 p-3 rounded-lg shadow flex flex-wrap gap-2 w-[300px] sm:w-[280px]"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {counts.map((option) => (

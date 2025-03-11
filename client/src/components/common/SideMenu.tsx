@@ -11,6 +11,10 @@ const buttons = [
         link: "/my-properties",
     },
     {
+        title: "Post Property",
+        link: "/new",
+    },
+    {
         title: "My Favorites",
         link: "/favorites",
     },
@@ -21,7 +25,10 @@ const buttons = [
 ];
 
 const SideMenu = () => {
-    const setAuth = useAuthStore((state) => state.setAuth);
+    const { auth, setAuth } = useAuthStore((state) => ({
+        auth: state.auth,
+        setAuth: state.setAuth,
+    }));
 
     const { showSideMenu, setShowSideMenu } = useCommonStore((state) => ({
         showSideMenu: state.showSideMenu,
@@ -66,14 +73,25 @@ const SideMenu = () => {
                         </Link>
                     ))}
                 </div>
-                <button
-                    title="Logout"
-                    className="flex justify-center items-center gap-2 font-bold text-xl bg-error-1/80 text-white py-2 px-4 rounded-lg mx-auto mt-5 transition hover:bg-error-1/100"
-                    onClick={handleLogout}
-                >
-                    <p>Logout</p>
-                    <IconLogout />
-                </button>
+                {auth ? (
+                    <button
+                        title="Logout"
+                        className="flex justify-center items-center gap-2 font-bold text-xl bg-error-1/80 text-white py-2 px-4 rounded-lg mx-auto mt-5 transition hover:bg-error-1/100"
+                        onClick={handleLogout}
+                    >
+                        <p>Logout</p>
+                        <IconLogout />
+                    </button>
+                ) : (
+                    <ul className="flex justify-center items-center gap-4 mt-3 text-lg">
+                        <li className="transition hover:opacity-70 whitespace-nowrap p-1">
+                            <Link to="/login">Login</Link>
+                        </li>
+                        <li className="hover:opacity-70 whitespace-nowrap p-1 px-2 rounded gradient-btn">
+                            <Link to="/signup">Sign up</Link>
+                        </li>
+                    </ul>
+                )}
 
                 <Links className="absolute bottom-0 pb-4" />
             </div>
