@@ -274,12 +274,12 @@ const New = ({ edit = false }: INew) => {
     }
 
     return (
-        <main className="w-[80%] m-auto pb-32">
-            <h1 className="my-10 font-bold text-3xl">
+        <main className="w-[80%] max-w-[860px] lg:w-[90%] m-auto pb-32">
+            <h1 className="my-10 font-bold text-3xl xs:text-2xl">
                 {edit ? "Edit" : "Post New"} Property
             </h1>
 
-            <form className="flex justify-between">
+            <form className="flex justify-between md:flex-wrap gap-y-10">
                 <FieldInputs
                     form={form}
                     setField={setField}

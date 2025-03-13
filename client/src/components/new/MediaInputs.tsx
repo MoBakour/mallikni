@@ -27,49 +27,53 @@ const MediaInputs = ({
     const [map, setMap] = useState<boolean>(false);
 
     return (
-        <section className="flex flex-col gap-8 w-[400px]">
-            {/* image input */}
-            <div>
-                <p className="pb-1 font-medium text-xl">Images</p>
+        <section className="flex flex-col items-center gap-8 w-[400px] md:w-full">
+            <div className="flex flex-col gap-8 md:flex-row md:flex-wrap md:justify-center md:items-center">
+                {/* image input */}
+                <div>
+                    <p className="pb-1 font-medium text-xl">Images</p>
 
-                <div className="w-[240px]">
-                    <ImageInput
-                        images={form.images}
-                        setImages={(value: any) => setField("images", value)}
-                        error={imageError}
-                        setError={setImageError}
-                    />
-                </div>
-            </div>
-
-            {/* location input */}
-            <div className="w-[240px]">
-                <p className="pb-1 font-medium text-xl">Location</p>
-                <button
-                    type="button"
-                    onClick={() => {
-                        setMap(true);
-                        setLocationError(null);
-                    }}
-                    className="w-full h-[160px] mb-6 bg-slate-300 rounded-2xl overflow-hidden flex justify-center items-center transition opacity-80 hover:opacity-100 cursor-pointer"
-                    title="Select Location"
-                >
-                    {form.location === null ? (
-                        <IconLocation className="text-5xl text-gray-600" />
-                    ) : (
-                        <Map
-                            key={form.location.lat + form.location.lng}
-                            location={form.location}
-                            setLocation={(value: any) =>
-                                setField("location", value)
+                    <div className="w-[240px]">
+                        <ImageInput
+                            images={form.images}
+                            setImages={(value: any) =>
+                                setField("images", value)
                             }
-                            picker={false}
+                            error={imageError}
+                            setError={setImageError}
                         />
-                    )}
-                </button>
-                <p className="mb-6 mt-2 empty:mt-0 bg-error-2 text-error-1 text-sm px-2 py-2 empty:p-0 text-center rounded-md">
-                    {locationError}
-                </p>
+                    </div>
+                </div>
+
+                {/* location input */}
+                <div className="w-[240px]">
+                    <p className="pb-1 font-medium text-xl">Location</p>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setMap(true);
+                            setLocationError(null);
+                        }}
+                        className="w-full h-[160px] mb-6 bg-slate-300 rounded-2xl overflow-hidden flex justify-center items-center transition opacity-80 hover:opacity-100 cursor-pointer"
+                        title="Select Location"
+                    >
+                        {form.location === null ? (
+                            <IconLocation className="text-5xl text-gray-600" />
+                        ) : (
+                            <Map
+                                key={form.location.lat + form.location.lng}
+                                location={form.location}
+                                setLocation={(value: any) =>
+                                    setField("location", value)
+                                }
+                                picker={false}
+                            />
+                        )}
+                    </button>
+                    <p className="mb-6 mt-2 empty:mt-0 bg-error-2 text-error-1 text-sm px-2 py-2 empty:p-0 text-center rounded-md">
+                        {locationError}
+                    </p>
+                </div>
             </div>
 
             {/* contacts input */}

@@ -7,9 +7,9 @@ interface IPriceCard {
 
 const PriceCard = ({ property }: IPriceCard) => {
     return (
-        <p className="bg-theme-1/30 w-fit py-2 px-4 rounded-lg">
+        <p className="bg-theme-1/30 w-fit py-2 px-4 rounded-lg sm:text-sm">
             <span>{currencyFormatter(+property.price)}</span>{" "}
-            <span className="text-sm">
+            <span className="text-sm sm:text-xs whitespace-nowrap">
                 {property.currency}{" "}
                 {property.mode === "rent" && "per " + property.frequency}
             </span>

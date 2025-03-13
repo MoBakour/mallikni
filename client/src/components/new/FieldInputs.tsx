@@ -33,7 +33,7 @@ const FieldInputs = ({
     currencyError,
 }: IFieldInputs) => {
     return (
-        <section className="flex flex-col gap-8 w-[400px]">
+        <section className="flex flex-col gap-8 w-[400px] md:w-full xs:text-sm">
             <label htmlFor="title">
                 <p className="pb-1 font-medium text-xl">Title</p>
                 <input
@@ -203,7 +203,7 @@ const FieldInputs = ({
                 </label>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between md:justify-center md:gap-20 xs:gap-10">
                 <NumberInput
                     title="Beds"
                     value={form.beds}

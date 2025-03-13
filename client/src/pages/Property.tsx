@@ -117,7 +117,7 @@ const Property = () => {
         );
 
     return (
-        <main className="w-[80%] m-auto pb-14">
+        <main className="w-[80%] lg:w-[90%] m-auto pb-14">
             <PropertyHeader
                 property={property}
                 setCurrentImage={setCurrentImage}
@@ -153,7 +153,7 @@ const Property = () => {
                             key={tab.title}
                             onClick={() => handleTab(tab.title)}
                             className={clsx(
-                                "py-2 flex-1 rounded-t-lg outline-none font-bold uppercase transition",
+                                "py-2 flex-1 rounded-t-lg outline-none font-bold uppercase transition sm:text-xs",
                                 {
                                     "bg-white shadow": tab.title === currentTab,
                                 }

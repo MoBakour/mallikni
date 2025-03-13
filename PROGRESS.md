@@ -83,3 +83,13 @@
 
 -   Completed activation system
 -   Fixed bugs
+
+### March 12, 2025
+
+-   Worked on responsive design
+
+### March 13, 2025
+
+-   Completed responsive design of the website
+-   Wrote about, contact, and privacy policy pages
+-   Added license and readme files

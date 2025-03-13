@@ -99,7 +99,7 @@ const GeneralSettings = ({
         <section>
             <h2 className="font-bold text-3xl mb-12">Profile Settings</h2>
 
-            <div className="flex justify-evenly items-start">
+            <div className="flex justify-evenly items-start sm:flex-col sm:items-center gap-6">
                 {/* avatar selector */}
                 <div className="flex flex-col justify-center items-center gap-3 w-fit">
                     <img
@@ -134,13 +134,13 @@ const GeneralSettings = ({
                 </div>
 
                 {/* profile details */}
-                <div className="flex flex-col items-end gap-3 w-fit">
-                    <div className="flex flex-col">
+                <div className="flex flex-col items-end gap-3 w-[300px] xs:w-full">
+                    <div className="flex flex-col w-full">
                         <label htmlFor="username" className="font-bold">
                             Username
                         </label>
                         <input
-                            className="shadow rounded border-none outline-none py-2 px-3 w-[300px]"
+                            className="shadow rounded border-none outline-none py-2 px-3 w-full"
                             id="username"
                             type="text"
                             value={newUsername}
@@ -150,12 +150,12 @@ const GeneralSettings = ({
                         <p className="text-error-1 text-sm"></p>
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col w-full">
                         <label htmlFor="email" className="font-bold">
                             Email
                         </label>
                         <input
-                            className="shadow rounded border-none outline-none py-2 px-3 w-[300px]"
+                            className="shadow rounded border-none outline-none py-2 px-3 w-full"
                             id="email"
                             type="text"
                             value={newEmail}
@@ -165,12 +165,12 @@ const GeneralSettings = ({
                         <p className="text-error-1 text-sm"></p>
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col w-full">
                         <label htmlFor="password" className="font-bold">
                             Password
                         </label>
                         <input
-                            className="shadow rounded border-none outline-none py-2 px-3 w-[300px]"
+                            className="shadow rounded border-none outline-none py-2 px-3 w-full"
                             id="password"
                             type="password"
                             value={newPassword}

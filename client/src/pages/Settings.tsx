@@ -18,7 +18,7 @@ const Settings = () => {
     };
 
     return (
-        <main className="w-[80%] m-auto py-20 flex flex-col gap-14">
+        <main className="w-[80%] md:w-[90%] sm:w-[95%] max-w-[900px] m-auto py-20 flex flex-col gap-14">
             <GeneralSettings
                 setLoading={setLoading}
                 setShowConfirmation={setShowConfirmation}

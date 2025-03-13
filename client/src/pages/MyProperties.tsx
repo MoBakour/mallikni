@@ -27,7 +27,7 @@ const MyProperties = () => {
 
     return (
         <main>
-            <div className="w-[80%] m-auto relative pb-20">
+            <div className="w-[80%] md:w-[95%] m-auto relative pb-20">
                 <div className="flex justify-between items-center pt-28 pb-10 font-bold">
                     <h2 className="text-3xl tracking-wide ">My Properties</h2>
 

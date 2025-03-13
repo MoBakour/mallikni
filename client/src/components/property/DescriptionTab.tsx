@@ -6,7 +6,7 @@ interface IDescriptionTab {
 
 const DescriptionTab = ({ property }: IDescriptionTab) => {
     return (
-        <section style={{ whiteSpace: `pre-wrap` }}>
+        <section className="xs:text-sm" style={{ whiteSpace: `pre-wrap` }}>
             {property.description}
         </section>
     );

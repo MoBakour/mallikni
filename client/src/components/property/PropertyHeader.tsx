@@ -82,32 +82,32 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
 
     return (
         <>
-            <header className="flex justify-between mt-20 gap-4">
+            <header className="flex justify-between md:flex-col mt-20 gap-4 md:w-[436px] md:mx-auto sm:w-full">
                 {property.images.length > 0 && (
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 xs:flex-col">
                         <img
                             src={`${
                                 import.meta.env.VITE_API_URL
                             }/properties/image/${property.images[0]}`}
                             alt="Property Image"
-                            className="w-[300px] h-[200px] rounded-lg transition hover:scale-[1.03] cursor-pointer object-cover"
+                            className="w-[300px] h-[200px] lg:w-[210px] lg:h-[140px] md:w-[300px] md:h-[200px] xs:w-full xs:h-auto rounded-lg transition hover:scale-[1.03] cursor-pointer object-cover"
                             onClick={() => setCurrentImage(0)}
                         />
 
                         {property.images.length > 1 && (
-                            <div className="flex flex-col justify-between">
+                            <div className="flex flex-col gap-5 xs:flex-row xs:gap-0 xs:justify-between">
                                 <img
                                     src={`${
                                         import.meta.env.VITE_API_URL
                                     }/properties/image/${property.images[1]}`}
                                     alt="Property Image"
-                                    className="w-[120px] h-[90px] rounded transition hover:scale-[1.05] cursor-pointer object-cover"
+                                    className="w-[120px] h-[90px] lg:w-[80px] lg:h-[60px] md:w-[120px] md:h-[90px] xs:w-[45%] xs:h-auto rounded transition hover:scale-[1.05] cursor-pointer object-cover"
                                     onClick={() => setCurrentImage(1)}
                                 />
 
                                 {property.images.length > 2 && (
                                     <div
-                                        className="relative w-[120px] h-[90px] rounded overflow-hidden transition hover:scale-[1.05] cursor-pointer"
+                                        className="relative w-[120px] h-[90px] lg:w-[80px] lg:h-[60px] md:w-[120px] md:h-[90px] xs:w-[45%] xs:h-auto rounded overflow-hidden transition hover:scale-[1.05] cursor-pointer"
                                         onClick={() => setCurrentImage(2)}
                                     >
                                         <img
@@ -136,7 +136,9 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                 )}
 
                 <div className="flex-[1] flex flex-col justify-between">
-                    <p className="font-bold text-2xl">{property.title}</p>
+                    <p className="font-bold text-2xl lg:text-xl">
+                        {property.title}
+                    </p>
 
                     <div>
                         <p>
@@ -166,10 +168,10 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                     <PriceCard property={property} />
                 </div>
 
-                <div className="flex flex-col gap-2 justify-center items-center">
+                <div className="flex flex-col md:flex-row md:gap-5 gap-2 lg:gap-1 justify-center items-center">
                     {/* add to favorites */}
                     <button
-                        className="text-3xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
+                        className="text-3xl w-[50px] h-[50px] lg:text-xl lg:w-[40px] lg:h-[40px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
                         title="Add to favorites"
                         onClick={handleFavorite}
                     >
@@ -184,7 +186,7 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
                         <>
                             {/* edit */}
                             <button
-                                className="text-2xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
+                                className="text-2xl w-[50px] h-[50px] lg:text-xl lg:w-[40px] lg:h-[40px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
                                 title="Edit Property"
                                 onClick={() =>
                                     navigate(`/edit/${property._id}`)
@@ -195,7 +197,7 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
 
                             {/* delete */}
                             <button
-                                className="text-3xl w-[50px] h-[50px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
+                                className="text-3xl w-[50px] h-[50px] lg:text-xl lg:w-[40px] lg:h-[40px] flex justify-center items-center rounded-full transition hover:bg-gray-200"
                                 title="Delete Property"
                                 onClick={() => setShowDelete(true)}
                             >

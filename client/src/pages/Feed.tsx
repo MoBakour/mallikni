@@ -10,16 +10,18 @@ const Feed = () => {
     return (
         <main className="relative">
             {/* content */}
-            <div className="w-[80%] m-auto relative sm:w-[95%]">
+            <div className="w-[80%] xl:w-[90%] m-auto relative sm:w-[95%]">
                 <h2 className="font-bold text-3xl tracking-wide pt-28 pb-10">
                     What are you looking for?
                 </h2>
 
-                {/* filters */}
-                <FeedFilters setData={setData} setLoading={setLoading} />
+                <div>
+                    {/* filters */}
+                    <FeedFilters setData={setData} setLoading={setLoading} />
 
-                {/* results */}
-                <FeedResults data={data} loading={loading} />
+                    {/* results */}
+                    <FeedResults data={data} loading={loading} />
+                </div>
             </div>
         </main>
     );

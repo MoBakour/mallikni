@@ -71,13 +71,13 @@ const CriticalSettings = ({
         <section>
             <h2 className="font-bold text-3xl mb-12">Critical Settings</h2>
 
-            <div className="px-10 flex flex-col gap-10">
+            <div className="px-10 md:px-5 xs:px-0 flex flex-col gap-10">
                 {/* delete all posts */}
                 <div>
                     <p className="font-bold text-xl mb-4">
                         Delete All Properties
                     </p>
-                    <div className="flex gap-10">
+                    <div className="flex gap-10 sm:flex-col sm:gap-4">
                         <p>
                             Delete all your posted properties along with all
                             associated media. This action is permanent and
@@ -97,7 +97,7 @@ const CriticalSettings = ({
                 {/* delete account */}
                 <div>
                     <p className="font-bold text-xl mb-4">Delete Account</p>
-                    <div className="flex gap-10">
+                    <div className="flex gap-10 sm:flex-col sm:gap-4">
                         <p>
                             By deleting your account, all your properties and
                             data will be permanently deleted. This action is
