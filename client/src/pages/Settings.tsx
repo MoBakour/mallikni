@@ -37,7 +37,7 @@ const Settings = () => {
             {/* password and confirmation popup */}
             {showConfirmation && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-                    <div className="bg-theme-2 p-8 rounded-md w-[400px]">
+                    <div className="bg-theme-2 p-8 rounded-md w-[400px] xs:w-[280px] xs:p-4">
                         <h2 className="text-xl font-bold">Confirm Password</h2>
                         <p className="mt-2">Please confirm your password</p>
 
