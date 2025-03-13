@@ -7,12 +7,12 @@ import useAuthStore from "../../stores/auth.store";
 
 const buttons = [
     {
-        title: "My Properties",
-        link: "/my-properties",
-    },
-    {
         title: "Post Property",
         link: "/new",
+    },
+    {
+        title: "My Properties",
+        link: "/my-properties",
     },
     {
         title: "My Favorites",

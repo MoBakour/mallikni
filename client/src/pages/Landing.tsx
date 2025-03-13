@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-
-// components
 import LandingHeader from "../components/landing/LandingHeader";
 import LandingSection from "../components/landing/LandingSection";
 import LandingFooter from "../components/landing/LandingFooter";
 import Footer from "../components/common/Footer";
+import Blob2 from "../assets/blob-2.svg";
 
 const sectionData = [
     {
@@ -91,7 +90,7 @@ const Landing = () => {
 
             <div className="bg-theme-1 py-20 relative overflow-hidden">
                 <img
-                    src="./images/blob-2.svg"
+                    src={Blob2}
                     alt="Blob image"
                     className="brightness-90 absolute top-0 -right-1/2 z-[0] w-[1200px] h-[1200px] max-w-none"
                 />

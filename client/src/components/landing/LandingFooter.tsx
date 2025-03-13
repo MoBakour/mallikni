@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import IconArrowRight from "../../icons/IconArrowRight";
+import Blob1 from "../../assets/blob-1.svg";
 
 const LandingFooter = () => {
     return (
         <div className="py-32 md:py-20 flex justify-around items-center relative overflow-hidden z-10 md:flex md:flex-col md:gap-4">
             <img
-                src="./images/blob-1.svg"
+                src={Blob1}
                 alt="Blob image"
                 className="absolute opacity-25 z-[-1] w-[1000px] h-[1000px] max-w-none sm:w-[600px] sm:h-[600px]"
             />
