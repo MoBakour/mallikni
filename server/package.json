@@ -5,7 +5,8 @@
     "main": "src/app.js",
     "scripts": {
         "dev": "nodemon ./dist/app.js",
-        "build": "tsc && node ./dist/app.js"
+        "build": "tsc",
+        "start": "node ./dist/app.js"
     },
     "author": "MoBakour",
     "license": "ISC",
