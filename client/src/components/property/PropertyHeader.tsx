@@ -210,7 +210,7 @@ const PropertyHeader = ({ property, setCurrentImage }: IPropertyHeader) => {
 
             {/* delete confirmation popup */}
             {showDelete && (
-                <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black/70 flex justify-center items-center">
+                <div className="fixed top-0 left-0 w-screen h-dvh z-10 bg-black/70 flex justify-center items-center">
                     <div className="w-[300px] bg-theme-2 rounded-lg p-3">
                         <p className="mb-3">
                             Are you sure you want to permanently delete this

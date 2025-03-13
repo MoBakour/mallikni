@@ -49,14 +49,14 @@ const SideMenu = () => {
     return (
         <div
             className={clsx(
-                "fixed left-0 top-0 z-10 bg-slate-800/80 backdrop-blur-sm w-screen h-screen transition",
+                "fixed left-0 top-0 z-10 bg-slate-800/80 backdrop-blur-sm w-screen h-dvh transition",
                 showSideMenu ? "opacity-100" : "opacity-0 pointer-events-none"
             )}
             onClick={(e) => handleHide(e)}
         >
             <div
                 className={clsx(
-                    "absolute z-20 right-0 bg-theme-2 w-[300px] min-h-screen transition",
+                    "absolute z-20 right-0 bg-theme-2 w-[300px] min-h-dvh transition",
                     showSideMenu ? "" : "translate-x-full"
                 )}
                 id="sideMenu"

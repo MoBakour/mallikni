@@ -24,7 +24,7 @@ function App() {
     }));
 
     return (
-        <div className="bg-slate-100 min-h-screen">
+        <div className="bg-slate-100 min-h-dvh">
             <BrowserRouter>
                 <ScrollToTop />
                 <Routes>

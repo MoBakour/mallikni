@@ -11,7 +11,7 @@ const Auth = ({ page }: IAuthProps) => {
     const auth = useAuthStore((state) => state.auth);
 
     return (
-        <main className=" bg-slate-100 flex justify-evenly items-center sm:flex-col w-full min-h-screen relative overflow-hidden">
+        <main className="bg-slate-100 flex justify-evenly items-center sm:flex-col w-full min-h-dvh relative overflow-hidden">
             <img
                 src="./images/blob-2.svg"
                 alt="Blob image"

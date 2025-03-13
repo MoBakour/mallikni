@@ -51,7 +51,7 @@ const Landing = () => {
         <main className="overflow-x-hidden">
             {/* landing bg */}
             <div
-                className="w-screen h-screen bg-cover bg-center opacity-35"
+                className="w-screen h-dvh bg-cover bg-center opacity-35"
                 style={{ backgroundImage: "url('./images/city-bg.png')" }}
             ></div>
 
