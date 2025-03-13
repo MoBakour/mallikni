@@ -19,10 +19,10 @@ const bottomLinks = [
 interface ILinks {
     className?: string;
     dir?: "row" | "col";
-    dots?: boolean;
+    onClick?: () => void;
 }
 
-const Links = ({ className = "", dir = "col" }: ILinks) => {
+const Links = ({ className = "", dir = "col", onClick = () => {} }: ILinks) => {
     return (
         <div
             className={`flex flex-${dir} justify-center items-center gap-1 w-full ${className}`}
@@ -32,6 +32,7 @@ const Links = ({ className = "", dir = "col" }: ILinks) => {
                     <Link
                         to={link.link}
                         className="transition hover:opacity-70"
+                        onClick={onClick}
                     >
                         {link.title}
                     </Link>

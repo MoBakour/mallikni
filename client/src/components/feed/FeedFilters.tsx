@@ -156,7 +156,7 @@ const FeedFilters = ({ setData, setLoading }: IFeedFilters) => {
 
     return (
         <div className="w-full shadow-lg rounded-lg bg-white p-4 flex flex-col gap-6 mb-14">
-            <div className="flex flex-wrap gap-y-4 gap-x-6">
+            <div className="flex flex-wrap gap-y-4 gap-x-6 sm:gap-x-3 sm:gap-y-3">
                 <ToggleFilter
                     value1={{ text: "rent", value: "rent" }}
                     value2={{ text: "buy", value: "sale" }}

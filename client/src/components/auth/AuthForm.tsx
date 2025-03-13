@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import IconLoader2 from "../../icons/IconLoader2";
 import useAxios from "../../hooks/useAxios";
 import useAuthStore from "../../stores/auth.store";
+import { useNavigate } from "react-router-dom";
 
 interface IAuthForm {
     page: "login" | "signup";
@@ -12,6 +13,7 @@ interface IAuthForm {
 const AuthForm = ({ page }: IAuthForm) => {
     const axios = useAxios();
     const { setAuth } = useAuthStore((state) => ({ setAuth: state.setAuth }));
+    const navigate = useNavigate();
 
     const [pwdMode, setPwdMode] = useState("password");
 
@@ -46,6 +48,10 @@ const AuthForm = ({ page }: IAuthForm) => {
                     user: response.data.user,
                     token: response.data.token,
                 });
+
+                setTimeout(() => {
+                    navigate("/find");
+                }, 0);
             }
         } catch (err: any) {
             setError(err.response?.data?.error);

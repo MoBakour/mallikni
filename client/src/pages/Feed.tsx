@@ -2,6 +2,7 @@ import { useState } from "react";
 import FeedFilters from "../components/feed/FeedFilters";
 import FeedResults from "../components/feed/FeedResults";
 import { IProperty } from "../types/types";
+import Links from "../components/common/Links";
 
 const Feed = () => {
     const [data, setData] = useState<IProperty[]>([]);
@@ -22,6 +23,8 @@ const Feed = () => {
                     {/* results */}
                     <FeedResults data={data} loading={loading} />
                 </div>
+
+                <Links dir="row" className="hidden lg:flex pb-4" />
             </div>
         </main>
     );

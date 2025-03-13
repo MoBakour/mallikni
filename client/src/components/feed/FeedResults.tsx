@@ -55,7 +55,7 @@ const FeedResults = ({ data, loading }: IFeedResults) => {
                 </div>
 
                 <div className="sticky top-10">
-                    <div className="bg-white shadow-lg p-3 rounded-lg w-full mt-8 flex flex-col gap-3">
+                    <div className="bg-white shadow-lg p-3 rounded-lg w-full mt-8 flex flex-col gap-3 mb-4">
                         <p className="text-lg font-bold">
                             Want to post your property?
                         </p>
@@ -72,13 +72,7 @@ const FeedResults = ({ data, loading }: IFeedResults) => {
                         </Link>
                     </div>
 
-                    <div>
-                        <Links className="text-xs mt-4" dir="row" dots={true} />
-
-                        {/* TODO: links to about/contact/privacy policy */}
-                        {/* maybe also logo */}
-                        {/* maybe also login/signup ? */}
-                    </div>
+                    <Links className="text-xs lg:hidden" dir="row" />
                 </div>
             </div>
         </div>

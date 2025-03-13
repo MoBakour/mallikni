@@ -42,8 +42,8 @@ const SideMenu = () => {
     };
 
     const handleLogout = () => {
-        setAuth(null);
         setShowSideMenu(false);
+        setAuth(null);
     };
 
     return (
@@ -77,7 +77,10 @@ const SideMenu = () => {
                     <button
                         title="Logout"
                         className="flex justify-center items-center gap-2 font-bold text-xl bg-error-1/80 text-white py-2 px-4 rounded-lg mx-auto mt-5 transition hover:bg-error-1/100"
-                        onClick={handleLogout}
+                        onClick={() => {
+                            handleLogout();
+                            setShowSideMenu(false);
+                        }}
                     >
                         <p>Logout</p>
                         <IconLogout />
@@ -85,15 +88,28 @@ const SideMenu = () => {
                 ) : (
                     <ul className="flex justify-center items-center gap-4 mt-3 text-lg">
                         <li className="transition hover:opacity-70 whitespace-nowrap p-1">
-                            <Link to="/login">Login</Link>
+                            <Link
+                                to="/login"
+                                onClick={() => setShowSideMenu(false)}
+                            >
+                                Login
+                            </Link>
                         </li>
                         <li className="hover:opacity-70 whitespace-nowrap p-1 px-2 rounded gradient-btn">
-                            <Link to="/signup">Sign up</Link>
+                            <Link
+                                to="/signup"
+                                onClick={() => setShowSideMenu(false)}
+                            >
+                                Sign up
+                            </Link>
                         </li>
                     </ul>
                 )}
 
-                <Links className="absolute bottom-0 pb-4" />
+                <Links
+                    className="absolute bottom-0 pb-4"
+                    onClick={() => setShowSideMenu(false)}
+                />
             </div>
         </div>
     );
