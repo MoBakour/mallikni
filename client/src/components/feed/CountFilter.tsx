@@ -2,6 +2,7 @@ import clsx from "clsx";
 import IconBxChevronDown from "../../icons/IconBxChevronDown";
 import IconTick from "../../icons/IconTick";
 import { capitalize, toggleItem } from "../../utils/utils";
+import { useEffect, useRef } from "react";
 
 interface ICountFilter {
     name: string;
@@ -20,11 +21,28 @@ const CountFilter = ({
     show,
     setShow,
 }: ICountFilter) => {
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
     const handleShow = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!e.currentTarget.classList.contains("filter-dropdown")) {
             setShow(name);
         }
     };
+
+    const handleDropdownPosition = (dropdown: HTMLDivElement) => {
+        const rect = dropdown.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            dropdown.style.left = `-${rect.right - window.innerWidth + 10}px`;
+        } else if (rect.left < 0) {
+            dropdown.style.left = `${-rect.left + 10}px`;
+        }
+    };
+
+    useEffect(() => {
+        if (dropdownRef.current) {
+            handleDropdownPosition(dropdownRef.current as HTMLDivElement);
+        }
+    }, [show, filters[name], dropdownRef, handleDropdownPosition]);
 
     return (
         <div
@@ -36,8 +54,14 @@ const CountFilter = ({
             <IconBxChevronDown className="text-lg" />
             {show && (
                 <div
-                    className="filter-dropdown absolute -bottom-1 left-0 translate-y-full bg-theme-2 p-3 rounded-lg shadow flex flex-wrap gap-2 w-[300px] sm:w-[280px]"
-                    onClick={(e) => e.stopPropagation()}
+                    className="z-10 filter-dropdown absolute -bottom-1 left-0 translate-y-full bg-theme-2 p-3 rounded-lg shadow flex flex-wrap gap-2 w-[300px] sm:w-[280px]"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleDropdownPosition(
+                            e.currentTarget as HTMLDivElement
+                        );
+                    }}
+                    ref={dropdownRef}
                 >
                     {counts.map((option) => (
                         <button

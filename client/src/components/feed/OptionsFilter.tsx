@@ -28,7 +28,7 @@ const OptionsFilter = ({
             Property Options <IconBxChevronDown className="text-lg" />
             {show && (
                 <div
-                    className="filter-dropdown absolute -bottom-1 left-0 translate-y-full bg-theme-2 p-3 rounded-lg shadow flex flex-wrap gap-3 flex-col"
+                    className="z-10 filter-dropdown absolute -bottom-1 left-0 translate-y-full bg-theme-2 p-3 rounded-lg shadow flex flex-wrap gap-3 flex-col"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <Checkbox
