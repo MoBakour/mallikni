@@ -50,7 +50,10 @@ const Landing = () => {
     return (
         <main className="overflow-x-hidden">
             {/* landing bg */}
-            <div className="bg-[url('./images/city-bg.png')] w-screen h-screen bg-cover bg-center opacity-35"></div>
+            <div
+                className="w-screen h-screen bg-cover bg-center opacity-35"
+                style={{ backgroundImage: "url('./images/city-bg.png')" }}
+            ></div>
 
             <LandingHeader scrolled={scrolled} />
 
