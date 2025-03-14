@@ -49,8 +49,9 @@ const AuthForm = ({ page }: IAuthForm) => {
                     token: response.data.token,
                 });
 
+                // in setTimeout to avoid 'router override navigate' issue
                 setTimeout(() => {
-                    navigate("/find");
+                    navigate(page === "login" ? "/find" : "/verify");
                 }, 0);
             }
         } catch (err: any) {
