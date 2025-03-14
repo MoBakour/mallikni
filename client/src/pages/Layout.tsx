@@ -12,7 +12,7 @@ const Layout = () => {
             <img
                 src={Blob1}
                 alt="Blob"
-                className="fixed opacity-20 blur-3xl -left-72 -top-14 pointer-events-none"
+                className="w-3/4 sm:w-4/5 top-24 -left-1/4 fixed opacity-20 blur-3xl pointer-events-none "
             />
 
             {/* side menu */}

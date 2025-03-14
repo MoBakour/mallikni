@@ -61,12 +61,30 @@ const SideMenu = () => {
                 )}
                 id="sideMenu"
             >
-                <div className="flex flex-col py-2">
+                {auth && (
+                    <div className="flex justify-center items-center gap-2 py-4">
+                        <>
+                            <img
+                                src={
+                                    auth.user.avatar
+                                        ? `${
+                                              import.meta.env.VITE_API_URL
+                                          }/users/avatar/${auth.user.avatar}`
+                                        : "/images/default-avatar.png"
+                                }
+                                alt="User Avatar"
+                                className="object-cover rounded-full w-8 h-8"
+                            />
+                            <p className="font-bold">{auth.user.username}</p>
+                        </>
+                    </div>
+                )}
+                <div className="flex flex-col">
                     {buttons.map((btn) => (
                         <Link
                             key={btn.title}
                             to={btn.link}
-                            className="text-2xl text-center font-bold py-4 border-b-4 transition hover:opacity-70"
+                            className="text-2xl text-center font-bold py-4 border-b-4 first:border-t-4 transition hover:opacity-70"
                             onClick={() => setShowSideMenu(false)}
                         >
                             {btn.title}

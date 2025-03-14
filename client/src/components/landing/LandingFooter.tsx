@@ -8,7 +8,7 @@ const LandingFooter = () => {
             <img
                 src={Blob1}
                 alt="Blob image"
-                className="absolute opacity-25 z-[-1] w-[1000px] h-[1000px] max-w-none sm:w-[600px] sm:h-[600px]"
+                className="absolute opacity-25 z-[-1] w-[800px] h-[800px] max-w-none sm:w-[450px] sm:h-[450px]"
             />
 
             <div className="relative md:hidden">

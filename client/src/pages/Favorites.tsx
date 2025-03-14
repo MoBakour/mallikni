@@ -28,9 +28,10 @@ const Favorites = () => {
     return (
         <main>
             <div className="w-[80%] md:w-[95%] m-auto relative pb-20">
-                <h2 className="font-bold text-3xl tracking-wide pt-28 pb-10">
+                <h2 className="mt-28 mb-10 sm:mt-16 font-bold text-3xl tracking-wide leading-[60px]">
                     My Favorites
                 </h2>
+
                 {loading ? (
                     <IconLoader2 className="animate-spin text-5xl mx-auto" />
                 ) : data.length > 0 ? (

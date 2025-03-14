@@ -12,7 +12,7 @@ const Feed = () => {
         <main className="relative">
             {/* content */}
             <div className="w-[80%] xl:w-[90%] m-auto relative sm:w-[95%]">
-                <h2 className="font-bold text-3xl tracking-wide pt-28 pb-10">
+                <h2 className="mt-28 mb-10 sm:mt-16 font-bold text-3xl tracking-wide leading-[60px]">
                     What are you looking for?
                 </h2>
 

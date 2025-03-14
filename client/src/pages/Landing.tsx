@@ -92,7 +92,7 @@ const Landing = () => {
                 <img
                     src={Blob2}
                     alt="Blob image"
-                    className="brightness-90 absolute top-0 -right-1/2 z-[0] w-[1200px] h-[1200px] max-w-none"
+                    className="brightness-90 absolute top-28 -right-1/3 z-[0] w-[900px] h-[900px] max-w-none"
                 />
 
                 <div className="w-[80%] m-auto flex flex-col gap-40 relative">

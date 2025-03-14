@@ -16,7 +16,7 @@ const Auth = ({ page }: IAuthProps) => {
             <img
                 src={Blob2}
                 alt="Blob image"
-                className="absolute opacity-20 -right-1/3 w-[1300px] lg:w-[1000px] sm:w-[600px] sm:bottom-0 max-w-none"
+                className="absolute opacity-20 -right-1/3 w-[1100px] lg:w-[800px] sm:w-[500px] sm:bottom-10 max-w-none"
             />
 
             <Link to="/" className="z-10">
