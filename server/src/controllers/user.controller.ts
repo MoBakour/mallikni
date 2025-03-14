@@ -14,6 +14,7 @@ import {
 import { updateUserSchema } from "../utils/validation";
 import { generateActivationCode, timeUntil } from "../utils/utils";
 import { sendActivationEmail } from "../utils/mailer";
+import { ZodError } from "zod";
 
 const router = express.Router();
 
@@ -201,7 +202,7 @@ router.put("/update", requireAuth, async (req: CustomRequest, res) => {
             if (req.body.password === "") {
                 delete req.body.password;
             }
-            const data = updateUserSchema.partial().parse(req.body);
+            const data = updateUserSchema.parse(req.body);
 
             // hash password
             if (data.password) {
@@ -268,9 +269,26 @@ router.put("/update", requireAuth, async (req: CustomRequest, res) => {
                     ...updatedUser.toObject(),
                 },
             });
-        } catch (err) {
+        } catch (err: any) {
+            if (err instanceof ZodError) {
+                res.status(400).json({
+                    error: err.errors[0].message,
+                });
+                return;
+            }
+
+            if (err.code === 11000) {
+                const cause = Object.keys(err.keyPattern)[0];
+                res.status(400).json({
+                    error: `An account with that ${cause} already exists`,
+                });
+                return;
+            }
+
             console.error(err);
-            res.status(500).json({ error: "Internal Server Error" });
+            res.status(500).json({
+                error: "Internal server error",
+            });
         } finally {
             if (req.file) {
                 await deleteFiles(req.file.path);
