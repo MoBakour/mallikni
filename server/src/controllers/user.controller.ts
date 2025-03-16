@@ -1,7 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import cron from "node-cron";
-import { CustomRequest } from "../types/types";
 import Property from "../models/property.model";
 import User from "../models/user.model";
 import { s3_delete, s3_get, s3_post } from "../utils/s3";
@@ -58,7 +57,7 @@ router.get("/avatar/:key", async (req, res) => {
     }
 });
 
-router.patch("/favor", requireAuth, async (req: CustomRequest, res) => {
+router.patch("/favor", requireAuth, async (req, res) => {
     try {
         const property = await Property.findById(req.body.propertyId);
 
@@ -92,7 +91,7 @@ router.patch("/favor", requireAuth, async (req: CustomRequest, res) => {
     }
 });
 
-router.patch("/activate", requireAuth, async (req: CustomRequest, res) => {
+router.patch("/activate", requireAuth, async (req, res) => {
     try {
         // get user with activation data
         const user = await User.findById(req.user._id, {
@@ -181,7 +180,7 @@ router.patch("/activate", requireAuth, async (req: CustomRequest, res) => {
     }
 });
 
-router.put("/update", requireAuth, async (req: CustomRequest, res) => {
+router.put("/update", requireAuth, async (req, res) => {
     uploadUserAvatar(req, res, async (err) => {
         const cont = handleMulterErrors(res, err);
         if (!cont) return;
@@ -297,7 +296,7 @@ router.put("/update", requireAuth, async (req: CustomRequest, res) => {
     });
 });
 
-router.delete("/delete", requireAuth, async (req: CustomRequest, res) => {
+router.delete("/delete", requireAuth, async (req, res) => {
     try {
         // check password
         const validPassword = await bcrypt.compare(

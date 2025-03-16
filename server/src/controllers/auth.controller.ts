@@ -1,7 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import { ZodError } from "zod";
-import { CustomRequest } from "../types/types";
 import { createUserSchema } from "../utils/validation";
 import User from "../models/user.model";
 import { sendActivationEmail } from "../utils/mailer";
@@ -9,7 +8,7 @@ import { createToken } from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
-router.post("/signup", async (req: CustomRequest, res) => {
+router.post("/signup", async (req, res) => {
     try {
         // validate user data
         const { email, username, password } = createUserSchema.parse(req.body);
@@ -70,7 +69,7 @@ router.post("/signup", async (req: CustomRequest, res) => {
     }
 });
 
-router.post("/login", async (req: CustomRequest, res) => {
+router.post("/login", async (req, res) => {
     try {
         // verify login data
         if (!req.body.credential) {

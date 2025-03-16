@@ -1,6 +1,5 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { CustomRequest } from "../types/types";
 import {
     deleteFiles,
     handleMulterErrors,
@@ -16,7 +15,7 @@ import { requireAuth } from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
-router.post("/new", requireAuth, (req: CustomRequest, res) => {
+router.post("/new", requireAuth, (req, res) => {
     // use multer
     uploadPropertyImages(req, res, async (err) => {
         // handle errors
@@ -142,7 +141,7 @@ router.get("/sample", async (req, res) => {
     }
 });
 
-router.get("/own", requireAuth, async (req: CustomRequest, res) => {
+router.get("/own", requireAuth, async (req, res) => {
     try {
         // find properties owned by user
         const properties = await Property.find({ owner: req.user._id });
@@ -159,7 +158,7 @@ router.get("/own", requireAuth, async (req: CustomRequest, res) => {
     }
 });
 
-router.get("/favorites", requireAuth, async (req: CustomRequest, res) => {
+router.get("/favorites", requireAuth, async (req, res) => {
     try {
         // get user favorite properties
         const properties = await Property.find({
@@ -191,7 +190,7 @@ router.get("/image/:key", async (req, res) => {
     }
 });
 
-router.put("/edit/:id", requireAuth, (req: CustomRequest, res) => {
+router.put("/edit/:id", requireAuth, (req, res) => {
     uploadPropertyImages(req, res, async (err) => {
         // handle errors
         const cont = handleMulterErrors(res, err);
@@ -266,7 +265,7 @@ router.put("/edit/:id", requireAuth, (req: CustomRequest, res) => {
     });
 });
 
-router.delete("/property/:id", requireAuth, async (req: CustomRequest, res) => {
+router.delete("/property/:id", requireAuth, async (req, res) => {
     try {
         // delete property
         const deletedProperty = await Property.findOneAndDelete({
@@ -306,7 +305,7 @@ router.delete("/property/:id", requireAuth, async (req: CustomRequest, res) => {
     }
 });
 
-router.delete("/all", requireAuth, async (req: CustomRequest, res) => {
+router.delete("/all", requireAuth, async (req, res) => {
     try {
         // check password
         const validPassword = await bcrypt.compare(

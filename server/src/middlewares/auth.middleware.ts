@@ -1,13 +1,8 @@
-import { NextFunction, Response } from "express";
+import { RequestHandler } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { CustomRequest } from "../types/types";
 import User from "../models/user.model";
 
-export const authenticate = (
-    req: CustomRequest,
-    res: Response,
-    next: NextFunction
-) => {
+export const authenticate: RequestHandler = (req, res, next) => {
     try {
         // get header
         const header = req.header("Authorization");
@@ -58,11 +53,7 @@ export const createToken = (userId: string) => {
     });
 };
 
-export const requireAuth = (
-    req: CustomRequest,
-    res: Response,
-    next: NextFunction
-) => {
+export const requireAuth: RequestHandler = (req, res, next) => {
     if (!req.user) {
         res.status(401).json({
             error: "Unauthorized",
