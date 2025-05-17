@@ -107,12 +107,18 @@ router.get("/search", async (req, res) => {
         // build query
         const filter = translateQueryToMQL(query);
 
+        const page = query.page ? +query.page : 1;
+        const limit = query.limit ? +query.limit : 10;
+
         // perform search
-        const properties = await Property.find(filter);
+        const properties = await Property.find(filter)
+            .skip((page - 1) * limit)
+            .limit(limit);
 
         // return response
         res.status(200).json({
             properties,
+            hasMore: properties.length === limit,
         });
     } catch (err) {
         console.error(err);

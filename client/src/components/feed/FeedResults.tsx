@@ -4,13 +4,15 @@ import Links from "../common/Links";
 import PropertyCard from "./PropertyCard";
 import { IProperty } from "../../types/types";
 import IconLoader2 from "../../icons/IconLoader2";
+import clsx from "clsx";
 
 interface IFeedResults {
     data: IProperty[];
     loading: boolean;
+    loaderRef: React.RefObject<HTMLDivElement>;
 }
 
-const FeedResults = ({ data, loading }: IFeedResults) => {
+const FeedResults = ({ data, loading, loaderRef }: IFeedResults) => {
     return (
         <div className="pb-24 flex justify-between lg:flex-col-reverse">
             <div className="w-2/3 lg:w-full">
@@ -21,7 +23,7 @@ const FeedResults = ({ data, loading }: IFeedResults) => {
                 )}
 
                 <div className="flex flex-col gap-8 sm:gap-5">
-                    {loading ? (
+                    {!data.length && loading ? (
                         <div className="bg-slate-500/20 rounded-xl h-[200px] flex justify-center items-center">
                             <IconLoader2 className="animate-spin text-5xl m-auto opacity-40" />
                         </div>
@@ -37,6 +39,16 @@ const FeedResults = ({ data, loading }: IFeedResults) => {
                             No results found
                         </p>
                     )}
+
+                    {/* infinite scroll loader */}
+                    <div
+                        ref={loaderRef}
+                        className={clsx("opacity-0", {
+                            "opacity-100": data.length && loading,
+                        })}
+                    >
+                        <IconLoader2 className="animate-spin text-5xl m-auto opacity-40" />
+                    </div>
                 </div>
             </div>
 

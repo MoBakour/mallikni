@@ -12,9 +12,12 @@ import IconTick from "../../icons/IconTick";
 import { ICountry, IFilters, IProperty } from "../../types/types";
 import useAxios from "../../hooks/useAxios";
 
+const LIMIT = 10;
+
 interface IFeedFilters {
     setData: React.Dispatch<React.SetStateAction<IProperty[]>>;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    loaderRef: React.RefObject<HTMLDivElement>;
 }
 
 interface DropdownsState {
@@ -44,12 +47,15 @@ const defaultFilters: IFilters = {
     frequency: "",
 };
 
-const FeedFilters = ({ setData, setLoading }: IFeedFilters) => {
+const FeedFilters = ({ setData, setLoading, loaderRef }: IFeedFilters) => {
     const location = useLocation();
     const navigate = useNavigate();
     const axios = useAxios();
 
     const [filters, setFilters] = useState<IFilters>(defaultFilters);
+
+    const [page, setPage] = useState<number>(1);
+    const [hasMore, setHasMore] = useState<boolean>(true);
 
     const initialDropdownsState: DropdownsState = {
         beds: false,
@@ -87,7 +93,43 @@ const FeedFilters = ({ setData, setLoading }: IFeedFilters) => {
             }
         }
 
-        navigate({ search: params.toString() }, { replace: true });
+        navigate({ search: params.toString() });
+    };
+
+    const fetchData = async (type: "initial" | "more") => {
+        setLoading(true);
+
+        try {
+            const params = new URLSearchParams(location.search);
+            params.set("limit", LIMIT.toString());
+            params.set("page", type === "initial" ? "1" : page.toString());
+
+            const response = await axios.get(
+                `/properties/search?${params.toString()}`
+            );
+
+            if (response.status === 200) {
+                if (type === "initial") {
+                    setData(response.data.properties);
+                    setPage(1);
+                } else {
+                    setData((prev) => {
+                        const newData = response.data.properties.filter(
+                            (property: IProperty) =>
+                                !prev.some((p) => p._id === property._id)
+                        );
+
+                        return [...prev, ...newData];
+                    });
+                }
+
+                setHasMore(response.data.hasMore);
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -124,22 +166,29 @@ const FeedFilters = ({ setData, setLoading }: IFeedFilters) => {
 
         setFilters(newFilters);
 
-        (async () => {
-            try {
-                const response = await axios.get(
-                    `/properties/search/${location.search}`
-                );
-
-                if (response.status === 200) {
-                    setData(response.data.properties);
-                }
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        })();
+        fetchData("initial");
     }, [location.search]);
+
+    useEffect(() => {
+        fetchData("more");
+    }, [page]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMore) {
+                setPage((prev) => prev + 1);
+            }
+        });
+
+        if (loaderRef && "current" in loaderRef) {
+            const currentElement = loaderRef.current;
+            if (currentElement) {
+                observer.observe(currentElement);
+            }
+        }
+
+        return () => observer.disconnect();
+    }, [hasMore]);
 
     useEffect(() => {
         window.addEventListener("click", (e: MouseEvent) => {

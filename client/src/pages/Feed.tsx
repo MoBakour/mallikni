@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import FeedFilters from "../components/feed/FeedFilters";
 import FeedResults from "../components/feed/FeedResults";
 import { IProperty } from "../types/types";
@@ -7,6 +7,7 @@ import Links from "../components/common/Links";
 const Feed = () => {
     const [data, setData] = useState<IProperty[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const loaderRef = useRef<HTMLDivElement>(null);
 
     return (
         <main className="relative">
@@ -18,10 +19,18 @@ const Feed = () => {
 
                 <div>
                     {/* filters */}
-                    <FeedFilters setData={setData} setLoading={setLoading} />
+                    <FeedFilters
+                        setData={setData}
+                        setLoading={setLoading}
+                        loaderRef={loaderRef}
+                    />
 
                     {/* results */}
-                    <FeedResults data={data} loading={loading} />
+                    <FeedResults
+                        data={data}
+                        loading={loading}
+                        loaderRef={loaderRef}
+                    />
                 </div>
 
                 <Links dir="row" className="hidden lg:flex pb-4" />
