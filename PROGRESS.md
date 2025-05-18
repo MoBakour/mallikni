@@ -93,3 +93,7 @@
 -   Completed responsive design of the website
 -   Wrote about, contact, and privacy policy pages
 -   Added license and readme files
+
+### May 17, 2025
+
+-   Added pagination
