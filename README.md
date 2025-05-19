@@ -110,7 +110,7 @@ Once both the server and client are running, you can access the application by n
 
 -   For production deployment, configure the server and client to point to production API and bucket URLs in their respective `.env` files.
 -   Server can be deployed on a service like Render.com, Heroku, AWS, or DigitalOcean.
--   Client can be hostred on a static hosting service like Vercel, Netlify, or AWS S3.
+-   Client can be hosted on a static hosting service like Vercel, Netlify, or AWS S3.
 
 ## License
 
