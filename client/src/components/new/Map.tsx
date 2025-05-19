@@ -1,6 +1,16 @@
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import { LatLng } from "leaflet";
+import L, { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css";
+
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+});
+
+L.Marker.prototype.setIcon(DefaultIcon);
 
 interface IMap {
     location: LatLng | null;

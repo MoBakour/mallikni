@@ -97,3 +97,7 @@
 ### May 17, 2025
 
 -   Added pagination
+
+### May 19, 2025
+
+-   Fixed map icon on production
