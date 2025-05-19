@@ -39,7 +39,7 @@ const PropertyCard = ({
                     className={clsx(
                         "object-cover",
                         details
-                            ? "rounded-lg w-[260px] h-[180px] sm:w-1/3 sm:h-auto"
+                            ? "rounded-lg w-[260px] min-w-[260px] h-[180px] sm:w-1/3 sm:min-w-[auto] sm:h-auto"
                             : "rounded-lg w-full"
                     )}
                 />
