@@ -47,7 +47,7 @@ To run the Mallikni project locally, follow these steps:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/mallikni.git
+git clone https://github.com/MoBakour/mallikni.git
 cd mallikni
 ```
 
