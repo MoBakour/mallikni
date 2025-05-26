@@ -27,6 +27,7 @@ VITE_API_URL = "http://localhost:3000"
 ### Server Environment Variables (`./server/.env`)
 
 ```env
+CLIENT_URL = "http://localhost:5173"
 PORT = "3000"
 SECRET = "some very important secret"
 DB_URI = "<mongodb://uri>"
