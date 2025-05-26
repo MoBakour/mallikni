@@ -101,3 +101,8 @@
 ### May 19, 2025
 
 -   Fixed map icon on production
+
+### May 26, 2025
+
+-   Separated routes from controllers
+-   Improved configuration setup by isolating config settings in ./config

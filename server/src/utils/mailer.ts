@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import env from "../config/env";
 
 type TMode = "new" | "update";
 
@@ -184,8 +185,8 @@ const getTemplate = (code: string, mode: TMode) => {
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_APP_PASS,
+        user: env.EMAIL_USER,
+        pass: env.EMAIL_APP_PASS,
     },
     tls: {
         rejectUnauthorized: false,
@@ -198,7 +199,7 @@ const sendActivationEmail = async (
     mode: "new" | "update"
 ) => {
     await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from: env.EMAIL_USER,
         to: email,
         subject:
             mode === "new"

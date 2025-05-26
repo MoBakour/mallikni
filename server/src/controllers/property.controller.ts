@@ -1,4 +1,4 @@
-import express from "express";
+import { Handler } from "express";
 import bcrypt from "bcrypt";
 import {
     deleteFiles,
@@ -11,11 +11,8 @@ import { s3_delete, s3_get, s3_post } from "../utils/s3";
 import { ZodError } from "zod";
 import User from "../models/user.model";
 import { translateQueryToMQL } from "../utils/utils";
-import { requireAuth } from "../middlewares/auth.middleware";
 
-const router = express.Router();
-
-router.post("/new", requireAuth, (req, res) => {
+export const createProperty: Handler = async (req, res) => {
     // use multer
     uploadPropertyImages(req, res, async (err) => {
         // handle errors
@@ -71,9 +68,9 @@ router.post("/new", requireAuth, (req, res) => {
             }
         }
     });
-});
+};
 
-router.get("/property/:id", async (req, res) => {
+export const getProperty: Handler = async (req, res) => {
     try {
         // get property by id
         const property = await Property.findById(req.params.id).populate(
@@ -98,9 +95,9 @@ router.get("/property/:id", async (req, res) => {
             error: "Internal server error",
         });
     }
-});
+};
 
-router.get("/search", async (req, res) => {
+export const searchProperties: Handler = async (req, res) => {
     try {
         const query = req.query;
 
@@ -126,9 +123,9 @@ router.get("/search", async (req, res) => {
             error: "Internal server error",
         });
     }
-});
+};
 
-router.get("/sample", async (req, res) => {
+export const getSampleProperties: Handler = async (req, res) => {
     try {
         // get sample properties
         const properties = await Property.aggregate([
@@ -145,9 +142,9 @@ router.get("/sample", async (req, res) => {
             error: "Internal server error",
         });
     }
-});
+};
 
-router.get("/own", requireAuth, async (req, res) => {
+export const getOwnProperties: Handler = async (req, res) => {
     try {
         // find properties owned by user
         const properties = await Property.find({ owner: req.user._id });
@@ -162,9 +159,9 @@ router.get("/own", requireAuth, async (req, res) => {
             error: "Internal server error",
         });
     }
-});
+};
 
-router.get("/favorites", requireAuth, async (req, res) => {
+export const getFavoriteProperties: Handler = async (req, res) => {
     try {
         // get user favorite properties
         const properties = await Property.find({
@@ -181,9 +178,9 @@ router.get("/favorites", requireAuth, async (req, res) => {
             error: "Internal server error",
         });
     }
-});
+};
 
-router.get("/image/:key", async (req, res) => {
+export const streamPropertyImage: Handler = async (req, res) => {
     try {
         // get image from s3 and stream it to user
         const stream = (await s3_get(req.params.key)) as NodeJS.ReadableStream;
@@ -194,9 +191,9 @@ router.get("/image/:key", async (req, res) => {
             error: "Internal server error",
         });
     }
-});
+};
 
-router.put("/edit/:id", requireAuth, (req, res) => {
+export const editProperty: Handler = async (req, res) => {
     uploadPropertyImages(req, res, async (err) => {
         // handle errors
         const cont = handleMulterErrors(res, err);
@@ -269,9 +266,9 @@ router.put("/edit/:id", requireAuth, (req, res) => {
             }
         }
     });
-});
+};
 
-router.delete("/property/:id", requireAuth, async (req, res) => {
+export const deleteProperty: Handler = async (req, res) => {
     try {
         // delete property
         const deletedProperty = await Property.findOneAndDelete({
@@ -309,9 +306,9 @@ router.delete("/property/:id", requireAuth, async (req, res) => {
             error: "Internal server error",
         });
     }
-});
+};
 
-router.delete("/all", requireAuth, async (req, res) => {
+export const deleteAllProperties: Handler = async (req, res) => {
     try {
         // check password
         const validPassword = await bcrypt.compare(
@@ -354,6 +351,4 @@ router.delete("/all", requireAuth, async (req, res) => {
             error: "Internal server error",
         });
     }
-});
-
-export default router;
+};

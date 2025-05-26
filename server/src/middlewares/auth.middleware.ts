@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import User from "../models/user.model";
+import env from "../config/env";
 
 export const authenticate: RequestHandler = (req, res, next) => {
     try {
@@ -19,7 +20,7 @@ export const authenticate: RequestHandler = (req, res, next) => {
         }
 
         // verify token
-        jwt.verify(token, process.env.SECRET!, async (err, decoded) => {
+        jwt.verify(token, env.SECRET, async (err, decoded) => {
             if (!err && decoded) {
                 const userId = (decoded as JwtPayload).userId;
                 const user = await User.findById(userId);
@@ -41,7 +42,7 @@ export const createToken = (userId: string) => {
     return new Promise((resolve, reject) => {
         jwt.sign(
             { userId },
-            process.env.SECRET!,
+            env.SECRET,
             (err: any, token: string | undefined) => {
                 if (!err) {
                     resolve(token);

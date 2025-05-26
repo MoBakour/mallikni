@@ -1,10 +1,9 @@
-import express from "express";
+import { Handler } from "express";
 import bcrypt from "bcrypt";
 import cron from "node-cron";
 import Property from "../models/property.model";
 import User from "../models/user.model";
 import { s3_delete, s3_get, s3_post } from "../utils/s3";
-import { requireAuth } from "../middlewares/auth.middleware";
 import {
     deleteFiles,
     handleMulterErrors,
@@ -14,8 +13,6 @@ import { updateUserSchema } from "../utils/validation";
 import { generateActivationCode, timeUntil } from "../utils/utils";
 import { sendActivationEmail } from "../utils/mailer";
 import { ZodError } from "zod";
-
-const router = express.Router();
 
 /**
  * cron job every minute:
@@ -47,7 +44,7 @@ cron.schedule("* * * * *", async () => {
     }
 });
 
-router.get("/avatar/:key", async (req, res) => {
+export const streamAvatar: Handler = async (req, res) => {
     try {
         const stream = (await s3_get(req.params.key)) as NodeJS.ReadableStream;
         stream.pipe(res);
@@ -55,9 +52,9 @@ router.get("/avatar/:key", async (req, res) => {
         console.error(err);
         res.status(500).json({ error: "Internal Server Error" });
     }
-});
+};
 
-router.patch("/favor", requireAuth, async (req, res) => {
+export const toggleFavorite: Handler = async (req, res) => {
     try {
         const property = await Property.findById(req.body.propertyId);
 
@@ -89,9 +86,9 @@ router.patch("/favor", requireAuth, async (req, res) => {
         console.error(err);
         res.status(500).json({ error: "Internal Server Error" });
     }
-});
+};
 
-router.patch("/activate", requireAuth, async (req, res) => {
+export const activateUser: Handler = async (req, res) => {
     try {
         // get user with activation data
         const user = await User.findById(req.user._id, {
@@ -178,9 +175,9 @@ router.patch("/activate", requireAuth, async (req, res) => {
         console.error(err);
         res.status(500).json({ error: "Internal Server Error" });
     }
-});
+};
 
-router.put("/update", requireAuth, async (req, res) => {
+export const updateUser: Handler = async (req, res) => {
     uploadUserAvatar(req, res, async (err) => {
         const cont = handleMulterErrors(res, err);
         if (!cont) return;
@@ -294,9 +291,9 @@ router.put("/update", requireAuth, async (req, res) => {
             }
         }
     });
-});
+};
 
-router.delete("/delete", requireAuth, async (req, res) => {
+export const deleteUser: Handler = async (req, res) => {
     try {
         // check password
         const validPassword = await bcrypt.compare(
@@ -341,6 +338,4 @@ router.delete("/delete", requireAuth, async (req, res) => {
         console.error(err);
         res.status(500).json({ error: "Internal Server Error" });
     }
-});
-
-export default router;
+};

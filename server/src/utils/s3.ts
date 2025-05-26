@@ -5,14 +5,15 @@ import {
     GetObjectCommand,
     DeleteObjectsCommand,
 } from "@aws-sdk/client-s3";
+import env from "../config/env";
 
-const bucketName = process.env.S3_BUCKET_NAME!;
+const bucketName = env.S3_BUCKET_NAME;
 
 const s3 = new S3Client({
-    region: process.env.S3_BUCKET_REGION!,
+    region: env.S3_BUCKET_REGION,
     credentials: {
-        accessKeyId: process.env.S3_ACCESS_KEY!,
-        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+        accessKeyId: env.S3_ACCESS_KEY,
+        secretAccessKey: env.S3_SECRET_ACCESS_KEY,
     },
 });
 
