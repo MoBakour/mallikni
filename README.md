@@ -21,23 +21,23 @@ Mallikni is a real estate property listing platform where users can browse, list
 ### Client Environment Variables (`./client/.env`)
 
 ```env
-VITE_API_URL = "http://localhost:3000"
+VITE_API_URL=http://localhost:3000
 ```
 
 ### Server Environment Variables (`./server/.env`)
 
 ```env
-CLIENT_URL = "http://localhost:5173"
-PORT = "3000"
-SECRET = "some very important secret"
-DB_URI = "<mongodb://uri>"
-DB_NAME = "<database name>"
-S3_BUCKET_NAME = "<bucket name>"
-S3_BUCKET_REGION = "<bucket region>"
-S3_ACCESS_KEY = "<access key>"
-S3_SECRET_ACCESS_KEY = "<secret access key>"
-EMAIL_USER = "<example@mail.com>"
-EMAIL_APP_PASS = "<email access password>"
+CLIENT_URL=http://localhost:5173
+PORT=3000
+SECRET=<some_very_important_secret>
+DB_URI=<mongodb://uri>
+DB_NAME=<database_name>
+S3_BUCKET_NAME=<bucket_name>
+S3_BUCKET_REGION=<bucket_region>
+S3_ACCESS_KEY=<access_key>
+S3_SECRET_ACCESS_KEY=<secret_access_key>
+EMAIL_USER=<example@mail.com>
+EMAIL_APP_PASS=<email_access_password>
 ```
 
 ## How to Run the Project Locally
