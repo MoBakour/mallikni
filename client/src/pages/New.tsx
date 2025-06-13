@@ -176,7 +176,10 @@ const New = ({ edit = false }: INew) => {
             // send request
             let response;
             if (edit) {
-                response = await axios.put(`/properties/edit/${id}`, formData);
+                response = await axios.patch(
+                    `/properties/edit/${id}`,
+                    formData
+                );
             } else {
                 response = await axios.post("/properties/new", formData);
             }

@@ -22,7 +22,7 @@ router.get("/sample", getSampleProperties);
 router.get("/own", requireAuth, getOwnProperties);
 router.get("/favorites", requireAuth, getFavoriteProperties);
 router.get("/image/:key", streamPropertyImage);
-router.put("/edit/:id", requireAuth, editProperty);
+router.patch("/edit/:id", requireAuth, editProperty);
 router.delete("/property/:id", requireAuth, deleteProperty);
 router.delete("/all", requireAuth, deleteAllProperties);
 
